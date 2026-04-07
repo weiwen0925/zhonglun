@@ -1,0 +1,3775 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>《中論》第七至十四品 — 深度解析總彙整</title>
+<style>
+/* ========== CSS Variables ========== */
+:root {
+  --primary: #5B3A29;
+  --primary-light: #8B6F47;
+  --accent: #C0392B;
+  --accent-gold: #B8860B;
+  --bg: #FAF8F5;
+  --bg-warm: #F5F0E8;
+  --bg-card: #FFFFFF;
+  --text: #2C2C2C;
+  --text-light: #5A5A5A;
+  --text-muted: #888;
+  --border: #E0D8CF;
+  --border-light: #EDE8E0;
+  --shadow: rgba(91, 58, 41, 0.08);
+  --shadow-md: rgba(91, 58, 41, 0.12);
+  --chapter-gradient-start: #1a1a2e;
+  --chapter-gradient-end: #0f3460;
+  --toc-bg: #FDFBF7;
+  --verse-bg: #FFF9F0;
+  --verse-border: #D4A574;
+  --highlight: #FFF3E0;
+  --progress-bg: linear-gradient(90deg, #8B6F47, #C0392B, #B8860B);
+}
+
+/* ========== Reset & Base ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body {
+  font-family: "Noto Serif TC", "Source Han Serif TC", "PMingLiU", "Songti SC", Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 2;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ========== Progress Bar ========== */
+.progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: rgba(0,0,0,0.05);
+  z-index: 10000;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--progress-bg);
+  border-radius: 0 3px 3px 0;
+  transition: width 0.15s ease-out;
+  box-shadow: 0 0 8px rgba(184, 134, 11, 0.4);
+}
+.progress-text {
+  position: fixed;
+  top: 8px;
+  right: 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  z-index: 10001;
+  background: rgba(250,248,245,0.9);
+  padding: 2px 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  font-family: system-ui, sans-serif;
+}
+
+/* ========== Sticky Navigation ========== */
+.sticky-nav {
+  position: fixed;
+  top: 5px;
+  left: 0;
+  width: 100%;
+  background: rgba(250,248,245,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-light);
+  z-index: 9999;
+  padding: 10px 0;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+.sticky-nav.visible { transform: translateY(0); }
+.sticky-nav .nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sticky-nav .nav-inner::-webkit-scrollbar { display: none; }
+.nav-pill {
+  flex-shrink: 0;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text-light);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: system-ui, "Microsoft JhengHei", sans-serif;
+}
+.nav-pill:hover { background: var(--bg-warm); border-color: var(--primary-light); }
+.nav-pill.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* ========== Hero ========== */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #1a1a3e 100%);
+  color: #fff;
+  text-align: center;
+  padding: 100px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 40%, rgba(184,134,11,0.12) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(139,0,0,0.08) 0%, transparent 50%);
+  animation: heroGlow 8s ease-in-out infinite alternate;
+}
+@keyframes heroGlow {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-5%, 3%); }
+}
+.hero-content { position: relative; z-index: 1; }
+.hero h1 {
+  font-size: 3em;
+  letter-spacing: 12px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.hero .subtitle {
+  font-size: 1.4em;
+  opacity: 0.85;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+.hero .meta {
+  font-size: 0.95em;
+  opacity: 0.6;
+  letter-spacing: 2px;
+}
+.hero .range-badge {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 8px 28px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 30px;
+  font-size: 0.95em;
+  letter-spacing: 3px;
+  opacity: 0.8;
+}
+
+/* ========== TOC ========== */
+.toc-wrapper {
+  max-width: 960px;
+  margin: -40px auto 50px;
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+}
+.toc-panel {
+  background: var(--toc-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 44px;
+  box-shadow: 0 4px 24px var(--shadow);
+}
+.toc-title {
+  text-align: center;
+  font-size: 1.5em;
+  color: var(--primary);
+  margin-bottom: 28px;
+  letter-spacing: 6px;
+  position: relative;
+}
+.toc-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: var(--accent-gold);
+  margin: 12px auto 0;
+}
+.toc-chapter {
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--border-light);
+}
+.toc-chapter:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.toc-chapter-link {
+  display: block;
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+.toc-chapter-link:hover { color: var(--accent); }
+.toc-num {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 1px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  margin-right: 10px;
+  font-family: system-ui, sans-serif;
+  vertical-align: 1px;
+}
+.toc-subtitle {
+  display: block;
+  font-size: 0.88em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  padding-left: 0;
+  font-style: italic;
+}
+.toc-sections {
+  display: block;
+  padding-left: 0;
+  margin-top: 10px;
+  column-count: 2;
+  column-gap: 28px;
+}
+
+.toc-h2 {
+  display: block;
+  font-size: 0.92em;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 4px 0 2px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  break-after: avoid;
+  transition: color 0.2s;
+}
+.toc-h2:hover { color: var(--accent); }
+.toc-h3 {
+  display: block;
+  font-size: 0.84em;
+  color: var(--text-light);
+  text-decoration: none;
+  padding: 2px 0 2px 14px;
+  break-inside: avoid;
+  transition: color 0.2s;
+}
+.toc-h3:hover { color: var(--accent); }
+.toc-expand-hint { display: none; }
+
+/* ========== Chapter Article ========== */
+.chapter-article {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  padding: 0 24px;
+}
+.chapter-header {
+  text-align: center;
+  padding: 50px 20px 40px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--border);
+  position: relative;
+}
+.chapter-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  padding: 6px 24px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+  font-family: system-ui, "Microsoft JhengHei", sans-serif;
+}
+.chapter-title {
+  font-size: 2.2em;
+  color: var(--primary);
+  letter-spacing: 6px;
+  margin-bottom: 12px;
+}
+.chapter-subtitle {
+  font-size: 1.1em;
+  color: var(--text-light);
+  letter-spacing: 2px;
+  font-style: italic;
+}
+
+/* ========== Chapter Body Content ========== */
+.chapter-body {
+  padding: 0;
+}
+.chapter-body .container {
+  max-width: 100%;
+  padding: 0;
+}
+.chapter-body h1 { display: none; } /* hide original h1, we have our own */
+.chapter-body h2 {
+  font-size: 1.45em;
+  color: var(--primary);
+  margin: 48px 0 20px;
+  padding: 12px 0 12px 20px;
+  border-left: 4px solid var(--accent-gold);
+  background: linear-gradient(90deg, rgba(184,134,11,0.06) 0%, transparent 100%);
+  letter-spacing: 2px;
+  line-height: 1.5;
+}
+.chapter-body h3 {
+  font-size: 1.15em;
+  color: var(--primary-light);
+  margin: 32px 0 14px;
+  padding-left: 16px;
+  border-left: 3px solid var(--border);
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+.chapter-body p {
+  margin: 14px 0;
+  text-align: justify;
+  text-indent: 0;
+}
+.chapter-body section {
+  margin: 10px 0;
+}
+
+/* Verse / Quote styling */
+.chapter-body blockquote,
+.chapter-body .verse,
+.chapter-body .quote-block {
+  background: var(--verse-bg);
+  border-left: 4px solid var(--verse-border);
+  padding: 18px 24px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: normal;
+  line-height: 2.2;
+}
+
+/* Card styling */
+.chapter-body .card,
+.chapter-body .content-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+/* Table styling */
+.chapter-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.95em;
+  background: var(--bg-card);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px var(--shadow);
+}
+.chapter-body th {
+  background: var(--primary);
+  color: #fff;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.chapter-body td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+.chapter-body tr:last-child td { border-bottom: none; }
+.chapter-body tr:nth-child(even) { background: rgba(245,240,232,0.4); }
+
+/* Strong/emphasis */
+.chapter-body strong { color: var(--primary); font-weight: 700; }
+.chapter-body em { color: var(--text-light); font-style: italic; }
+
+/* Horizontal rules / dividers */
+.chapter-body hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 36px 0;
+}
+
+/* Chapter divider between articles */
+.chapter-divider {
+  text-align: center;
+  margin: 60px auto;
+  max-width: 900px;
+  padding: 0 24px;
+}
+.chapter-divider .divider-line {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.chapter-divider .divider-line::before,
+.chapter-divider .divider-line::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+.chapter-divider .diamond {
+  color: var(--accent-gold);
+  font-size: 1.2em;
+}
+
+/* ========== Back to Top ========== */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 12px var(--shadow-md);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s;
+  z-index: 9998;
+}
+.back-to-top.visible { opacity: 1; transform: translateY(0); }
+.back-to-top:hover { background: var(--accent); }
+
+/* ========== Footer ========== */
+.main-footer {
+  text-align: center;
+  padding: 50px 24px;
+  color: var(--text-muted);
+  font-size: 0.9em;
+  border-top: 1px solid var(--border);
+  max-width: 900px;
+  margin: 40px auto 0;
+  letter-spacing: 1px;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2em; letter-spacing: 6px; }
+  .hero .subtitle { font-size: 1.1em; }
+  .toc-panel { padding: 24px 20px; }
+  .toc-subtitle { padding-left: 0; }
+  .toc-sections { column-count: 1; }
+  .chapter-title { font-size: 1.6em; letter-spacing: 3px; }
+  .chapter-body h2 { font-size: 1.25em; }
+  .chapter-body h3 { font-size: 1.05em; }
+  .sticky-nav { padding: 8px 0; }
+  .nav-pill { font-size: 12px; padding: 4px 10px; }
+}
+
+/* ========== Print ========== */
+@media print {
+  .progress-container, .progress-text, .sticky-nav, .back-to-top { display: none !important; }
+  .hero { padding: 40px 20px; background: #1a1a2e !important; -webkit-print-color-adjust: exact; }
+  .chapter-article { break-inside: avoid; }
+}
+
+/* ========== Animation ========== */
+.chapter-article {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.chapter-article.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== Additional CSS Variables (compatibility) ========== */
+:root {
+  --accent2: #2E7D32;
+  --accent-light: #D4A574;
+  --gold: #B8860B;
+  --orange: #E67E22;
+  --red: #C0392B;
+  --ink: #1a1a2e;
+  --dark-section: #1a1a2e;
+  --heading: #5B3A29;
+  --highlight-bg: #FFF3E0;
+  --card-bg: #FFFFFF;
+  --quote-bg: #F5F0E8;
+  --light-text: #555;
+  --text-muted: #888;
+}
+
+/* ========== Flowchart Components ========== */
+
+/* --- Horizontal flow (→ arrows, e.g. flow-box, flow-item) --- */
+.chapter-body .flow.flow-horizontal,
+.chapter-body .flow:not(.flow-vertical) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+  font-size: 0.95em;
+  padding: 24px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+/* --- Vertical flow (↓ arrows, e.g. flow-step) --- auto-detect --- */
+.chapter-body .flow.flow-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 24px auto;
+  padding: 32px 24px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px var(--shadow);
+  max-width: 520px;
+}
+
+/* Arrows */
+.chapter-body .flow-arrow {
+  font-size: 1.5em;
+  color: var(--accent);
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Vertical arrow sizing */
+.chapter-body .flow.flow-vertical .flow-arrow {
+  padding: 4px 0;
+  font-size: 1.3em;
+  width: 100%;
+}
+
+/* --- flow-box (horizontal chain) --- */
+.chapter-body .flow-box {
+  background: linear-gradient(135deg, #f8f6f0 0%, #ede8de 100%);
+  border: 2px solid var(--accent2);
+  border-radius: 10px;
+  padding: 14px 22px;
+  text-align: center;
+  min-width: 110px;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.chapter-body .flow-box small {
+  display: block;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 2px;
+}
+/* Color progression for flow-box */
+.chapter-body .flow-box:nth-of-type(1) { border-color: #2E7D32; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
+.chapter-body .flow-box:nth-of-type(2) { border-color: #1565C0; background: linear-gradient(135deg, #E3F2FD, #BBDEFB); }
+.chapter-body .flow-box:nth-of-type(3) { border-color: #E67E22; background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+.chapter-body .flow-box:nth-of-type(4) { border-color: #C0392B; background: linear-gradient(135deg, #FFEBEE, #FFCDD2); }
+.chapter-body .flow-box:nth-of-type(5) { border-color: #6A1B9A; background: linear-gradient(135deg, #F3E5F5, #E1BEE7); }
+
+/* --- flow-item (pill chain, e.g. 十二因緣) --- */
+.chapter-body .flow-item {
+  background: var(--verse-bg);
+  padding: 8px 18px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  font-weight: 500;
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+/* --- flow-step (vertical logic chain) --- */
+.chapter-body .flow-step {
+  background: linear-gradient(135deg, #FDFBF7 0%, #F5F0E8 100%);
+  border: 2px solid var(--accent-gold);
+  padding: 14px 32px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.98em;
+  font-weight: 600;
+  min-width: 260px;
+  max-width: 380px;
+  width: 100%;
+  color: var(--primary);
+  box-shadow: 0 2px 6px var(--shadow);
+  transition: all 0.2s;
+}
+.chapter-body .flow-step:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px var(--shadow-md);
+}
+/* Color progression for flow-steps */
+.chapter-body .flow-step:nth-of-type(1) { border-left: 5px solid #2E7D32; }
+.chapter-body .flow-step:nth-of-type(2) { border-left: 5px solid #1565C0; }
+.chapter-body .flow-step:nth-of-type(3) { border-left: 5px solid #7B1FA2; }
+.chapter-body .flow-step:nth-of-type(4) { border-left: 5px solid #E67E22; }
+.chapter-body .flow-step:nth-of-type(5) { border-left: 5px solid #00838F; }
+.chapter-body .flow-step:nth-of-type(6) { border-left: 5px solid #C0392B; }
+.chapter-body .flow-step:nth-of-type(7) { border-left: 5px solid #5B3A29; }
+
+.chapter-body .flow-step.final {
+  background: linear-gradient(135deg, #C0392B 0%, #922B21 100%);
+  color: #fff;
+  font-weight: bold;
+  border-color: #922B21;
+  border-left: 5px solid #7B241C;
+  font-size: 1.05em;
+  box-shadow: 0 4px 12px rgba(192,57,43,0.25);
+}
+
+/* --- .flowchart (vertical, centered block) --- */
+.chapter-body .flowchart {
+  text-align: center;
+  margin: 28px auto;
+  padding: 32px 28px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 10px var(--shadow);
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chapter-body .flowchart .arrow {
+  display: block;
+  color: var(--accent);
+  font-size: 1.4em;
+  margin: 4px 0;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+.chapter-body .flowchart .step {
+  display: block;
+  background: linear-gradient(135deg, #FDFBF7 0%, #F5F0E8 100%);
+  border: 2px solid var(--accent-gold);
+  border-radius: 10px;
+  padding: 14px 28px;
+  margin: 0;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--primary);
+  min-width: 280px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+/* Color progression for flowchart steps */
+.chapter-body .flowchart .step:nth-of-type(1) { border-left: 5px solid #2E7D32; }
+.chapter-body .flowchart .step:nth-of-type(2) { border-left: 5px solid #1565C0; }
+.chapter-body .flowchart .step:nth-of-type(3) { border-left: 5px solid #7B1FA2; }
+.chapter-body .flowchart .step:nth-of-type(4) { border-left: 5px solid #E67E22; }
+.chapter-body .flowchart .step[style*="border-color"] {
+  border-left: 5px solid var(--gold) !important;
+}
+
+/* ========== Q&A / Debate Components ========== */
+.chapter-body .debate {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 24px 0;
+}
+.chapter-body .debate-side {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.chapter-body .debate-side .side-label {
+  font-weight: bold;
+  font-size: 0.95em;
+  margin-bottom: 10px;
+  letter-spacing: 3px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border-light);
+}
+.chapter-body .debate-side.question {
+  border-top: 4px solid #2980B9;
+  background: linear-gradient(180deg, #f0f7ff 0%, var(--bg-card) 30%);
+}
+.chapter-body .debate-side.question .side-label { color: #2980B9; }
+.chapter-body .debate-side.answer {
+  border-top: 4px solid var(--accent);
+  background: linear-gradient(180deg, #fff5f5 0%, var(--bg-card) 30%);
+}
+.chapter-body .debate-side.answer .side-label { color: var(--accent); }
+
+.chapter-body .qa { margin: 20px 0; }
+.chapter-body .qa .q {
+  font-weight: bold;
+  color: #2980B9;
+  margin-bottom: 6px;
+  padding: 8px 14px;
+  background: #f0f7ff;
+  border-left: 4px solid #2980B9;
+  border-radius: 0 6px 6px 0;
+}
+.chapter-body .qa .a {
+  margin-bottom: 16px;
+  padding: 8px 14px 8px 18px;
+  color: var(--text);
+}
+
+/* ========== Verse / Gatha ========== */
+.chapter-body .verse {
+  background: var(--verse-bg);
+  border-left: 4px solid var(--primary);
+  padding: 14px 28px;
+  margin: 22px 0;
+  font-size: 1.08em;
+  line-height: 2.2;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 1px 4px var(--shadow);
+}
+.chapter-body .verse .label,
+.chapter-body .verse .verse-label {
+  display: block;
+  font-size: 0.82em;
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+.chapter-body .verse .ref {
+  display: block;
+  text-align: right;
+  font-size: 0.82em;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+.chapter-body .gatha {
+  background: var(--verse-bg);
+  border-left: 4px solid var(--accent);
+  padding: 16px 28px;
+  margin: 22px 0;
+  font-size: 1.12em;
+  line-height: 2.2;
+  letter-spacing: 0.06em;
+  white-space: pre-line;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 1px 4px var(--shadow);
+}
+.chapter-body .gatha .label {
+  display: block;
+  font-size: 0.8em;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* ========== Classical Text ========== */
+.chapter-body .classical-text {
+  background: #FFFDF5;
+  border: 1px solid #E8E0D0;
+  border-radius: 10px;
+  padding: 26px 30px;
+  margin: 26px 0;
+  font-size: 1.02em;
+  line-height: 2.2;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.chapter-body .classical-text .text-label {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.8em;
+  padding: 3px 12px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  letter-spacing: 3px;
+}
+
+/* ========== Commentary ========== */
+.chapter-body .commentary {
+  background: var(--bg-warm);
+  border-radius: 10px;
+  padding: 20px 26px;
+  margin: 18px 0;
+  font-size: 0.97em;
+  color: #444;
+  border-left: 4px solid var(--accent-gold);
+}
+.chapter-body .commentary::before {
+  content: "【長行釋】";
+  display: block;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-size: 0.92em;
+  letter-spacing: 2px;
+}
+.chapter-body .commentary .label {
+  font-weight: bold;
+  color: var(--accent2);
+  margin-bottom: 6px;
+}
+
+/* ========== Insight ========== */
+.chapter-body .insight {
+  background: #FFF8E1;
+  border: 1px solid #FFE0B2;
+  border-radius: 10px;
+  padding: 20px 26px;
+  margin: 22px 0;
+  box-shadow: 0 2px 6px rgba(230,126,34,0.08);
+}
+.chapter-body .insight::before {
+  content: "簡報洞見";
+  display: block;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--orange);
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+.chapter-body .insight .insight-title,
+.chapter-body .insight .title {
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1.05em;
+  margin-bottom: 10px;
+}
+.chapter-body .insight .label {
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.chapter-body .insight .tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.78em;
+  padding: 2px 12px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* ========== Analogy / Metaphor ========== */
+.chapter-body .analogy {
+  background: #faf5ee;
+  border: 1px dashed var(--accent-gold);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin: 18px 0;
+}
+.chapter-body .analogy::before {
+  content: "隱喻";
+  font-weight: bold;
+  color: var(--accent-gold);
+  font-size: 0.88em;
+  letter-spacing: 2px;
+}
+.chapter-body .metaphor {
+  background: var(--bg-card);
+  border-left: 4px solid var(--accent-gold);
+  padding: 18px 24px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+}
+.chapter-body .metaphor .label,
+.chapter-body .metaphor h4 {
+  font-weight: bold;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+}
+
+/* ========== Explain Box ========== */
+.chapter-body .explain {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 26px;
+  margin: 18px 0;
+  box-shadow: 0 1px 4px var(--shadow);
+}
+.chapter-body .explain .tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.78em;
+  padding: 3px 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+.chapter-body .explain .tag.blue { background: #3a5a8c; }
+.chapter-body .explain .tag.green { background: var(--accent2); }
+
+/* ========== Slide Insight ========== */
+.chapter-body .slide-insight {
+  background: linear-gradient(135deg, #f8f5ef 0%, #ede8de 100%);
+  border-radius: 10px;
+  padding: 22px 28px;
+  margin: 20px 0;
+  border-left: 4px solid var(--accent-gold);
+}
+.chapter-body .slide-insight .tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.78em;
+  padding: 2px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* ========== Logic Box / Cards ========== */
+.chapter-body .logic-box {
+  display: flex;
+  gap: 20px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+.chapter-body .logic-card {
+  flex: 1;
+  min-width: 260px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 26px;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.chapter-body .logic-card .card-label {
+  font-weight: bold;
+  font-size: 1.05em;
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+.chapter-body .logic-card ul { list-style: none; padding: 0; }
+.chapter-body .logic-card li {
+  padding: 5px 0 5px 1.4em;
+  position: relative;
+}
+.chapter-body .logic-card li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.chapter-body .logic-card.trap { border-top: 4px solid #c0392b; }
+.chapter-body .logic-card.trap .card-label { color: #c0392b; }
+
+/* ========== Four Grid / Grid-4 ========== */
+.chapter-body .four-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 24px 0;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.chapter-body .four-grid .cell {
+  padding: 22px;
+  text-align: center;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+}
+.chapter-body .four-grid .cell-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+.chapter-body .four-grid .cell-result { font-weight: bold; font-size: 0.95em; }
+.chapter-body .four-grid .cell:nth-child(1) .cell-result { color: var(--accent); }
+.chapter-body .four-grid .cell:nth-child(2) .cell-result { color: var(--accent2); }
+.chapter-body .four-grid .cell:nth-child(3) .cell-result { color: var(--orange); }
+.chapter-body .four-grid .cell:nth-child(4) .cell-result { color: var(--accent); }
+
+.chapter-body .grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 24px 0;
+}
+.chapter-body .grid-4 .cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.chapter-body .grid-4 .cell .num {
+  font-size: 1.5em;
+  color: var(--accent-gold);
+  font-weight: bold;
+}
+.chapter-body .grid-4 .cell .term {
+  font-size: 1.1em;
+  color: var(--accent-gold);
+  margin: 6px 0;
+  font-weight: 600;
+}
+.chapter-body .grid-4 .cell .eng { font-size: 0.85em; color: var(--text-muted); }
+.chapter-body .grid-4 .cell .desc { font-size: 0.9em; color: var(--text-light); margin-top: 6px; }
+
+/* ========== Roadmap / Practice Steps ========== */
+.chapter-body .roadmap {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 28px 0;
+  padding: 20px;
+  background: var(--bg-card);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+.chapter-body .roadmap-step {
+  flex: 1;
+  min-width: 140px;
+  text-align: center;
+  padding: 18px;
+}
+.chapter-body .roadmap-step .step-icon { font-size: 2.2em; margin-bottom: 10px; }
+.chapter-body .roadmap-step .step-title {
+  font-weight: bold;
+  color: var(--accent2);
+  margin-bottom: 6px;
+}
+.chapter-body .roadmap-step .step-desc { font-size: 0.88em; color: #666; }
+
+.chapter-body .practice-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 26px;
+  margin: 18px 0;
+  box-shadow: 0 1px 4px var(--shadow);
+}
+.chapter-body .practice-step .step-label {
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1.08em;
+  margin-bottom: 8px;
+}
+
+.chapter-body .practice {
+  background: #f5f0e5;
+  border-radius: 10px;
+  padding: 22px 28px;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+}
+.chapter-body .practice h4 { color: var(--accent); margin-bottom: 12px; }
+
+/* ========== Key Point ========== */
+.chapter-body .key-point {
+  background: linear-gradient(90deg, rgba(192,57,43,0.06) 0%, transparent 100%);
+  border-left: 4px solid var(--accent);
+  padding: 16px 22px;
+  margin: 20px 0;
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 1.06em;
+  border-radius: 0 8px 8px 0;
+}
+.chapter-body .key { color: var(--accent); font-weight: bold; }
+.chapter-body .highlight {
+  background: linear-gradient(transparent 60%, rgba(184,134,11,0.18) 60%);
+}
+
+/* ========== Compare Table ========== */
+.chapter-body .compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 22px 0;
+  font-size: 0.95em;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.chapter-body .compare-table th {
+  background: var(--accent2);
+  color: #fff;
+  padding: 14px 18px;
+  text-align: center;
+  font-weight: 600;
+}
+.chapter-body .compare-table td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+  background: var(--bg-card);
+}
+.chapter-body .compare-table tr:nth-child(even) td { background: var(--verse-bg); }
+.chapter-body td.fail { color: var(--accent); font-weight: 700; font-size: 1.15em; }
+
+/* ========== Transition ========== */
+.chapter-body .transition {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 1.6em;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  font-weight: bold;
+}
+
+/* ========== Part Divider ========== */
+.chapter-body .part-divider {
+  text-align: center;
+  margin: 50px 0 36px;
+  padding: 20px 0;
+  border-top: 2px solid var(--primary);
+  border-bottom: 2px solid var(--primary);
+}
+.chapter-body .part-divider h2 {
+  font-size: 1.8em;
+  color: var(--primary);
+  letter-spacing: 6px;
+  border-left: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+.chapter-body .part-divider .part-sub {
+  font-size: 0.95em;
+  color: var(--text-light);
+  margin-top: 8px;
+}
+
+/* ========== Conclusion Section ========== */
+.chapter-body .conclusion-section {
+  background: var(--ink);
+  color: #e8e2d8;
+  border: none;
+  text-align: center;
+  padding: 50px 44px;
+  border-radius: 12px;
+  margin: 30px 0;
+}
+.chapter-body .conclusion-section h2 {
+  color: var(--accent-gold);
+  border-left: none;
+  background: none;
+  padding: 0;
+}
+.chapter-body .conclusion-section p {
+  color: #d5cfc5;
+  text-align: center;
+  font-size: 1.02em;
+}
+.chapter-body .conclusion-section .big-text {
+  font-size: 2em;
+  color: #f0ece4;
+  letter-spacing: 0.2em;
+  margin: 28px 0 12px;
+  font-weight: bold;
+}
+
+/* ========== Footnotes ========== */
+.chapter-body .footnotes {
+  margin-top: 50px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 0.88em;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+.chapter-body .footnotes h2 {
+  font-size: 1.15em;
+  border-left: none;
+  padding-left: 0;
+  color: var(--text-muted);
+  background: none;
+}
+.chapter-body .footnotes h3 { font-size: 1.05em; border-bottom: none; }
+.chapter-body .footnotes ol { padding-left: 24px; }
+.chapter-body .footnotes li { margin-bottom: 8px; }
+.chapter-body .footnotes table { width: 100%; border-collapse: collapse; }
+.chapter-body .footnotes td {
+  padding: 5px 12px;
+  vertical-align: top;
+  border-bottom: 1px solid #eee;
+}
+.chapter-body .footnotes td:first-child {
+  width: 44px;
+  color: var(--accent);
+  font-weight: bold;
+  text-align: right;
+}
+
+/* ========== Section Styling (from source files) ========== */
+.chapter-body .section { margin-bottom: 48px; }
+.chapter-body .section h2 {
+  font-size: 1.5em;
+  color: var(--accent);
+  border-left: 5px solid var(--accent);
+  padding-left: 16px;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+.chapter-body .section h3 {
+  font-size: 1.2em;
+  color: var(--primary-light);
+  margin: 28px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border);
+}
+.chapter-body .section h4 {
+  font-size: 1.08em;
+  color: var(--accent);
+  margin: 22px 0 10px;
+}
+.chapter-body .section p {
+  margin-bottom: 14px;
+  text-align: justify;
+}
+
+/* ========== Section Title (h2/h3 with special classes) ========== */
+.chapter-body h2.section-title {
+  font-size: 1.55em;
+  color: var(--primary);
+  border-left: 5px solid var(--accent);
+  padding: 10px 0 10px 18px;
+  margin: 50px 0 25px;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, rgba(192,57,43,0.05) 0%, transparent 100%);
+}
+.chapter-body h3.sub-title {
+  font-size: 1.2em;
+  color: #4a3520;
+  margin: 35px 0 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid var(--accent-gold);
+  padding-left: 14px;
+}
+
+/* ========== Sanskrit ========== */
+.chapter-body .sanskrit {
+  font-style: italic;
+  color: #777;
+  font-size: 0.9em;
+}
+
+/* ========== Back Top (inner) ========== */
+.chapter-body .back-top { display: none; }
+
+/* ========== TOC (inner from individual files) ========== */
+.chapter-body .toc,
+.chapter-body nav.toc {
+  display: none;
+}
+.chapter-body .toc-columns { display: none; }
+
+/* ========== Content container from ch8 ========== */
+.chapter-body .content {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== Top bar from source ========== */
+.chapter-body .top-bar { display: none; }
+
+/* ========== Divider ========== */
+.chapter-body .divider,
+.chapter-body hr.divider,
+.chapter-body hr.section-divider {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: 40px 0;
+}
+
+/* ========== Lists in chapter body ========== */
+.chapter-body ul, .chapter-body ol {
+  margin: 12px 0 12px 24px;
+}
+.chapter-body li {
+  margin-bottom: 6px;
+}
+
+/* ========== Responsive for components ========== */
+@media (max-width: 768px) {
+  .chapter-body .debate { grid-template-columns: 1fr; }
+  .chapter-body .four-grid { grid-template-columns: 1fr; }
+  .chapter-body .grid-4 { grid-template-columns: 1fr; }
+  .chapter-body .logic-box { flex-direction: column; }
+  .chapter-body .flow:not(.flow-vertical) { flex-direction: column; gap: 6px; align-items: center; }
+  .chapter-body .flow:not(.flow-vertical) .flow-arrow { transform: rotate(90deg); }
+  .chapter-body .flow.flow-vertical .flow-step { min-width: 200px; padding: 12px 20px; }
+  .chapter-body .roadmap { flex-direction: column; }
+}
+
+/* Override any conflicting styles from source files */
+.chapter-body .hero { display: none; }
+.chapter-body .toc-wrapper { display: none; }
+.chapter-body .back-to-top { display: none; }
+.chapter-body .reading-progress { display: none; }
+.chapter-body > footer { display: none; }
+.chapter-body .colophon { display: none; }
+.chapter-body > .footer { display: none; }
+
+/* ========== Enhanced Readability ========== */
+.chapter-body { font-size: 17px; color: #2C2C2C; line-height: 2.1; }
+.chapter-body p { margin: 16px 0; }
+.chapter-body strong { color: var(--primary); }
+
+/* Fix conclusion/dark section text visibility */
+.chapter-body .conclusion-section p,
+.chapter-body .conclusion-section li,
+.chapter-body .conclusion-section span {
+  color: #d5cfc5 !important;
+  font-size: 1.02em;
+}
+.chapter-body .conclusion-section strong { color: #f0ece4 !important; }
+.chapter-body .conclusion-section a { color: var(--accent-gold) !important; }
+
+/* Footer inside chapters - make visible */
+.chapter-body .footer p,
+.chapter-body footer p {
+  color: #d5cfc5;
+}
+.chapter-body .footer .big-quote,
+.chapter-body footer .big-quote {
+  color: #f0e6d3;
+  font-size: 1.5em;
+}
+
+/* ========== 問曰 / 答曰 Color Blocks ========== */
+.chapter-body .qa-question {
+  background: linear-gradient(135deg, #EBF5FB 0%, #D6EAF8 100%);
+  border-left: 5px solid #2980B9;
+  border-radius: 0 10px 10px 0;
+  padding: 16px 22px;
+  margin: 22px 0 4px;
+  color: #1a3a5c;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(41,128,185,0.1);
+  position: relative;
+}
+.chapter-body .qa-question::before {
+  content: "問";
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  background: #2980B9;
+  color: #fff;
+  font-size: 0.72em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.chapter-body .qa-answer {
+  background: linear-gradient(135deg, #FDEDEC 0%, #FADBD8 100%);
+  border-left: 5px solid #C0392B;
+  border-radius: 0 10px 10px 0;
+  padding: 16px 22px;
+  margin: 4px 0 22px;
+  color: #5a1a1a;
+  box-shadow: 0 2px 6px rgba(192,57,43,0.1);
+  position: relative;
+}
+.chapter-body .qa-answer::before {
+  content: "答";
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  background: #C0392B;
+  color: #fff;
+  font-size: 0.72em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* ========== 心法 Cards ========== */
+.chapter-body .xinfa-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff !important;
+  padding: 14px 22px;
+  border-radius: 10px 10px 0 0;
+  margin: 36px 0 0;
+  font-size: 1.12em;
+  letter-spacing: 2px;
+  border: none;
+  border-bottom: none;
+}
+.chapter-body .xinfa-question {
+  background: #FFF3E0;
+  border-left: 5px solid #E67E22;
+  border-radius: 0;
+  padding: 14px 22px;
+  margin: 0;
+  color: #5a3e1a;
+  font-weight: 500;
+}
+.chapter-body .xinfa-question strong { color: #E67E22 !important; }
+.chapter-body .xinfa-insight {
+  background: #E8F5E9;
+  border-left: 5px solid #2E7D32;
+  border-radius: 0;
+  padding: 14px 22px;
+  margin: 0;
+  color: #1a3d1a;
+}
+.chapter-body .xinfa-insight strong { color: #2E7D32 !important; }
+.chapter-body .xinfa-action {
+  background: #E3F2FD;
+  border-left: 5px solid #1565C0;
+  border-radius: 0 0 10px 10px;
+  padding: 14px 22px;
+  margin: 0 0 20px;
+  color: #1a2e4a;
+  font-weight: 500;
+}
+.chapter-body .xinfa-action strong { color: #1565C0 !important; }
+.chapter-body .xinfa-metaphor {
+  background: #FFF8E1;
+  border-left: 5px solid var(--accent-gold);
+  border-radius: 0;
+  padding: 14px 22px;
+  margin: 0;
+  color: #5a4520;
+  font-style: italic;
+}
+.chapter-body .xinfa-metaphor strong { color: var(--accent-gold) !important; }
+
+/* ========== Scenario / Trap Headers ========== */
+.chapter-body .scenario-header {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #f0ece4 !important;
+  padding: 14px 22px;
+  border-radius: 10px;
+  margin: 30px 0 12px;
+  font-size: 1.08em;
+  letter-spacing: 2px;
+  border: none;
+}
+.chapter-body .trap-header {
+  background: linear-gradient(135deg, #7B1A1A, #A52A2A);
+  color: #fff !important;
+  padding: 14px 22px;
+  border-radius: 10px;
+  margin: 30px 0 12px;
+  font-size: 1.08em;
+  letter-spacing: 2px;
+  border: none;
+}
+
+/* ========== Section Card (h3 content blocks) ========== */
+.chapter-body .section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 28px 32px 24px;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: box-shadow 0.2s;
+}
+.chapter-body .section-card:hover {
+  box-shadow: 0 4px 18px var(--shadow-md);
+}
+.chapter-body .section-card > h3 {
+  margin-top: 0 !important;
+  padding-top: 0;
+  border-left: 4px solid var(--accent-gold);
+  padding-left: 14px;
+  border-bottom: none;
+}
+.chapter-body .section-card > p:last-child {
+  margin-bottom: 0;
+}
+.chapter-body .section-card .section-card {
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+
+/* ========== General h4 Improvement ========== */
+.chapter-body h4 {
+  font-size: 1.08em;
+  color: var(--primary);
+  margin: 28px 0 12px;
+  padding: 10px 18px;
+  background: linear-gradient(90deg, rgba(184,134,11,0.08) 0%, transparent 100%);
+  border-left: 3px solid var(--accent-gold);
+  border-radius: 0 6px 6px 0;
+}
+</style>
+</head>
+<body>
+<!-- Progress Bar -->
+<div class="progress-container">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="progress-text" id="progressText">0%</div>
+<!-- Sticky Navigation -->
+<nav class="sticky-nav" id="stickyNav">
+<div class="nav-inner">
+<a class="nav-pill" href="#toc">目錄</a>
+<a class="nav-pill" data-ch="7" href="#chapter-7">七</a>
+<a class="nav-pill" data-ch="8" href="#chapter-8">八</a>
+<a class="nav-pill" data-ch="9" href="#chapter-9">九</a>
+<a class="nav-pill" data-ch="10" href="#chapter-10">十</a>
+<a class="nav-pill" data-ch="11" href="#chapter-11">十一</a>
+<a class="nav-pill" data-ch="12" href="#chapter-12">十二</a>
+<a class="nav-pill" data-ch="13" href="#chapter-13">十三</a>
+<a class="nav-pill" data-ch="14" href="#chapter-14">十四</a>
+</div>
+</nav>
+<!-- Hero -->
+<header class="hero">
+<div class="hero-content">
+<h1>中　論</h1>
+<p class="subtitle">龍樹菩薩造　鳩摩羅什譯　青目釋</p>
+<p class="meta">深度解析總彙整</p>
+<span class="range-badge">第七品 — 第十四品</span>
+</div>
+</header>
+<!-- TOC -->
+<div class="toc-wrapper" id="toc">
+<div class="toc-panel">
+<h2 class="toc-title">彙 整 目 錄</h2>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-7"><span class="toc-num">第七品</span>觀三相品第七</a>
+<span class="toc-subtitle">生、住、滅的邏輯解構</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch7-sec1">壹</a>
+<a class="toc-h3" href="#ch7-sec2">一、三相概說：生、住、滅</a>
+<a class="toc-h3" href="#ch7-sec3">二、核心提問：三相是否真實？</a>
+<a class="toc-h3" href="#ch7-sec4">三、思辨工具：三時觀察法</a>
+<a class="toc-h3" href="#ch7-sec5">四、結局預告：如幻亦如夢</a>
+<a class="toc-h2" href="#ch7-sec6">貳</a>
+<a class="toc-h3" href="#ch7-sec7">五、生是有為或無為？</a>
+<a class="toc-h3" href="#ch7-sec8">六、三相聚散的矛盾</a>
+<a class="toc-h3" href="#ch7-sec9">七、無窮過：無限後退的謬誤</a>
+<a class="toc-h3" href="#ch7-sec10">八、生生與本生：互為因果的死鎖</a>
+<a class="toc-h3" href="#ch7-sec11">九、燈喻辯證與龍樹的反擊</a>
+<a class="toc-h3" href="#ch7-sec12">十、三時破生：已生、未生、生時</a>
+<a class="toc-h3" href="#ch7-sec13">十一、眾緣生法即寂滅性</a>
+<a class="toc-h3" href="#ch7-sec14">十二、第一階段結論：生不可得</a>
+<a class="toc-h2" href="#ch7-sec15">參</a>
+<a class="toc-h3" href="#ch7-sec16">十三、連鎖反應：皮之不存，毛將焉附</a>
+<a class="toc-h3" href="#ch7-sec17">十四、破「住」：被凍結的錯覺</a>
+<a class="toc-h3" href="#ch7-sec18">十五、破「滅」：死亡的悖論</a>
+<a class="toc-h3" href="#ch7-sec19">十六、有為法不成，無為亦不成</a>
+<a class="toc-h2" href="#ch7-sec20">肆</a>
+<a class="toc-h3" href="#ch7-sec21">十七、緣起：是流動，不是碰撞</a>
+<a class="toc-h3" href="#ch7-sec22">十八、為何我們看見生滅？</a>
+<a class="toc-h3" href="#ch7-sec23">十九、從邏輯辯證到生命解脫</a>
+<a class="toc-h3" href="#ch7-sec24">二十、如幻如夢如乾闥婆城</a>
+<a class="toc-h2" href="#ch7-sec25">伍</a>
+<a class="toc-h3" href="#ch7-sec26">二十一、《中論》觀三相品原文（三十五偈）</a>
+</div>
+</div>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-8"><span class="toc-num">第八品</span>觀作作者品第八</a>
+<span class="toc-subtitle">行動與主體的因果辯證</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch8-sec1">一、導論：直覺的陷阱</a>
+<a class="toc-h3" href="#ch8-sec2">關鍵詞定義：「決定」(Svabhava / Intrinsic Nature)</a>
+<a class="toc-h2" href="#ch8-sec3">二、原典全文與逐段註釋（十二偈）</a>
+<a class="toc-h3" href="#ch8-sec4">第一、二偈：決定有・決定無，皆不能作</a>
+<a class="toc-h3" href="#ch8-sec5">第三偈：若定有即墮無因</a>
+<a class="toc-h3" href="#ch8-sec6">第四至六偈：墮無因之過</a>
+<a class="toc-h3" href="#ch8-sec7">第七偈：亦定亦不定——有無相違</a>
+<a class="toc-h3" href="#ch8-sec8">第八、九偈：有不能作無，無不能作有</a>
+<a class="toc-h3" href="#ch8-sec9">第十偈：三種作者皆不能作業</a>
+<a class="toc-h3" href="#ch8-sec10">第十一偈：緣起正見——因業有作者，因作者有業</a>
+<a class="toc-h3" href="#ch8-sec11">第十二偈：推廣應用——受受者及一切諸法</a>
+<a class="toc-h2" href="#ch8-sec12">三、邏輯解構：四句破斥的完整推演</a>
+<a class="toc-h3" href="#ch8-sec13">柵欄一：決定有作者</a>
+<a class="toc-h3" href="#ch8-sec14">柵欄二：決定無作者</a>
+<a class="toc-h3" href="#ch8-sec15">柵欄三：亦定亦不定 (The Hybrid Fallacy)</a>
+<a class="toc-h3" href="#ch8-sec16">四句破斥總覽</a>
+<a class="toc-h2" href="#ch8-sec17">四、轉折：從「實體」到「關係」——緣起正見</a>
+<a class="toc-h3" href="#ch8-sec18">蘆束相依：沒有先後的共生</a>
+<a class="toc-h3" href="#ch8-sec19">釐清關鍵概念：決定 vs. 因緣</a>
+<a class="toc-h2" href="#ch8-sec20">五、生命心法：從邏輯到解脫</a>
+<a class="toc-h3" href="#ch8-sec21">心法一：去標籤化 (De-labeling)</a>
+<a class="toc-h3" href="#ch8-sec22">心法二：動態自信 (Dynamic Confidence)</a>
+<a class="toc-h3" href="#ch8-sec23">心法三：慈悲與人際 (Compassion)</a>
+<a class="toc-h3" href="#ch8-sec24">船過水無痕：性空即解脫</a>
+<a class="toc-h2" href="#ch8-sec25">六、中道智慧：不落兩邊</a>
+<a class="toc-h2" href="#ch8-sec26">七、修學地圖與教學建議</a>
+<a class="toc-h3" href="#ch8-sec27">觀作作者品・修學地圖</a>
+<a class="toc-h3" href="#ch8-sec28">給講者的建議：如何傳遞這一品？</a>
+</div>
+</div>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-9"><span class="toc-num">第九品</span>觀本住品第九</a>
+<span class="toc-subtitle">破解主體與靈魂迷思</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch9-sec1">上篇：現代詮釋——觀本住品的邏輯與心法</a>
+<a class="toc-h3" href="#ch9-sec2">核心直覺：誰在駕駛這具軀殼？</a>
+<a class="toc-h3" href="#ch9-sec3">定義「本住」：先於經驗的主體</a>
+<a class="toc-h3" href="#ch9-sec4">對手的焦慮：無人駕駛的恐懼</a>
+<a class="toc-h3" href="#ch9-sec5">龍樹的挑戰：只有「看」，沒有「看者」</a>
+<a class="toc-h3" href="#ch9-sec6">第一波反擊：分離測試（The Separation Test）</a>
+<a class="toc-h3" href="#ch9-sec7">經典譬喻：離法無物</a>
+<a class="toc-h3" href="#ch9-sec8">第二波反擊：相互依存（Interdependence）</a>
+<a class="toc-h3" href="#ch9-sec9">空間謬誤：靈魂在哪裡？</a>
+<a class="toc-h3" href="#ch9-sec10">第三波反擊：一與多的困境</a>
+<a class="toc-h3" href="#ch9-sec11">反證：生理機能不是靈魂證據</a>
+<a class="toc-h3" href="#ch9-sec12">時間論證：三世皆空</a>
+<a class="toc-h3" href="#ch9-sec13">邏輯判決：無主宰</a>
+<a class="toc-h3" href="#ch9-sec14">中場釐清：「空」不是「沒有」</a>
+<a class="toc-h3" href="#ch9-sec15">心法實踐：從「名詞」轉為「動詞」</a>
+<a class="toc-h3" href="#ch9-sec16">步驟一至三：拆解受苦者</a>
+<a class="toc-h3" href="#ch9-sec17">進階應用：人際關係與身份解構</a>
+<a class="toc-h3" href="#ch9-sec18">心法總結與日常練習</a>
+<a class="toc-h3" href="#ch9-sec19">最終境界：戲論滅故，諸法則空</a>
+<a class="toc-h2" href="#ch9-sec20">下篇：原典論文——觀本住品第九（十二偈）</a>
+<a class="toc-h3" href="#ch9-sec21">偈一、二：問方立論——本住之主張</a>
+<a class="toc-h3" href="#ch9-sec22">偈三：答方反問——以何可知本住？</a>
+<a class="toc-h3" href="#ch9-sec23">偈四：若離本住有眼耳等</a>
+<a class="toc-h3" href="#ch9-sec24">偈五：以法知人，以人知法</a>
+<a class="toc-h3" href="#ch9-sec25">偈六：實無有本住</a>
+<a class="toc-h3" href="#ch9-sec26">偈七、八：一與多的困境</a>
+<a class="toc-h3" href="#ch9-sec27">偈九：四大亦無神</a>
+<a class="toc-h3" href="#ch9-sec28">偈十：眼等亦應無</a>
+<a class="toc-h3" href="#ch9-sec29">偈十一、十二：三世無故，戲論則滅</a>
+</div>
+</div>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-10"><span class="toc-num">第十品</span>觀燃可燃品第十</a>
+<span class="toc-subtitle">火與薪的緣起辯證</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch10-sec1">壹、導論：核心隱喻與問題意識</a>
+<a class="toc-h3" href="#ch10-sec2">一、核心隱喻：物理與心靈的鏡像</a>
+<a class="toc-h3" href="#ch10-sec3">二、世俗的直觀假設</a>
+<a class="toc-h3" href="#ch10-sec4">三、三重邏輯陷阱總覽</a>
+<a class="toc-h2" href="#ch10-sec5">貳、原典：十六偈與長行釋</a>
+<a class="toc-h3" href="#ch10-sec6">序說：問答緣起</a>
+<a class="toc-h3" href="#ch10-sec7">第一偈：一異總破</a>
+<a class="toc-h3" href="#ch10-sec8">第二偈：常燃之過</a>
+<a class="toc-h3" href="#ch10-sec9">第三偈：不從緣生、人功應空</a>
+<a class="toc-h3" href="#ch10-sec10">第四偈：燃時名可燃之破</a>
+<a class="toc-h3" href="#ch10-sec11">第五偈：不至不燒不滅常住</a>
+<a class="toc-h3" href="#ch10-sec12">第六偈：對方以男女喻反駁</a>
+<a class="toc-h3" href="#ch10-sec13">第七偈：破男女喻</a>
+<a class="toc-h3" href="#ch10-sec14">第八偈：相待而有之破——先定何法</a>
+<a class="toc-h3" href="#ch10-sec15">第九偈：燃成復成之過</a>
+<a class="toc-h3" href="#ch10-sec16">第十偈：因待成之通破</a>
+<a class="toc-h3" href="#ch10-sec17">第十一偈：未成與已成</a>
+<a class="toc-h3" href="#ch10-sec18">第十二偈：因與不因皆無</a>
+<a class="toc-h3" href="#ch10-sec19">第十三偈：去來不可得</a>
+<a class="toc-h3" href="#ch10-sec20">第十四偈：五求不可得總結</a>
+<a class="toc-h3" href="#ch10-sec21">第十五偈：類推受受者、瓶衣諸法</a>
+<a class="toc-h3" href="#ch10-sec22">第十六偈：結偈——不得佛法味</a>
+<a class="toc-h2" href="#ch10-sec23">參、簡報解析：三重假設之逐步論破</a>
+<a class="toc-h3" href="#ch10-sec24">一、假設一：若燃是可燃（一／Identity）</a>
+<a class="toc-h3" href="#ch10-sec25">二、假設二：若燃異可燃（異／Difference）</a>
+<a class="toc-h3" href="#ch10-sec26">三、假設三：相待而有（相待／Dependence）</a>
+<a class="toc-h3" href="#ch10-sec27">四、去來不可得</a>
+<a class="toc-h2" href="#ch10-sec28">肆、心法應用：從物理學到解脫道</a>
+<a class="toc-h3" href="#ch10-sec29">一、從火薪到受與受者</a>
+<a class="toc-h3" href="#ch10-sec30">二、「我」的不可得</a>
+<a class="toc-h3" href="#ch10-sec31">三、畢竟空：緣起如幻</a>
+<a class="toc-h3" href="#ch10-sec32">四、應用一：抽薪止火</a>
+<a class="toc-h3" href="#ch10-sec33">五、應用二：對立的消融</a>
+<a class="toc-h3" href="#ch10-sec34">六、遠離斷常二見——中道</a>
+<a class="toc-h3" href="#ch10-sec35">七、空性中的行動</a>
+<a class="toc-h3" href="#ch10-sec36">八、見法即見佛</a>
+<a class="toc-h2" href="#ch10-sec37">伍、結語與延伸閱讀</a>
+<a class="toc-h3" href="#ch10-sec38">觀燃可燃品：全景圖</a>
+<a class="toc-h3" href="#ch10-sec39">結語偈頌</a>
+<a class="toc-h3" href="#ch10-sec40">最後的提問</a>
+<a class="toc-h3" href="#ch10-sec41">延伸閱讀</a>
+</div>
+</div>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-11"><span class="toc-num">第十一品</span>觀本際品第十一</a>
+<span class="toc-subtitle">生死起點的終極追問</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch11-sec1">一、核心衝突：生死的起點在哪裡？</a>
+<a class="toc-h2" href="#ch11-sec2">二、大聖之判決：本際不可得（第一偈）</a>
+<a class="toc-h2" href="#ch11-sec3">三、既然無頭無尾，何來中間？（第二偈）</a>
+<a class="toc-h2" href="#ch11-sec4">四、邏輯攻防戰：生與死的時間軸假設（第三、四偈）</a>
+<a class="toc-h3" href="#ch11-sec5">假設一：先有生，後有老死</a>
+<a class="toc-h3" href="#ch11-sec6">假設二：先有老死，後有生</a>
+<a class="toc-h3" href="#ch11-sec7">假設三：生與老死一時共</a>
+<a class="toc-h3" href="#ch11-sec8">邏輯的崩塌</a>
+<a class="toc-h2" href="#ch11-sec9">五、戲論的本質（第五偈）</a>
+<a class="toc-h2" href="#ch11-sec10">六、真相：相因與緣起</a>
+<a class="toc-h3" href="#ch11-sec11">火與薪的智慧</a>
+<a class="toc-h3" href="#ch11-sec12">線性思考的心理陷阱</a>
+<a class="toc-h2" href="#ch11-sec13">七、一切法本際皆無（第六、七偈）</a>
+<a class="toc-h3" href="#ch11-sec14">三種虛妄的二元對立</a>
+<a class="toc-h3" href="#ch11-sec15">誰在受苦？破解「受者」</a>
+<a class="toc-h2" href="#ch11-sec16">附錄：原典全文──觀本際品第十一（八偈）</a>
+</div>
+</div>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-12"><span class="toc-num">第十二品</span>觀苦品第十二</a>
+<span class="toc-subtitle">痛苦歸因的邏輯解構</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch12-sec1">一、核心提問：痛苦發生時，誰該負責？</a>
+<a class="toc-h2" href="#ch12-sec2">二、邏輯的四個死角</a>
+<a class="toc-h2" href="#ch12-sec3">三、解構工具：五陰</a>
+<a class="toc-h2" href="#ch12-sec4">四、第一關：破解「自作」</a>
+<a class="toc-h3" href="#ch12-sec5">4.1 偈頌與青目釋</a>
+<a class="toc-h3" href="#ch12-sec6">4.2 邏輯矛盾：刀不自割</a>
+<a class="toc-h3" href="#ch12-sec7">4.3 譬喻：接力賽跑</a>
+<a class="toc-h2" href="#ch12-sec8">五、第二關：破解「他作」</a>
+<a class="toc-h3" href="#ch12-sec9">5.1 偈頌與青目釋</a>
+<a class="toc-h3" href="#ch12-sec10">5.2 相待論：沒有「受害者」，就沒有「加害者」</a>
+<a class="toc-h3" href="#ch12-sec11">5.3 失蹤的受害者</a>
+<a class="toc-h3" href="#ch12-sec12">5.4 譬喻：牛的雙角、布與縷</a>
+<a class="toc-h2" href="#ch12-sec13">六、第三關與第四關：共作與無因</a>
+<a class="toc-h2" href="#ch12-sec14">七、四路不通——總結否定</a>
+<a class="toc-h2" href="#ch12-sec15">八、轉折：從「實體」轉向「緣起」</a>
+<a class="toc-h3" href="#ch12-sec16">8.1 譬喻：彩虹與水中月</a>
+<a class="toc-h3" href="#ch12-sec17">8.2 什麼是「中道」？</a>
+<a class="toc-h2" href="#ch12-sec18">九、戰場擴大：一切外萬物</a>
+<a class="toc-h2" href="#ch12-sec19">十、心法應用：去磁</a>
+<a class="toc-h2" href="#ch12-sec20">十一、專家級邏輯總結</a>
+<a class="toc-h2" href="#ch12-sec21">十二、原典全文與註釋</a>
+<a class="toc-h3" href="#ch12-sec22">第一偈</a>
+<a class="toc-h3" href="#ch12-sec23">第二偈</a>
+<a class="toc-h3" href="#ch12-sec24">第三偈</a>
+<a class="toc-h3" href="#ch12-sec25">第四偈</a>
+<a class="toc-h3" href="#ch12-sec26">第五偈</a>
+<a class="toc-h3" href="#ch12-sec27">第六偈</a>
+<a class="toc-h3" href="#ch12-sec28">第七偈</a>
+<a class="toc-h3" href="#ch12-sec29">第八偈</a>
+<a class="toc-h3" href="#ch12-sec30">第九偈</a>
+<a class="toc-h3" href="#ch12-sec31">第十偈</a>
+</div>
+</div>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-13"><span class="toc-num">第十三品</span>觀行品第十三</a>
+<span class="toc-subtitle">虛誑與空的邏輯辯證</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch13-sec1">一、導論：為什麼佛說世界是「虛誑」的？</a>
+<a class="toc-h3" href="#ch13-sec2">佛經的定義與核心邏輯</a>
+<a class="toc-h3" href="#ch13-sec3">涅槃——唯一的真實</a>
+<a class="toc-h3" href="#ch13-sec4">本品四大辯證主軸</a>
+<a class="toc-h2" href="#ch13-sec5">二、第一偈：虛誑妄取——空義的提出</a>
+<a class="toc-h3" href="#ch13-sec6">問方立場：經典依據</a>
+<a class="toc-h3" href="#ch13-sec7">答方破斥：妄取即空</a>
+<a class="toc-h2" href="#ch13-sec8">三、辯證一：嬰兒與老人——身分同一性的辯證</a>
+<a class="toc-h3" href="#ch13-sec9">反方質疑：成長是連續的</a>
+<a class="toc-h3" href="#ch13-sec10">邏輯陷阱 A：若是「一」（同一實體）</a>
+<a class="toc-h3" href="#ch13-sec11">邏輯陷阱 B：若是「異」（完全不同）</a>
+<a class="toc-h3" href="#ch13-sec12">結論：不一亦不異</a>
+<a class="toc-h3" href="#ch13-sec13">譬喻：燈焰的傳遞與水流相續</a>
+<a class="toc-h2" href="#ch13-sec14">四、辯證二：乳與酪——因果變化的辯證</a>
+<a class="toc-h3" href="#ch13-sec15">第六偈：若即是、若離</a>
+<a class="toc-h3" href="#ch13-sec16">什麼是「空」（Śūnyatā）？</a>
+<a class="toc-h2" href="#ch13-sec17">五、辯證三：五蘊皆空——向內解構自我</a>
+<a class="toc-h3" href="#ch13-sec18">色蘊與受蘊</a>
+<a class="toc-h3" href="#ch13-sec19">想蘊與行蘊</a>
+<a class="toc-h3" href="#ch13-sec20">識蘊：幻術師的戲法</a>
+<a class="toc-h3" href="#ch13-sec21">誰在受苦？——無我（Anattā）</a>
+<a class="toc-h2" href="#ch13-sec22">六、核心偈頌：諸法無性與空亦復空</a>
+<a class="toc-h3" href="#ch13-sec23">第七偈：諸法有異故，知皆是無性</a>
+<a class="toc-h3" href="#ch13-sec24">第八偈：若有不空法，則應有空法</a>
+<a class="toc-h3" href="#ch13-sec25">緣起性空——中道實相</a>
+<a class="toc-h2" href="#ch13-sec26">七、辯證四：空亦復空——避免虛無主義</a>
+<a class="toc-h3" href="#ch13-sec27">終極陷阱：執著於「空」</a>
+<a class="toc-h3" href="#ch13-sec28">第九偈：大聖說空法，諸佛所不化</a>
+<a class="toc-h3" href="#ch13-sec29">譬喻：空是藥、水與火</a>
+<a class="toc-h2" href="#ch13-sec30">八、生活應用與總結</a>
+<a class="toc-h3" href="#ch13-sec31">面對變局</a>
+<a class="toc-h3" href="#ch13-sec32">情緒管理</a>
+<a class="toc-h3" href="#ch13-sec33">真正的中道專家</a>
+<a class="toc-h2" href="#ch13-sec34">結語</a>
+<a class="toc-h3" href="#ch13-sec36">梵文術語</a>
+<a class="toc-h3" href="#ch13-sec37">版本異同（大正藏 vs 宋元明藏）</a>
+<a class="toc-h3" href="#ch13-sec38">梵文偈頌對照</a>
+</div>
+</div>
+<div class="toc-chapter">
+<a class="toc-chapter-link" href="#chapter-14"><span class="toc-num">第十四品</span>觀合品第十四</a>
+<span class="toc-subtitle">破除接觸的幻象</span>
+<div class="toc-sections">
+<a class="toc-h2" href="#ch14-sec1">前言：品名由來與前後文脈絡</a>
+<a class="toc-h2" href="#ch14-sec2">核心問題：我們真的「接觸」到世界了嗎？</a>
+<a class="toc-h2" href="#ch14-sec3">第一偈 — 三事各異方，終無有合時</a>
+<a class="toc-h3" href="#ch14-sec4">凡夫見：三事和合</a>
+<a class="toc-h3" href="#ch14-sec5">空間矛盾：眼在身內，色在身外</a>
+<a class="toc-h3" href="#ch14-sec6">合與不合的兩難</a>
+<a class="toc-h2" href="#ch14-sec7">時間與因果的矛盾 — 四事合之破斥</a>
+<a class="toc-h2" href="#ch14-sec8">第二偈 — 推廣至煩惱：染、可染、染者</a>
+<a class="toc-h3" href="#ch14-sec9">貪欲的物理學</a>
+<a class="toc-h3" href="#ch14-sec10">憤怒的落點</a>
+<a class="toc-h2" href="#ch14-sec11">第一階段總結：物理上的不可能</a>
+<a class="toc-h2" href="#ch14-sec12">第三偈 — 異法當有合，見等無有異</a>
+<a class="toc-h3" href="#ch14-sec13">邏輯陷阱：合的前提是「異」</a>
+<a class="toc-h2" href="#ch14-sec14">第四偈 — 一切法皆無異相</a>
+<a class="toc-h2" href="#ch14-sec15">第五偈 — 異因異有異，異離異無異</a>
+<a class="toc-h3" href="#ch14-sec16">「異」是相對的</a>
+<a class="toc-h3" href="#ch14-sec17">隱喻：房子與樑柱</a>
+<a class="toc-h2" href="#ch14-sec18">第六偈 — 歸謬法：離從異有異</a>
+<a class="toc-h3" href="#ch14-sec19">隱喻：拳頭與手指</a>
+<a class="toc-h3" href="#ch14-sec20">核心洞見：是「關係」而非「實體」</a>
+<a class="toc-h2" href="#ch14-sec21">第七偈 — 異中無異相，不異中亦無</a>
+<a class="toc-h3" href="#ch14-sec22">「異相」無處容身</a>
+<a class="toc-h3" href="#ch14-sec23">「他者」的崩塌</a>
+<a class="toc-h2" href="#ch14-sec24">第八偈 — 終極結論：是法不自合</a>
+<a class="toc-h2" href="#ch14-sec25">專家邏輯路徑圖</a>
+<a class="toc-h2" href="#ch14-sec26">解脫心法：從邏輯到實踐</a>
+<a class="toc-h3" href="#ch14-sec27">為什麼我們感到痛苦？</a>
+<a class="toc-h3" href="#ch14-sec28">觀察者心法：緣起性空，無合無散</a>
+<a class="toc-h3" href="#ch14-sec29">實戰應用：斷貪</a>
+<a class="toc-h3" href="#ch14-sec30">實戰應用：斷瞋</a>
+<a class="toc-h3" href="#ch14-sec31">實戰應用：人際關係</a>
+<a class="toc-h2" href="#ch14-sec32">正見總結與終極偈頌</a>
+<a class="toc-h2" href="#ch14-sec33">延伸學習索引</a>
+</div>
+</div>
+<p class="toc-expand-hint">將滑鼠移至各品標題可展開小節目錄</p>
+</div>
+</div>
+<!-- Content -->
+<article class="chapter-article" data-chapter="7" id="chapter-7">
+<div class="chapter-header">
+<div class="chapter-badge">第七品</div>
+<h1 class="chapter-title">觀三相品第七</h1>
+<p class="chapter-subtitle">生、住、滅的邏輯解構</p>
+</div>
+<div class="chapter-body">
+<body>
+<!-- ==================== HERO ==================== -->
+<!-- ==================== TOC ==================== -->
+<!-- ==================== 壹、導論 ==================== -->
+<div class="part-divider">
+<h2 id="ch7-sec1">壹</h2>
+<div class="part-sub">導論與問題意識</div>
+</div>
+<section id="s1">
+<div class="section-card"><h3 id="ch7-sec2">一、三相概說：生、住、滅</h3><p>佛經說有為法具有三相（<span class="sanskrit">Tri-lakṣaṇa</span>）：<span class="key">生</span>（<span class="sanskrit">Utpāda</span>, Arising）、<span class="key">住</span>（<span class="sanskrit">Sthiti</span>, Abiding）、<span class="key">滅</span>（<span class="sanskrit">Bhaṅga</span>, Ceasing）。萬物以生法生、以住法住、以滅法滅——這是我們對世界最直覺的認知框架。</p><p><span class="key">生</span>是事物的開端，如嬰兒誕生、專案啟動；<span class="key">住</span>是存在的持續，如生命過程、建築矗立；<span class="key">滅</span>是最終的消亡，如死亡、結束。凡夫觀點認為：這些階段清晰可見，故認為世界真實。</p><div class="classical-text"><span class="text-label">原典</span><br/>
+    問曰：經說有為法有三相：生、住、滅。萬物以生法生、以住法住、以滅法滅，是故有諸法。
+  </div></div>
+</section>
+<section id="s2">
+<div class="section-card"><h3 id="ch7-sec3">二、核心提問：三相是否真實？</h3><p>龍樹菩薩的回應直截了當：<strong>不爾。</strong>三相無決定故。這三相，究竟是有為法（<span class="sanskrit">Saṃskṛta</span>）能作有為相？還是無為法（<span class="sanskrit">Asaṃskṛta</span>）能作有為相？二者皆不成立。</p><div class="insight"><div class="label">核心提問</div>
+    如果這些階段只是一種錯覺呢？如果「生、住、滅」並非事物的真實屬性，而只是我們大腦對連續流動的人為切割呢？
+  </div><div class="verse">
+    「若生是有為，則應有三相；<br/>
+    　若生是無為，何名有為相？」
+  </div><p>若生是有為法，則生本身應有自己的生、住、滅三相，如此則陷入無窮後退。若生是無為法，無為法無自性，如兔角龜毛，無法為有為法作相。住、滅亦然。</p></div>
+</section>
+<section id="s3">
+<div class="section-card"><h3 id="ch7-sec4">三、思辨工具：三時觀察法</h3><p>龍樹菩薩運用的核心邏輯剃刀，是將任何現象放入三個時間點來檢驗：</p><p><strong>過去（已）</strong>— Already Happened：事情已經完成，無需再生。</p><p><strong>未來（未）</strong>— Not Yet：事情尚未存在，無法執行動作。</p><p><strong>現在（時）</strong>— Happening：看似合理的中間地帶，但經不起推敲。</p><div class="insight"><div class="label">檢驗標準</div>
+    如果在這三個時間點都找不到「生」，那麼「生」就是一個偽概念。這個方法貫穿全品，是理解龍樹辯證的關鍵鑰匙。
+  </div></div>
+</section>
+<section id="s3b">
+<div class="section-card"><h3 id="ch7-sec5">四、結局預告：如幻亦如夢</h3><div class="verse">
+    「<span class="key">如幻</span>亦如<span class="key">夢</span>，如乾闥婆城，<br/>
+    　所說生住滅，其相亦<span class="key">如是</span>。」
+  </div><p>龍樹並非說「什麼都沒有」，而是證明現實本質如「魔術」或「夢境」。夢中之虎雖有恐懼功能（作用），但無實體本質（<span class="key">空性</span>）。這是全品的終極結論，接下來的辯證將一步步抵達此處。</p></div>
+</section>
+<!-- ==================== 貳、破「生」 ==================== -->
+<div class="part-divider">
+<h2 id="ch7-sec6">貳</h2>
+<div class="part-sub">破「生」— 第一階段辯證</div>
+</div>
+<section id="s4">
+<div class="section-card"><h3 id="ch7-sec7">五、生是有為或無為？</h3><p>龍樹首先從「生」的本質入手。生若是有為法，就應當具有三相——生之生、生之住、生之滅。但生相應生法、住相應住法、滅相應滅法，三者共相違：生時不應有住、滅相違法，如明闇不能同時存在。</p><div class="classical-text"><span class="text-label">原典</span><br/>
+    若生是有為，應有三相生住滅。是事不然。何以故？共相違故。相違者，生相應生法、住相應住法、滅相應滅法。若法生時，不應有住、滅相違法。一時則不然，如明闇不俱。
+  </div><p>若生是無為法呢？無為法無性，因滅有為名無為，「不生不滅」是無為相，更無自相。無法不能為法作相，如兔角龜毛等不能為法作相。</p></div>
+</section>
+<section id="s5">
+<div class="section-card"><h3 id="ch7-sec8">六、三相聚散的矛盾</h3><div class="verse">
+    「三相若聚散，不能有所相；<br/>
+    　云何於一處，一時有三相？」
+  </div><p>生、住、滅三相若分開（散），則一處中或有有相、或有無相，生時無住滅、住時無生滅、滅時無生住，法不完整。若合在一起（聚），則共相違法不能一時俱存。</p><p>若說三相更有三相來標記它們，則陷入無限後退：</p><div class="verse">
+    「若謂生住滅，更有有為相，<br/>
+    　是即為<span class="key">無窮</span>（<span class="sanskrit">Anavasthā</span>），無即非有為。」
+  </div></div>
+</section>
+<section id="s6">
+<div class="section-card"><h3 id="ch7-sec9">七、無窮過：無限後退的謬誤</h3><p>若「生」是實體，誰生出了「生」？這導出一條無盡的邏輯鏈：</p><p style="text-align:center; font-size:1.1em; margin:20px 0;">
+<span class="key">生</span> (Birth) ← <span class="key">生生</span> (Birth of Birth) ← 生生生 …
+  </p><p>結論：導致無限循環，永遠找不到起點。</p><p>對手試圖以「七法」模型（法、生、住、滅、生生、住住、滅滅）解決此問題：</p><div class="verse">
+    「生生之所生（<span class="sanskrit">Utpādotpāda</span>），生於彼本生（<span class="sanskrit">Mūlotpāda</span>），<br/>
+    　本生之所生，還生於生生。」
+  </div><p>意即：本生除自體外能生六法，生生能生本生，本生能生生生，互為因果而非無窮。</p></div>
+</section>
+<section id="s7">
+<div class="section-card"><h3 id="ch7-sec10">八、生生與本生：互為因果的死鎖</h3><p>龍樹對「互為因果」的辯解進行了致命的反擊：</p><div class="debate">
+<div class="debate-side question">
+<div class="side-label">對手辯解</div>
+      互為因果，如母生女、女復生母。生生能生本生，本生能生生生。
+    </div>
+<div class="debate-side answer">
+<div class="side-label">龍樹絕殺</div>
+      若母親（本生）<span class="key">未生</span>，誰生女兒（生生）？<br/>
+      若女兒（生生）<span class="key">未生</span>，誰生母親（本生）？<br/>
+      待彼而生，兩者皆無法成立。
+    </div>
+</div><div class="verse">
+    「若謂是生生，能生於本生；<br/>
+    　生生從本生，何能生本生？」
+  </div><div class="verse">
+    「若謂是本生，能生於生生；<br/>
+    　本生從彼生，何能生生生？」
+  </div><p>進而在「生時」的角度破之：</p><div class="verse">
+    「若生生生時，能生於本生；<br/>
+    　生生尚未有，何能生本生？」<br/><br/>
+    「若本生生時，能生於生生；<br/>
+    　本生尚未有，何能生生生？」
+  </div></div>
+</section>
+<section id="s8">
+<div class="section-card"><h3 id="ch7-sec11">九、燈喻辯證與龍樹的反擊</h3><p>對手提出了最強的類比論證——<strong>燈喻</strong>（The Lamp Analogy）：</p><div class="debate">
+<div class="debate-side question">
+<div class="side-label">對手論點</div>
+      「如燈能自照，亦能照於彼；生法亦如是，自生亦生彼。」<br/>
+      燈不需他物照亮，它能照亮自己（自照）與別人（照彼）。故「生」也可自生。
+    </div>
+<div class="debate-side answer">
+<div class="side-label">龍樹反擊</div>
+      燈體自無闇（因為是燈），燈照之處亦無闇（因為有光）。破闇乃名照，<span class="key">無闇則無照</span>。既然光所在之處根本沒有黑暗，那燈到底「破除」了什麼？
+    </div>
+</div><h4>物理學反擊 I：明闇不俱</h4><div class="verse">
+    「燈中自無闇，住處亦無闇，<br/>
+    　破闇乃名照，無闇則無照。」
+  </div><h4>物理學反擊 II：接觸悖論</h4><p>光與暗無法共存。若光要破暗，必須接觸暗；若光接觸暗，暗即消失（不在場）。結論：光永遠<span class="key">碰不到</span>暗。哲學意涵：你不能殺死一個你從未碰過的人，因果作用並非實體碰撞。</p><h4>物理學反擊 III：超距作用的荒謬</h4><div class="verse">
+    「燈若未及闇，而能破闇者，<br/>
+    　燈在於此間，則破一切闇。」
+  </div><p>歸謬法：如果不需要接觸也能破暗，那麼在此處點一盞燈，理應能破除全宇宙的黑暗。</p><div class="verse">
+    「若燈能自照，亦能照於彼；<br/>
+    　闇亦應自闇，亦能闇於彼。」
+  </div><p>若燈與闇相違能自照照彼，則闇與燈相違亦應自蔽蔽彼。但顯然闇不能如此，故燈亦不能。<span class="key">判決：燈喻不成立，「自生」論點瓦解。</span></p></div>
+</section>
+<section id="s9">
+<div class="section-card"><h3 id="ch7-sec12">十、三時破生：已生、未生、生時</h3><h4>已生不生（過去的邏輯死胡同）</h4><div class="verse">
+    「若生已自生，生已何用生？」
+  </div><p>既已存在，何必再生？判決：<span class="key">廢話</span>（Redundant）。已生法不可生：生已復生，展轉則為無窮，如作已復作。如燒已不應復燒、去已不應復去。</p><h4>未生不生（未來的邏輯死胡同）</h4><div class="verse">
+    「此生若未生，云何能自生？」
+  </div><p>尚未存在，如何執行「生」的動作？判決：<span class="key">矛盾</span>（Impossible）。若未生法能生，則一切凡夫未生菩提今應生菩提，不壞法阿羅漢無有煩惱今應生煩惱，兔等無角今皆應生——顯然不然。</p><h4>生時不生（當下之謎）</h4><div class="verse">
+    「生非生已生，亦非未生生，<br/>
+    　生時亦不生，去來中已答。」
+  </div><p>「生時」看似合理，實則經不起推敲。極限切割：若把時間切得夠細，你只能找到「已完成」和「未開始」。若堅持有一個獨立的「生時」，則需要兩個生（時間段的生＋動作的生），二生過（Double Arising），邏輯荒謬。此問題在〈觀去來品〉中已有詳答。</p></div>
+</section>
+<section id="s10">
+<div class="section-card"><h3 id="ch7-sec13">十一、眾緣生法即寂滅性</h3><p>對手最後嘗試：「眾緣和合故有生。」龍樹回應：</p><div class="verse">
+    「若謂生時生，是事已不成；<br/>
+    　云何眾緣合，爾時而得生？」
+  </div><p>生時生已經被破，眾緣具足或不具足，皆與生同破。進而揭示最深層的道理：</p><div class="verse">
+    「若法眾緣生，即是<span class="key">寂滅性</span>（<span class="sanskrit">Śānta</span>）；<br/>
+    　是故生生時，是二俱寂滅。」
+  </div><p>眾緣所生法，無自性故寂滅。寂滅名為無此無彼無相，斷言語道、滅諸戲論。因縷有布、因蒲有席，若縷自有定相不應從麻出，若布自有定相不應從縷出。而實從縷有布、從麻有縷，是故縷亦無定性、布亦無定性。如燃、可燃因緣和合成，無有自性。一切法亦如是，<span class="key">從眾緣生法無自性，無自性故空，如野馬無實</span>。</p></div>
+</section>
+<section id="s11">
+<div class="section-card"><h3 id="ch7-sec14">十二、第一階段結論：生不可得</h3><p>經由三時觀察（過去、未來、現在）與燈喻辯證，已經充分證實：<span class="key">「生」只是一個概念標籤，而非物理實體。</span></p><div class="insight"><div class="label">Key Insight</div>
+    沒有「發生」那一瞬間，只有緣起的流動。
+  </div><p>對手仍嘗試以「未來世中有未生法而生」立論，龍樹答：若未來世中有法而生，此法先已有，何用更生？若未來無現在相，云何言未來生法生？若有，不名未來，應名現在。現在不應更生。</p><div class="verse">
+    「有法不應生，無亦不應生，<br/>
+    　有無亦不生，此義先已說。」
+  </div><div class="verse">
+    「若諸法滅時，是時不應生；<br/>
+    　法若不滅者，終無有是事。」
+  </div><p>滅相法不應生（二相相違），而一切有為法念念滅故，無不滅法，故生終究不可得。</p></div>
+</section>
+<!-- ==================== 參、破「住」與破「滅」 ==================== -->
+<div class="part-divider">
+<h2 id="ch7-sec15">參</h2>
+<div class="part-sub">破「住」與破「滅」</div>
+</div>
+<section id="s12">
+<div class="section-card"><h3 id="ch7-sec16">十三、連鎖反應：皮之不存，毛將焉附</h3><p>「生、住、滅」是有為法的三位一體。如果沒有真實的「生」，「住」和「滅」就失去了依附的基礎。邏輯很簡單：一個從未真正出生的東西，<span class="key">如何能活著</span>？又<span class="key">如何能死亡</span>？</p></div>
+</section>
+<section id="s13">
+<div class="section-card"><h3 id="ch7-sec17">十四、破「住」：被凍結的錯覺</h3><div class="verse">
+    「不住法不住（<span class="sanskrit">Asthita-bhāva</span>），住法亦不住，<br/>
+    　住時（<span class="sanskrit">Tiṣṭhamāna</span>）亦不住，無生云何住？」
+  </div><p>不住法不住——無住相故。住法亦不住——已有住故，因去故有住，若住法先有，不應更住。住時亦不住——離住、不住更無住時。如是一切處求住不可得故，即是無生，若無生，云何有住？</p><div class="verse">
+    「所有一切法，皆是老死相，<br/>
+    　終不見有法，離老死有住。」
+  </div><p><span class="key">老死隨逐</span>：萬物分秒都在變化（Aging / Dying）。<span class="key">流動性</span>：生命是一條河，沒有哪一秒是靜止的「住」。矛盾：若有「住」，則不應變老；若變老，則不是「住」。</p><div class="verse">
+    「住不自相住，亦不異相住；<br/>
+    　如生不自生，亦不異相生。」
+  </div><p>自相住則為常，一切有為法從眾緣生，若住法自住則不名有為。如眼不能自見。異相住則無窮，住更有住，展轉不已。</p></div>
+</section>
+<section id="s14">
+<div class="section-card"><h3 id="ch7-sec18">十五、破「滅」：死亡的悖論</h3><div class="verse">
+    「法已滅（<span class="sanskrit">Niruddha</span>）不滅，未滅（<span class="sanskrit">Aniruddha</span>）亦不滅，<br/>
+    　滅時（<span class="sanskrit">Nirudhyamāna</span>）亦不滅，無生（<span class="sanskrit">Ajāta</span>）何有滅？」
+  </div><p>已滅則不滅（先滅故）、未滅亦不滅（離滅相故）、滅時亦不滅（離二更無滅時）。推求之下，滅法即是無生，無生何有滅？</p><div class="debate">
+<div class="debate-side question">
+<div class="side-label">若法是有</div>
+      真實存在的東西，本質不能改變，故不能滅。「不應於一法，而有有無相」，如光影不同處。
+    </div>
+<div class="debate-side answer">
+<div class="side-label">若法是無</div>
+      本來就沒有東西，談何滅？「譬如第二頭（<span class="sanskrit">Dvitīya-śiras</span>），無故不可斷。」你無法砍下你沒有的「第二顆頭」。
+    </div>
+</div><p>結論：有無法亦不滅。既然「生」如夢幻，並無實體產生；那麼「滅」也只是夢醒，並無實體被消滅。<span class="key">心法：死亡不是實體的毀滅，而是緣散散的假名。</span></p><h4>生滅不共存</h4><div class="verse">
+    「法若有住者，是則不應滅；<br/>
+    　法若不住者，是亦不應滅。」
+  </div><p>法若有住者，是則不應滅：<span class="key">活著的時候不能死</span>。法若不住者，是亦不應滅：<span class="key">沒活著就沒東西可死</span>。時間軸封殺：在任何一個時間切片中，你都找不到「死」發生的空間。</p><div class="verse">
+    「是法於是時，不於是時滅；<br/>
+    　是法於異時，不於異時滅。」
+  </div><p>如乳不於乳時滅——隨有乳時，乳相定住故。非乳時亦不滅——若非乳不得言乳滅。</p><div class="verse">
+    「法不自相滅（<span class="sanskrit">Svātmanā nirodha</span>），他相亦不滅（<span class="sanskrit">Parātmanā nirodha</span>）；<br/>
+    　如自相不生，他相亦不生。」
+  </div></div>
+</section>
+<section id="s15">
+<div class="section-card"><h3 id="ch7-sec19">十六、有為法不成，無為亦不成</h3><div class="verse">
+    「生住滅不成，故無有有為；<br/>
+    　有為法無故，何得有無為？」
+  </div><p>三相不可得，有為法不成立。無為相名不生不住不滅，是止有為相而名無為——無為自無別相，因是三相有無為相。如火為熱相、地為堅相、水為冷相，無為則不然。<span class="key">有為法無故，無為亦不成。</span></p><div class="insight"><div class="label">有為與無為皆空</div>
+    「涅槃（無為）」是相對於「世間（有為）」而建立的概念。若「世間」本空，則「涅槃」亦無需執著。<span class="key">徹底自由</span>：不執著於生，亦不執著於滅。
+  </div></div>
+</section>
+<!-- ==================== 肆、總結 ==================== -->
+<div class="part-divider">
+<h2 id="ch7-sec20">肆</h2>
+<div class="part-sub">總結與實踐</div>
+</div>
+<section id="s16">
+<div class="section-card"><h3 id="ch7-sec21">十七、緣起：是流動，不是碰撞</h3><p><span class="key">破實體</span>：因果不是實體 A 撞擊實體 B。<span class="key">顯流動</span>：燈不接觸暗，但緣聚則光生暗去。</p><p>如因縷有布、因蒲有席，若縷自有定相不應從麻出，若布自有定相不應從縷出。一切法從眾緣生，無有自性。</p><div class="insight"><div class="label">Key Takeaway</div>
+    世界只有「作用」，沒有背後的「行動者」。是流動，不是碰撞。
+  </div></div>
+</section>
+<section id="s17">
+<div class="section-card"><h3 id="ch7-sec22">十八、為何我們看見生滅？</h3><p>世俗諦 vs. 勝義諦。</p><p><span class="key">戲論</span>（Conceptual Proliferation）：大腦將連續的流動切割成「生、住、滅」的片段。<span class="key">如幻</span>：電影讓你哭（有功能），但螢幕上只有光（無實體）。</p><p>結論：<span class="key">現象是有的</span>（因緣假合），但<span class="key">自性是空的</span>（無獨立實體）。</p></div>
+</section>
+<section id="s18">
+<div class="section-card"><h3 id="ch7-sec23">十九、從邏輯辯證到生命解脫</h3><p>龍樹的邏輯不僅是哲學遊戲，更是治療「存在焦慮」的強力解藥。痛苦源於對「三相」的實體執著。</p><h4 class="xinfa-header">心法一：面對「開始」的焦慮</h4><p class="xinfa-question"><strong>問題：</strong>「我還沒準備好」、「我要一個完美的開始」。</p><p class="xinfa-insight"><strong>洞見（<span class="key">無生</span>）：</strong>沒有絕對的起點，一切都是條件（<span class="key">緣</span>）的匯聚。</p><p class="xinfa-action"><strong>行動：</strong>不要執著於「創造」，專注於「耕耘」條件。因緣具足，自然顯現。</p><h4 class="xinfa-header">心法二：面對「現狀」的執著</h4><p class="xinfa-question"><strong>問題：</strong>「我想留住青春」、「我無法接受改變」。</p><p class="xinfa-insight"><strong>洞見（<span class="key">無住</span>）：</strong>生命是流動的長河，沒有暫停鍵。</p><p class="xinfa-action"><strong>行動：</strong>在流動中安住。接受變化不是失敗，而是生命的本質。<span class="key">真言：無常即是自由。</span></p><h4 class="xinfa-header">心法三：面對「失去」的恐懼</h4><p class="xinfa-question"><strong>問題：</strong>「我失去了一切」、「我也會死」。</p><p class="xinfa-insight"><strong>洞見（<span class="key">無滅</span>）：</strong>既然「生」如夢幻，「滅」也非真實的消亡。</p><p class="xinfa-metaphor"><strong>譬喻：</strong>夢醒時，你沒有失去夢裡的錢，因為那錢本就不實有。</p><p class="xinfa-action"><strong>行動：</strong>看透失去的虛幻性，減輕劇痛。</p></div>
+</section>
+<section id="s19">
+<div class="section-card"><h3 id="ch7-sec24">二十、如幻如夢如乾闥婆城</h3><div class="verse">
+    「如幻（<span class="sanskrit">Māyā</span>）亦如夢（<span class="sanskrit">Svapna</span>），如乾闥婆城（<span class="sanskrit">Gandharvanagara</span>），<br/>
+    　所說生住滅，其相亦如是。」
+  </div><p>生、住、滅相無有決定，凡人貪著謂有決定。諸賢聖憐愍欲止其顛倒，還以其所著名字為說，語言雖同其心則異。</p><p><span class="key">乾闥婆城</span>：海市蜃樓，日出時現，無有實體。智者的視角：凡夫分別為有（<span class="key">執著</span>），智者推求不可得（<span class="key">解脫</span>）。世界依然美麗，但你知道它<span class="key">不實</span>。</p><div class="classical-text"><span class="text-label">原典</span><br/>
+    如幻化所作，不應責其所由，不應於中有憂喜想，但應眼見而已。如夢中所見不應求實，如乾闥婆城日出時現而無有實，但假為名字不久則滅。生、住、滅亦如是，凡夫分別為有，智者推求則不可得。
+  </div><div class="insight"><div class="label">般若智慧：入戲而不迷</div>
+<strong>總結：</strong><br/>
+    1. 邏輯上：三相（生住滅）均不成立。<br/>
+    2. 本質上：一切法無自性（<span class="key">空</span>）。<br/>
+    3. 生活上：如夢如幻，戲論寂滅。<br/><br/>
+<strong>生活態度：</strong>全心投入劇情（認真生活），但心裡清楚這是一場電影（<span class="key">不執著結果</span>）。
+  </div><p style="text-align:center; font-size:1.3em; margin:40px 0; color:var(--primary); letter-spacing:4px;">
+    「本無生滅，焉有恐怖？」
+  </p></div>
+</section>
+<!-- ==================== 伍、原典 ==================== -->
+<div class="part-divider">
+<h2 id="ch7-sec25">伍</h2>
+<div class="part-sub">原典全文</div>
+</div>
+<section id="s20">
+<div class="section-card"><h3 id="ch7-sec26">二十一、《中論》觀三相品原文（三十五偈）</h3><div class="classical-text" style="font-size:0.95em;"><span class="text-label">中論卷第二 · 觀三相品第七</span><br/><br/>
+<p class="qa-question">問曰：經說有為法有三相：生、住、滅。萬物以生法生、以住法住、以滅法滅，是故有諸法。</p>
+<p class="qa-answer">答曰：不爾。何以故？三相無決定故。是三相為是有為能作有為相？為是無為能作有為相？二俱不然。何以故？</p>
+<p>「若生是有為，　則應有三相；若生是無為，　何名有為相？」</p>
+<p>若生是有為，應有三相生住滅。是事不然。何以故？共相違故。相違者，生相應生法、住相應住法、滅相應滅法。若法生時，不應有住、滅相違法。一時則不然，如明闇不俱。以是故，生不應是有為法；住、滅相亦應如是。</p>
+<p class="qa-question">問曰：若生非有為，若是無為，有何咎？</p>
+<p class="qa-answer">答曰：若生是無為，云何能為有為法作相。何以故？無為法無性故。因滅有為名無為，是故說不生不滅名無為相，更無自相。是故無法，不能為法作相，如兔角龜毛等不能為法作相。是故生非無為；住、滅亦如是。復次：</p>
+<p>「三相若聚散，　不能有所相；云何於一處，　一時有三相？」</p>
+<p>是生、住、滅相，若一一能為有為法作相？若和合能與有為法作相？二俱不然。何以故？若謂一一者，於一處中或有有相、或有無相，生時無住、滅，住時無生、滅，滅時無生、住。若和合者，共相違法，云何一時俱？若謂三相更有三相者，是亦不然。何以故？</p>
+<p>「若謂生住滅，　更有有為相，是即為無窮，　無即非有為。」</p>
+<p>若謂生、住、滅更有有為相，生更有生、有住、有滅。如是三相，復應更有相，若爾則無窮。若更無相，是三相則不名有為法，亦不能為有為法作相。</p>
+<p class="qa-question">問曰：汝說三相為無窮。是事不然。生、住、滅雖是有為，而非無窮。何以故？</p>
+<p>「生生之所生，　生於彼本生，本生之所生，　還生於生生。」</p>
+<p>法生時通自體七法共生：一法、二生、三住、四滅、五生生、六住住、七滅滅。是七法中，本生除自體，能生六法。生生能生本生，本生能生生生，是故三相雖是有為，而非無窮。</p>
+<p class="qa-answer">答曰：</p>
+<p>「若謂是生生，　能生於本生；生生從本生，　何能生本生？」</p>
+<p>若是生生能生本生者，是生生則不名從本生生。何以故？是生生從本生生，云何能生本生。復次：</p>
+<p>「若謂是本生，　能生於生生；本生從彼生，　何能生生生？」</p>
+<p>若謂本生能生生生者，是本生不名從生生生。何以故？是本生從生生生，云何能生生生？生生法應生本生。而今生生不能生本生，生生未有自體，何能生本生？是故本生不能生生生。</p>
+<p class="qa-question">問曰：是生生生時，非先非後能生本生，但生生生時能生本生。</p>
+<p class="qa-answer">答曰：不然。何以故？</p>
+<p>「若生生生時，　能生於本生；生生尚未有，　何能生本生？」</p>
+<p>若謂生生生時能生本生可爾，而實未有，是故生生生時不能生本生。復次：</p>
+<p>「若本生生時，　能生於生生；本生尚未有，　何能生生生？」</p>
+<p>若謂是本生生時能生生生可爾，而實未有，是故本生生時不能生生生。</p>
+<p class="qa-question">問曰：</p>
+<p>「如燈能自照，　亦能照於彼；生法亦如是，　自生亦生彼。」</p>
+<p>如燈入於闇室，照了諸物亦能自照。生亦如是，能生於彼亦能自生。</p>
+<p class="qa-answer">答曰：不然。何以故？</p>
+<p>「燈中自無闇，　住處亦無闇，破闇乃名照，　無闇則無照。」</p>
+<p>燈體自無闇，明所及處亦無闇，明闇相違故。破闇故名照，無闇則無照，何得言燈自照亦照彼？</p>
+<p class="qa-question">問曰：是燈非未生有照，亦非生已有照，但燈生時能自照亦照彼。</p>
+<p class="qa-answer">答曰：</p>
+<p>「云何燈生時，　而能破於闇？此燈初生時，　不能及於闇。」</p>
+<p>燈生時名半生半未生，燈體未成就，云何能破闇？又燈不能及闇，如人得賊乃名為破。若謂燈雖不到闇而能破闇者，是亦不然。何以故？</p>
+<p>「燈若未及闇，　而能破闇者，燈在於此間，　則破一切闇。」</p>
+<p>若燈有力，不到闇而能破者。此處燃燈，應破一切處闇，俱不及故。復次燈不應自照、照彼。何以故？</p>
+<p>「若燈能自照，　亦能照於彼；闇亦應自闇，　亦能闇於彼。」</p>
+<p>若燈與闇相違故，能自照亦照於彼。闇與燈相違故，亦應自蔽蔽彼。若闇與燈相違，不能自蔽蔽彼。燈與闇相違，亦不應自照亦照彼。是故燈喻非也。破生因緣未盡故，今當更說。</p>
+<p>「此生若未生，　云何能自生？若生已自生，　生已何用生？」</p>
+<p>是生自生時，為生已生？為未生生？若未生生，則是無法，無法何能自生？若謂生已生，則為已成，不須復生，如已作不應更作。若已生、若未生，是二俱不生，故無生。汝先說生如燈，能自生亦生彼，是事不然；住、滅亦如是。復次：</p>
+<p>「生非生已生，　亦非未生生，生時亦不生，　去來中已答。」</p>
+<p>生名眾緣和合有生，已生中無作故無生，未生中無作故無生。生時亦不然，離生法生時不可得、離生時生法亦不可得、云何生時生？是事〈去來〉中已答。已生法不可生。何以故？生已復生，如是展轉則為無窮，如作已復作。復次若生已更生者，以何生法生？是生相未生。而言生已生者，則自違所說。何以故？生相未生而汝謂生。若未生謂生者，法或可生已而生、或可未生而生。汝先說生已生，是則不定。復次如燒已不應復燒、去已不應復去，如是等因緣故，生已不應生。未生法亦不生。何以故？法若未生則不應與生緣和合，若不與生緣和合則無法生。若法未與生緣和合而生者，應無作法而作、無去法而去、無染法而染、無恚法而恚、無癡法而癡。如是則皆破世間法，是故未生法不生。復次若未生法生者，世間未生法皆應生，一切凡夫未生菩提今應生菩提，不壞法阿羅漢無有煩惱今應生煩惱，兔等無角今皆應生。但是事不然，是故未生法亦不生。</p>
+<p class="qa-question">問曰：未生法不生者，以未有緣、無作、無作者、無時、無方等故不生。若有緣、有作、有作者、有時、有方等和合故，未生法生。是故若說一切未生法皆不生，是事不爾。</p>
+<p class="qa-answer">答曰：若法有緣、有時、有方等和合則生者，先有亦不生、先無亦不生、有無亦不生。三種先已破，是故生已不生。未生亦不生、生時亦不生。何以故？已生分不生，未生分亦不生，如先答。復次若離生有生時者，應生時生。但離生無生時，是故生時亦不生。復次若言生時生者，則有二生過：一以生故名生時；二以生時中生。二皆不然。無有二法，云何有二生？是故生時亦不生。復次生法未發則無生時，生時無故生何所依？是故不得言生時生。如是推求，生已無生、未生無生、生時無生，無生故生不成，生不成故住、滅亦不成。生、住、滅不成，故有為法不成。是故偈中說去未去去時中已答。</p>
+<p class="qa-question">問曰：我不定言生已生、未生生、生時生，但眾緣和合故有生。</p>
+<p class="qa-answer">答曰：汝雖有是說，此則不然。何以故？</p>
+<p>「若謂生時生，　是事已不成；云何眾緣合，　爾時而得生？」</p>
+<p>生時生已種種因緣破，汝今何以更說眾緣和合故有生？若眾緣具足、不具足，皆與生同破。復次：</p>
+<p>「若法眾緣生，　即是寂滅性；是故生生時，　是二俱寂滅。」</p>
+<p>眾緣所生法，無自性故寂滅，寂滅名為無此無彼無相，斷言語道、滅諸戲論。眾緣名，如因縷有布、因蒲有席。若縷自有定相，不應從麻出。若布自有定相，不應從縷出。而實從縷有布、從麻有縷，是故縷亦無定性、布亦無定性。如燃、可燃因緣和合成，無有自性，可燃無故燃亦無、燃無故可燃亦無。一切法亦如是，是故從眾緣生法無自性，無自性故空，如野馬無實。是故偈中說生與生時二俱寂滅，不應說生時生。汝雖種種因緣欲成生相，皆是戲論，非寂滅相。</p>
+<p class="qa-question">問曰：定有三世別異。未來世法得生，因緣即生。何故言無生？答曰：</p>
+<p>「若有未生法，　說言有生者，此法先已有，　更復何用生？」</p>
+<p>若未來世中有未生法而生，是法先已有，何用更生？有法不應更生。</p>
+<p class="qa-question">問曰：未來雖有，非如現在相，以現在相故說生。</p>
+<p class="qa-answer">答曰：現在相未來中無，若無，云何言未來生法生；若有，不名未來，應名現在，現在不應更生。二俱無生，故不生。復次汝謂生時生亦能生彼。今當更說。</p>
+<p>「若言生時生，　是能有所生；何得更有生，　而能生是生？」</p>
+<p>若生生時能生彼，是生誰復能生？</p>
+<p>「若謂更有生，　生生則無窮，離生生有生，　法皆能自生。」</p>
+<p>若生更有生，生則無窮。若是生更無生而自生者，一切法亦皆能自生，而實不爾。復次：</p>
+<p>「有法不應生，　無亦不應生，有無亦不生，　此義先已說。」</p>
+<p>凡所有生，為有法有生？為無法有生？為有無法有生？是皆不然，是事先已說。離此三事更無有生，是故無生。復次：</p>
+<p>「若諸法滅時，　是時不應生；法若不滅者，　終無有是事。」</p>
+<p>若法滅相，是法不應生。何以故？二相相違故。一是滅相，知法是滅。一是生相，知法是生。二相相違法，一時則不然，是故滅相法不應生。</p>
+<p class="qa-question">問曰：若滅相法不應生，不滅相法應生。</p>
+<p class="qa-answer">答曰：一切有為法念念滅故，無不滅法。離有為，無有決定無為法。無為法但有名字，是故說不滅法，終無有是事。</p>
+<p class="qa-question">問曰：若法無生，應有住。</p>
+<p class="qa-answer">答曰：</p>
+<p>「不住法不住，　住法亦不住，住時亦不住，　無生云何住？」</p>
+<p>不住法不住，無住相故。住法亦不住。何以故？已有住故。因去故有住，若住法先有，不應更住。住時亦不住，離住、不住更無住時，是故亦不住。如是一切處求住不可得故，即是無生。若無生，云何有住？復次：</p>
+<p>「若諸法滅時，　是則不應住；法若不滅者，　終無有是事。」</p>
+<p>若法滅相，是法無有住相。何以故？一法中有二相相違故，一是滅相、二是住相。一時一處有住滅相，是事不然，是故不得言滅相法有住。</p>
+<p class="qa-question">問曰：若法不滅，應有住。</p>
+<p class="qa-answer">答曰：無有不滅法。何以故？</p>
+<p>「所有一切法，　皆是老死相，終不見有法，　離老死有住。」</p>
+<p>一切法生時，無常常隨逐。無常有二，名老及死。如是一切法常有老死，故無住時。復次：</p>
+<p>「住不自相住，　亦不異相住；如生不自生，　亦不異相生。」</p>
+<p>若有住法，為自相住？為他相住？二俱不然。若自相住，則為是常。一切有為法從眾緣生，若住法自住，則不名有為。住若自相住，法亦應自相住。如眼不能自見，住亦如是。若異相住，則住更有住，是則無窮。復次見異法生異相，不得不因異法而有異相，異相不定故。因異相而住者，是事不然。</p>
+<p class="qa-question">問曰：若無住，應有滅。</p>
+<p class="qa-answer">答曰：無。何以故？</p>
+<p>「法已滅不滅，　未滅亦不滅，滅時亦不滅，　無生何有滅？」</p>
+<p>若法已滅則不滅，以先滅故。未滅亦不滅，離滅相故。滅時亦不滅，離二更無滅時。如是推求，滅法即是無生，無生何有滅？復次：</p>
+<p>「法若有住者，　是則不應滅；法若不住者，　是亦不應滅。」</p>
+<p>若法定住則無有滅。何以故？由有住相故。若住法滅，則有二相：住相、滅相。是故不得言住中有滅，如生死不得一時有。若法不住，亦無有滅。何以故？離住相故。若離住相則無法，無法云何滅？復次：</p>
+<p>「是法於是時，　不於是時滅；是法於異時，　不於異時滅。」</p>
+<p>若法有滅相，是法為自相滅？為異相滅？二俱不然。何以故？如乳不於乳時滅。隨有乳時，乳相定住故。非乳時亦不滅，若非乳不得言乳滅。復次：</p>
+<p>「如一切諸法，　生相不可得；以無生相故，　即亦無滅相。」</p>
+<p>如先推求，一切法生相不可得，爾時即無滅相，破生故無生，無生云何有滅？若汝意猶未已，今當更說破滅因緣。</p>
+<p>「若法是有者，　是即無有滅；不應於一法，　而有有無相。」</p>
+<p>諸法有時，推求滅相不可得。何以故？云何一法中亦有亦無相？如光影不同處。復次：</p>
+<p>「若法是無者，　是即無有滅；譬如第二頭，　無故不可斷。」</p>
+<p>法若無者則無滅相，如第二頭、第三手，無故不可斷。復次：</p>
+<p>「法不自相滅，　他相亦不滅；如自相不生，　他相亦不生。」</p>
+<p>如先說生相，生不自生亦不從他生。若以自體生，是則不然，一切物皆從眾緣生。如指端不能自觸，如是生不能自生。從他生亦不然。何以故？生未有故，不應從他生。是生無故無自體，自體無故他亦無，是故從他生亦不然。滅法亦如是，不自相滅、不他相滅。復次：</p>
+<p>「生住滅不成，　故無有有為；有為法無故，　何得有無為？」</p>
+<p>汝先說有生、住、滅相故有有為，以有有為故有無為。今以理推求，三相不可得，云何得有有為？如先說，無有無相法，有為法無故，何得有無為？無為相名不生不住不滅。止有為相故名無為相，無為自無別相，因是三相有無為相。如火為熱相、地為堅相、水為冷相，無為則不然。</p>
+<p class="qa-question">問曰：若是生、住、滅畢竟無者，云何論中得說名字？</p>
+<p class="qa-answer">答曰：</p>
+<p>「如幻亦如夢，　如乾闥婆城，所說生住滅，　其相亦如是。」</p>
+<p>生、住、滅相無有決定，凡人貪著謂有決定。諸賢聖憐愍欲止其顛倒，還以其所著名字為說，語言雖同其心則異。如是說生、住、滅相，不應有難。如幻化所作，不應責其所由，不應於中有憂喜想，但應眼見而已。如夢中所見不應求實，如乾闥婆城日出時現而無有實，但假為名字不久則滅。生、住、滅亦如是，凡夫分別為有，智者推求則不可得。</p>
+</div></div>
+</section>
+<section id="s21">
+</section>
+<div class="back-top"><a href="#top">↑ 回到頂部</a></div>
+</body> </div>
+</article>
+<article class="chapter-article" data-chapter="8" id="chapter-8">
+<div class="chapter-header">
+<div class="chapter-badge">第八品</div>
+<h1 class="chapter-title">觀作作者品第八</h1>
+<p class="chapter-subtitle">行動與主體的因果辯證</p>
+</div>
+<div class="chapter-body">
+<body>
+<!-- ==================== HERO ==================== -->
+<!-- ==================== TOC ==================== -->
+<!-- ==================== CONTENT ==================== -->
+<div class="content">
+<!-- ===== PART 1: 導論 ===== -->
+<div class="section" id="part1">
+<h2 id="ch8-sec1">一、導論：直覺的陷阱</h2>
+<p>我們理所當然地認為：這個世界先有一個「做事的人」（作者），然後才有「做的事」（作業），三事和合（作者、作業、果報）才能產生結果。這是凡夫的直覺——必須先有一個獨立存在的「我」，才能去執行畫畫或思考的動作。</p>
+<p>但這在邏輯上真的成立嗎？</p>
+<div class="insight"><div class="insight-title">核心問題</div>
+<p>這個世界是先有「做事人」，還是先有「做的事」？如果作者、作業、果報三者必須實有，世界才能運轉，那麼「作者」和「作業」之間的關係究竟是什麼？</p>
+</div>
+<div class="section-card"><h3 id="ch8-sec2">關鍵詞定義：「決定」(Svabhava / Intrinsic Nature)</h3><p>龍樹菩薩所要破除的，不是「作用」，而是<strong>「決定性」(Fixedness)</strong>。</p><p>所謂「決定」，意指本質固定不變、獨立存在、不依賴條件。其邏輯推演如下：如果「作者」是「決定有」（本質上就是作者），那他就不需要透過行動來成為作者；如果「作者」是「決定無」，那他根本不存在，無法行動。</p><a class="back-top" href="#top">↑ 回到目錄</a></div>
+</div>
+<hr class="divider"/>
+<!-- ===== PART 2: 原典全文 ===== -->
+<div class="section" id="part2">
+<h2 id="ch8-sec3">二、原典全文與逐段註釋（十二偈）</h2>
+<div class="commentary"><div class="label">【論主開篇語】</div>
+<p class="qa-question">問曰：現有作、有作者、有所用作法，三事和合故有果報，是故應有作者、作業。</p>
+<p class="qa-answer">答曰：上來品品中破一切法皆無有餘。如破三相，三相無故無有有為，有為無故無無為。有為無為無故，一切法盡無作、作者。若是有為，有為中已破。若是無為，無為中已破。不應復問。汝著心深故而復更問，今當復答。</p>
+</div>
+<!-- 第一、二偈 -->
+<div class="section-card"><h3 id="ch8-sec4">第一、二偈：決定有・決定無，皆不能作</h3><div class="verse"><div class="verse-label">【偈一】</div>
+      「決定有作者，　　不作決定業；<br/>
+      　決定無作者，　　不作無定業。」
+    </div><p>若先定有作者、定有作業，則不應作。若先定無作者、定無作業，亦不應作。何以故？</p><div class="verse"><div class="verse-label">【偈二】</div>
+      「決定業無作，　　是業無作者；<br/>
+      　定作者無作，　　作者亦無業。」
+    </div><p>若先決定有作業，不應更有作者；又離作者應有作業。但是事不然。若先決定有作者，不應更有作業；又離作業應有作者。但是事不然。是故決定作者、決定作業，不應有作。不決定作者、不決定作業，亦不應有作。何以故？本來無故。有作者、有作業尚不能作，何況無作者、無作業。</p><div class="insight"><div class="insight-title">解析</div>
+<p>此二偈以「四句」開端：「決定有作者」不能作「決定業」，「決定無作者」也不能作「不定業」。關鍵在於——如果作者在行動之前已經「固定存在」，那行動就是多餘的（因為他已經完成了「是作者」這件事）。如果作者「固定不存在」，一個不存在的主體不可能發起任何行動。</p>
+</div></div>
+<!-- 第三偈 -->
+<div class="section-card"><h3 id="ch8-sec5">第三偈：若定有即墮無因</h3><div class="verse"><div class="verse-label">【偈三】</div>
+      「若定有作者，　　亦定有作業，<br/>
+      　作者及作業，　　即墮於無因。」
+    </div><p>若先定有作者、定有作業，汝謂作者有作，即為無因，離作業有作者、離作者有作業，則不從因緣有。</p><div class="qa">
+<div class="q">問曰：若不從因緣有作者、有作業，有何咎？</div>
+<div class="a">答曰：</div>
+</div></div>
+<!-- 第四至六偈 -->
+<div class="section-card"><h3 id="ch8-sec6">第四至六偈：墮無因之過</h3><div class="verse"><div class="verse-label">【偈四至六】</div>
+      「若墮於無因，　　則無因無果，<br/>
+      　無作無作者，　　無所用作法。<br/>
+      　若無作等法，　　則無有罪福，<br/>
+      　罪福等無故，　　罪福報亦無。<br/>
+      　若無罪福報，　　亦無有涅槃，<br/>
+      　諸可有所作，　　皆空無有果。」
+    </div><p>若墮於無因，一切法則無因無果。能生法名為因、所生法名為果，是二即無。是二無故，無作、無作者亦無所用作法，亦無罪福。罪福無故，亦無罪福果報及涅槃道。是故不得從無因生。</p><div class="insight"><div class="insight-title">堅持「實有」的代價</div>
+<p>如果堅持「作者」和「作業」是兩個獨立實體，兩者就失去了連結，導致：</p>
+<div class="flow">
+<div class="flow-box">獨立實體<br/><small>(Separate Entities)</small></div>
+<div class="flow-arrow">→</div>
+<div class="flow-box">無因<br/><small>(Acausality)</small></div>
+<div class="flow-arrow">→</div>
+<div class="flow-box">無果<br/><small>(No Effect)</small></div>
+<div class="flow-arrow">→</div>
+<div class="flow-box">無罪福<br/><small>(No Merit/Sin)</small></div>
+<div class="flow-arrow">→</div>
+<div class="flow-box">無涅槃<br/><small>(No Nirvana)</small></div>
+</div>
+<p style="margin-top:12px; color: var(--highlight); font-weight: bold;">警示：執著於「實我的存在」，反而破壞了世間的道德與解脫道，導致一切修行變得毫無意義。</p>
+</div><div class="qa">
+<div class="q">問曰：若作者不定，而作不定業，有何咎？</div>
+<div class="a">答曰：一事無尚不能起作業，何況二事都無。譬如化人以虛空為舍，但有言說，而無作者、作業。</div>
+</div><div class="qa">
+<div class="q">問曰：若無作者、無作業，不能有所作；今有作者、有作業，應有作。</div>
+<div class="a">答曰：</div>
+</div></div>
+<!-- 第七偈 -->
+<div class="section-card"><h3 id="ch8-sec7">第七偈：亦定亦不定——有無相違</h3><div class="verse"><div class="verse-label">【偈七】</div>
+      「作者定不定，　　不能作二業，<br/>
+      　有無相違故，　　一處則無二。」
+    </div><p>作者定不定，不能作定不定業。何以故？有無相違故，一處不應有二。有是決定、無是不決定，一人一事云何有有無？</p><div class="insight"><div class="insight-title">排中律與矛盾律</div>
+<p>「有（存在）」與「無（不存在）」像光明與黑暗，性質互斥。一個杯子不可能在同一秒鐘既是「全滿」又是「全空」。結論：作者不可能既是「固定」又是「不固定」的。這條折衷路線是死胡同。</p>
+</div></div>
+<!-- 第八、九偈 -->
+<div class="section-card"><h3 id="ch8-sec8">第八、九偈：有不能作無，無不能作有</h3><div class="verse"><div class="verse-label">【偈八】</div>
+      「有不能作無，　　無不能作有，<br/>
+      　若有作作者，　　其過如先說。」
+    </div><p>若有作者而無業，何能有所作？若無作者而有業，亦不能有所作。何以故？如先說。有中若先有業，作者復何所作？若先無業，云何可得作？如是則破罪福等因緣果報。是故偈中說「有不能作無，無不能作有，若有作作者，其過如先說。」</p><div class="verse"><div class="verse-label">【偈九】</div>
+      「作者不作定，　　亦不作不定，<br/>
+      　及定不定業，　　其過如先說。」
+    </div><p>定業已破，不定業亦破，定不定業亦破；今欲一時總破，故說是偈。是故作者不能作三種業。</p><div class="insight"><div class="insight-title">作業本身的解構</div>
+<p>不僅「人」是空的，「事」也是空的。如果行動已經「決定」存在，那它已經完成了，不需要再去「做」；如果行動沒有定性，那它甚至構不成一個具體的行動。無論是從「人」的角度，還是從「事」的角度，尋找「實體」都不可得。</p>
+</div></div>
+<!-- 第十偈 -->
+<div class="section-card"><h3 id="ch8-sec9">第十偈：三種作者皆不能作業</h3><div class="verse"><div class="verse-label">【偈十】</div>
+      「作者定不定、　　亦定亦不定，<br/>
+      　不能作於業，　　其過如先說。」
+    </div><p>作者定、不定、亦定亦不定，不能作於業。何以故？如先三種過因緣。此中應廣說，如是一切處求作者作業，皆不可得。</p><div class="key-point">當所有關於「實體」的可能性都被堵死，我們必須轉換視角。</div><div class="qa">
+<div class="q">問曰：若言無作、無作者，則復墮無因。</div>
+<div class="a">答曰：是業從眾緣生，假名為有，無有決定。不如汝所說。何以故？</div>
+</div></div>
+<!-- 第十一偈 -->
+<div class="section-card"><h3 id="ch8-sec10">第十一偈：緣起正見——因業有作者，因作者有業</h3><div class="verse"><div class="verse-label">【偈十一】</div>
+      「因業有作者，　　因作者有業，<br/>
+      　成業義如是，　　更無有餘事。」
+    </div><p>業先無決定，因人起業；因業有作者，作者亦無決定。因有作業，名為作者，二事和合故得成作、作者。若從和合生則無自性，無自性故空，空則無所生。但隨凡夫憶想分別故，說有作業有作者；第一義中無作業、無作者。</p><div class="key-point">「因業有作者，因作者有業」——不是虛無，而是「相互依存」。</div><div class="insight"><div class="insight-title">蘆束相依：沒有先後的共生</div>
+<p>就像兩束蘆葦互相依靠才能站立。沒有獨立的「老師」，只有在「教書（作業）」的當下，「老師（作者）」這個身分才成立。離開了互動，身分即消失（或潛伏）。這就是「假名」(Prajnapti) 的深義。</p>
+</div></div>
+<!-- 第十二偈 -->
+<div class="section-card"><h3 id="ch8-sec11">第十二偈：推廣應用——受受者及一切諸法</h3><div class="verse"><div class="verse-label">【偈十二】</div>
+      「如破作作者，　　受受者亦爾，<br/>
+      　及一切諸法，　　亦應如是破。」
+    </div><p>如作、作者不得相離，不相離故不決定，無決定故無自性。受受者亦如是，受名五陰身，受者是人，如是離人無五陰、離五陰無人，但從眾緣生如受受者。餘一切法亦應如是破。</p><div class="insight"><div class="insight-title">推廣邏輯</div>
+<p>同樣的邏輯適用於「罵人者」與「被罵者」。既然罵人的「作者」是空的，被罵的「受者」也是因緣暫現的假名。雙方都只是因為一個暫時的事件而短暫出現的角色，演完即謝幕。</p>
+</div><a class="back-top" href="#top">↑ 回到目錄</a></div>
+</div>
+<hr class="divider"/>
+<!-- ===== PART 3: 邏輯解構 ===== -->
+<div class="section" id="part3">
+<h2 id="ch8-sec12">三、邏輯解構：四句破斥的完整推演</h2>
+<p>龍樹菩薩運用嚴密的邏輯，逐一檢驗「作者」與「作業」之間所有可能的關係，最終證明「實體」在任何假設下都不成立。</p>
+<!-- 柵欄一 -->
+<div class="section-card"><h3 id="ch8-sec13">柵欄一：決定有作者</h3><p><strong>假設：</strong>作者在行動之前已經存在。</p><div class="key-point">「決定有作者，不作決定業。」</div><p><strong>矛盾點：</strong>若「作者」是先於行動而固定存在的實體，那麼「行動」就是多餘的。</p><p><strong>小偷譬喻：</strong>如果一個人天生「固定」就是小偷（不需偷竊行為即是小偷），那他偷不偷東西都是小偷。這違背了「因偷竊故名小偷」的定義。</p><p><strong>結論：</strong>實有的作者，無法進行實有的作業。</p></div>
+<!-- 柵欄二 -->
+<div class="section-card"><h3 id="ch8-sec14">柵欄二：決定無作者</h3><p><strong>假設：</strong>作者根本不存在。</p><div class="key-point">「決定無作者，不作無定業。」</div><p><strong>前提：</strong>假設作者是「固定不存在」的。</p><p><strong>推論：</strong>一個不存在的主體，邏輯上不可能發起任何行動。無，不能生有。</p><p><strong>結論：</strong>如果沒有作者，作業也無從談起。</p></div>
+<!-- 柵欄三 -->
+<div class="section-card"><h3 id="ch8-sec15">柵欄三：亦定亦不定 (The Hybrid Fallacy)</h3><div class="key-point">「有無相違故，一處則無二。」</div><p><strong>排中律與矛盾律：</strong>「有（存在）」與「無（不存在）」像光明與黑暗，性質互斥。一個杯子不可能在同一秒鐘既是「全滿」又是「全空」。</p><p><strong>結論：</strong>作者不可能既是「固定」又是「不固定」的。這條折衷路線是死胡同。</p></div>
+<!-- 四句總覽 -->
+<div class="section-card"><h3 id="ch8-sec16">四句破斥總覽</h3><div class="four-grid">
+<div class="cell">
+<div class="cell-title">決定有<br/><small>(Fixed Existence)</small></div>
+<div class="cell-result">多餘 (Redundant)</div>
+</div>
+<div class="cell">
+<div class="cell-title">決定無<br/><small>(Fixed Non-existence)</small></div>
+<div class="cell-result">不可能 (Impossible)</div>
+</div>
+<div class="cell">
+<div class="cell-title">亦有亦無<br/><small>(Both)</small></div>
+<div class="cell-result">矛盾 (Contradictory)</div>
+</div>
+<div class="cell">
+<div class="cell-title">非有非無<br/><small>(Neither)</small></div>
+<div class="cell-result">戲論 (Conceptual Proliferation)</div>
+</div>
+</div><div class="key-point">當所有關於「實體」的可能性都被堵死，我們必須轉換視角。</div><a class="back-top" href="#top">↑ 回到目錄</a></div>
+</div>
+<hr class="divider"/>
+<!-- ===== PART 4: 緣起正見 ===== -->
+<div class="section" id="part4">
+<h2 id="ch8-sec17">四、轉折：從「實體」到「關係」——緣起正見</h2>
+<p>既然「實體」這條路走不通，那真相是什麼？</p>
+<p>解答：不是虛無，而是<strong>「相互依存」</strong>。</p>
+<div class="key-point">「因業有作者，因作者有業。」</div>
+<p>業先無決定，因人起業；因業有作者，作者亦無決定。因有作業，名為作者，二事和合故得成作、作者。若從和合生則無自性，無自性故空，空則無所生。</p>
+<!-- 蘆束相依 -->
+<div class="section-card"><h3 id="ch8-sec18">蘆束相依：沒有先後的共生</h3><p>就像兩束蘆葦互相依靠才能站立——拿掉任何一束，另一束也會倒下。作者與作業的關係正是如此：互為條件，沒有誰先誰後。</p><p>這就是<strong>「假名」(Prajnapti)</strong> 的深義：沒有獨立的「老師」，只有在「教書（作業）」的當下，「老師（作者）」這個身分才成立。離開了互動，身分即消失（或潛伏）。</p></div>
+<!-- 比較表 -->
+<div class="section-card"><h3 id="ch8-sec19">釐清關鍵概念：決定 vs. 因緣</h3><table class="compare-table">
+<tr>
+<th style="width:15%"></th>
+<th style="width:42%">✗ 決定 (Svabhava)</th>
+<th style="width:43%">✓ 因緣 (Pratityasamutpada)</th>
+</tr>
+<tr>
+<td><strong>本質</strong></td>
+<td>固定不變</td>
+<td>依靠條件而存在</td>
+</tr>
+<tr>
+<td><strong>譬喻</strong></td>
+<td>天生的好人/壞人</td>
+<td>作畫時稱為畫家</td>
+</tr>
+<tr>
+<td><strong>結果</strong></td>
+<td>宿命論，努力無效</td>
+<td>充滿流動性與改變可能</td>
+</tr>
+</table><a class="back-top" href="#top">↑ 回到目錄</a></div>
+</div>
+<hr class="divider"/>
+<!-- ===== PART 5: 生命心法 ===== -->
+<div class="section" id="part5">
+<h2 id="ch8-sec20">五、生命心法：從邏輯到解脫</h2>
+<p>中觀不僅是哲學辯證，更是心理治療與行為指南。當我們打破「實體作者」的迷思，就能解除對「自我形象」的焦慮與執著。</p>
+<!-- 心法一 -->
+<div class="section-card"><h3 id="ch8-sec21">心法一：去標籤化 (De-labeling)</h3><div class="insight"><div class="insight-title">從「決定有」到「緣起觀」</div>
+<p><strong>舊思維（決定有）：</strong>一次失敗 → 「我是一個失敗者」。將行為固化為身分。</p>
+<p><strong>中觀視角（緣起）：</strong>「失敗」是當下因緣和合的「作業」。事件過去了，標籤隨之剝落。</p>
+<p><strong>實踐方法：</strong>區分「做的事 (Event)」與「人 (Identity)」。沒有永恆的失敗者，只有暫時未成功的行動。</p>
+</div></div>
+<!-- 心法二 -->
+<div class="section-card"><h3 id="ch8-sec22">心法二：動態自信 (Dynamic Confidence)</h3><div class="insight"><div class="insight-title">你不需要先「是」什麼，才能去「做」什麼</div>
+<p>Writing（寫作）&gt; Writer（作家）<br/>
+      Leading（領導）&gt; Leader（領袖）</p>
+<p><strong>你是流動的動詞：</strong>你的身分是由當下的每一個行動動態構建的。</p>
+<p><strong>練習：</strong>不要糾結「我是誰」，專注於「我現在在做什麼」。當你行慈悲時，當下即是慈悲者。</p>
+</div></div>
+<!-- 心法三 -->
+<div class="section-card"><h3 id="ch8-sec23">心法三：慈悲與人際 (Compassion)</h3><div class="insight"><div class="insight-title">破除「實體惡」</div>
+<p><strong>破除「實體惡」：</strong>我們討厭某人，常認為他本質就是壞的（決定有）。</p>
+<p><strong>緣起觀：</strong>惡行是因緣聚合的產物——環境、創傷、壓力、無明——沒有天生的惡人。</p>
+<p><strong>效果：</strong>這能幫助我們生起慈悲，針對「因緣」解決問題，而不是單純攻擊「身分」。</p>
+</div></div>
+<div class="section-card"><h3 id="ch8-sec24">船過水無痕：性空即解脫</h3><p><strong>不抓取：</strong>痛苦之所以真實，是因為我們用頭腦把流動的事件「凝固」了。</p><p><strong>恢復流動：</strong>當不再把行為視為「我的本質」，創傷就不會留下永久的傷痕。</p><p><strong>結論：</strong>一切都是流動的因緣。發生了，經歷它，然後讓它過去。</p><a class="back-top" href="#top">↑ 回到目錄</a></div>
+</div>
+<hr class="divider"/>
+<!-- ===== PART 6: 中道智慧 ===== -->
+<div class="section" id="part6">
+<h2 id="ch8-sec25">六、中道智慧：不落兩邊</h2>
+<table class="compare-table">
+<tr>
+<th style="width:50%">緣起有 (Existence / Karma)</th>
+<th style="width:50%">自性空 (Emptiness / No Nature)</th>
+</tr>
+<tr>
+<td>因緣果報歷歷不爽，所以要謹慎行動。</td>
+<td>沒有固定不變的實體，所以能改變、能解脫。</td>
+</tr>
+</table>
+<p><strong style="color: var(--accent);">非有</strong> (Not Absolute Realism)：沒有固定不變的實體，所以能改變、能解脫。</p>
+<p><strong style="color: var(--highlight);">非無</strong> (Not Nihilism)：因緣果報歷歷不爽，所以要謹慎行動。</p>
+<p><strong style="color: var(--accent2);">生活態度：</strong>活在當下因緣的流動中，既不執著，也不消極。</p>
+<a class="back-top" href="#top">↑ 回到目錄</a>
+</div>
+<hr class="divider"/>
+<!-- ===== PART 7: 修學地圖 ===== -->
+<div class="section" id="part7">
+<h2 id="ch8-sec26">七、修學地圖與教學建議</h2>
+<div class="section-card"><h3 id="ch8-sec27">觀作作者品・修學地圖</h3><div class="roadmap">
+<div class="roadmap-step">
+<div class="step-icon">☀</div>
+<div class="step-title">直覺</div>
+<div class="step-desc">以為有實體作者</div>
+</div>
+<div class="roadmap-step">
+<div class="step-icon">💥</div>
+<div class="step-title">破斥</div>
+<div class="step-desc">邏輯證明實體不可得</div>
+</div>
+<div class="roadmap-step">
+<div class="step-icon">🌿</div>
+<div class="step-title">正見</div>
+<div class="step-desc">作者與作業如蘆束相依</div>
+</div>
+<div class="roadmap-step">
+<div class="step-icon">🌊</div>
+<div class="step-title">心法</div>
+<div class="step-desc">去標籤，活成流動的動詞</div>
+</div>
+</div></div>
+<div class="section-card"><h3 id="ch8-sec28">給講者的建議：如何傳遞這一品？</h3><div class="insight"><p><strong style="color: var(--highlight);">先破後立：</strong>不要直接談「空」，必須先讓學生看到「實有」在邏輯上的荒謬（使用四句破斥）。</p>
+<p><strong style="color: var(--accent);">重喻：</strong>多使用「小偷」、「蘆葦」、「船過水無痕」等譬喻，將抽象概念具象化。</p>
+<p><strong style="color: var(--accent2);">連結生活：</strong>務必將哲學連結到「自我標籤」與「焦慮」，否則會變成純粹的文字遊戲。</p>
+</div><a class="back-top" href="#top">↑ 回到目錄</a></div>
+</div>
+</div>
+<!-- ==================== FOOTER ==================== -->
+</body> </div>
+</article>
+<article class="chapter-article" data-chapter="9" id="chapter-9">
+<div class="chapter-header">
+<div class="chapter-badge">第九品</div>
+<h1 class="chapter-title">觀本住品第九</h1>
+<p class="chapter-subtitle">破解主體與靈魂迷思</p>
+</div>
+<div class="chapter-body">
+<body>
+<div class="container">
+<header>
+<h1>中論·觀本住品第九</h1>
+<div class="subtitle">破解主體迷思——從邏輯辯證到心法實踐的解構之旅</div>
+<div class="english">Mūlamadhyamakakārikā: Examination of the Prior Entity</div>
+</header>
+<!-- ============ TABLE OF CONTENTS ============ -->
+<!-- ========================================================== -->
+<!--          上篇：現代詮釋                                      -->
+<!-- ========================================================== -->
+<section id="part1">
+<h2 class="section-title" id="ch9-sec1">上篇：現代詮釋——觀本住品的邏輯與心法</h2>
+<p class="indent">以下內容依據簡報「觀本住品第九」的 30 張投影片，以現代語言重新敘述龍樹菩薩破「本住」的完整論證脈絡，以及由此延伸的日常心法實踐。全篇分為「邏輯辯證」與「心法實踐」兩大段落，前者解構「我」的虛妄，後者指出解構之後如何安住。</p>
+<!-- ---- S1 ---- -->
+<section id="s1">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec2">核心直覺：誰在駕駛這具軀殼？</h3><p class="indent">我們通常直覺地認為，身體像是一間屋子或一部車子，裡面有一個「主人」或「駕駛員」。這個駕駛員使用眼睛去看、耳朵去聽、身體去感受快樂與痛苦。如果沒有這個主人，是誰在用眼睛看？是誰在感受快樂與痛苦？這正是觀本住品最根本的提問。</p><div class="insight"><div class="label">核心提問</div>
+「如果沒有這個主人，是誰在用眼睛看？是誰在感受快樂與痛苦？」
+</div></div>
+</section>
+<!-- ---- S2 ---- -->
+<section id="s2">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec3">定義「本住」：先於經驗的主體</h3><p class="indent">所謂「本住」（梵文概念對應 Prior Entity），指的是在眼耳鼻舌等感官出現之前，就已經存在的那個「主體」或「真我」。論師主張：感官是工具，而本住是使用工具的那個人；先有主人，然後才有眼睛、耳朵等功能被使用。</p><div class="verse">「若無有本住，誰有眼等法？以是故當知，先已有本住。」</div><p class="indent">這段偈頌正是論敵的核心立場：如果沒有本住，誰來擁有這些感官功能？因此必須先有本住存在。</p></div>
+</section>
+<!-- ---- S3 ---- -->
+<section id="s3">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec4">對手的焦慮：無人駕駛的恐懼</h3><p class="indent">主張「本住」存在的論師，其背後有三層焦慮。第一是缺乏歸屬感：若無本住，誰來負責輪迴？誰是受苦者？第二是功能的必要性：眼耳鼻舌只是工具，必須有一個使用者（User）存在，工具才有意義。第三是經驗的「證據」：呼吸、眨眼、愛恨情仇、思惟等現象，被視為「神我」在背後操作的證據。</p><p class="indent">用現代的比喻來說，這就像擔心一部車子如果沒有駕駛，就不可能自己運行——對「無人駕駛」的恐懼。</p></div>
+</section>
+<!-- ---- S4 ---- -->
+<section id="s4">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec5">龍樹的挑戰：只有「看」，沒有「看者」</h3><p class="indent">龍樹菩薩並不否認「看」與「聽」的經驗存在——眼睛確實在看，耳朵確實在聽。他所否認的是那個獨立於經驗之外的「背後靈」——一個在看和聽的背後、操控一切的實體。</p><div class="insight"><div class="label">龍樹的核心立場</div>
+Show me the Driver without the Car.——把車子拿掉，讓我看看那個「駕駛員」在哪裡。如果駕駛員只有在車子裡才能被認知，那「駕駛員」就不是一個獨立存在的實體。
+</div><p class="indent">從這裡開始，龍樹展開了層層遞進的三波反擊。</p></div>
+</section>
+<!-- ---- S5 ---- -->
+<section id="s5">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec6">第一波反擊：分離測試（The Separation Test）</h3><p class="indent">如果「我」存在於感官之前，那麼把感官拿掉後，「我」應該還能被單獨認知。這是龍樹提出的「分離測試」：把身體功能、感官、感受全部抽離，看看剩下的那個「本住」是否還能被指認。</p><div class="metaphor"><div class="label">思想實驗</div>
+想像把一個人的眼、耳、鼻、舌、身體感受全部移除。移除之後，剩下的「自我」（Self / 本住）在哪裡？答案是：一片空無（Zero / Void）。離開了身體功能與感受，這個「本住」根本無法被認知，也就無法證明其存在。
+</div><div class="verse">「若離眼等根，及苦樂等法，先有本住者，以何而可知？」</div></div>
+</section>
+<!-- ---- S6 ---- -->
+<section id="s6">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec7">經典譬喻：離法無物</h3><p class="indent">龍樹用了一個非常直觀的譬喻來說明這一點。如同「花瓶」是因為有形狀（Shape）和顏色（Color），我們才知道它是瓶子。如果把形狀和顏色都抽掉，「花瓶」就什麼都不剩了。</p><p class="indent">同理，「我」是因為有看、聽、感覺的動作，才被定義為「我」。抽掉動作，什麼都不剩。所謂的「我」，不過是一連串經驗的總稱，而非一個在經驗背後的獨立實體。</p></div>
+</section>
+<!-- ---- S7 ---- -->
+<section id="s7">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec8">第二波反擊：相互依存（Interdependence）</h3><p class="indent">龍樹進一步指出「人」與「法」的相互依存關係。偈云：「以法知有人，以人知有法；離法何有人？離人何有法？」</p><div class="metaphor"><div class="label">相互依存的邏輯</div>
+1. 因為有「作用（法）」——看、聽、感受——才知道有「人」。<br/>
+2. 因為有「人」，才把這些作用歸納為「某人的作用」。<br/>
+3. 兩者是綁在一起的，不能切開獨存。
+</div><p class="indent">這就像一個無限循環的莫比烏斯環（∞）：見者（Seer）依賴「見」（Seeing）而成立，「見」又依賴見者而被命名。離開了法，人不存在；離開了人，法也無所歸屬。兩者互為定義，卻都沒有獨立的自性。</p></div>
+</section>
+<!-- ---- S8 ---- -->
+<section id="s8">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec9">空間謬誤：靈魂在哪裡？</h3><p class="indent">龍樹接著從空間的角度來追問：如果「神我」（靈魂）真的存在，它在哪裡？</p><p class="indent">假設一：若在身內（Inside），如同牆壁中有柱子。那麼身體毀壞的時候，應該能看到裡面的「柱子」（靈魂），但事實上看不到。而且，如果神常在身內，身體就不應該壞滅，因為有神在裡面撐著——但身體確實會壞。</p><p class="indent">假設二：若在身外（Outside），如同人穿鎧甲。那麼應該能看到靈魂包覆著身體，但事實上也看不到。而且身體也不應該受傷，因為有靈魂像鎧甲一樣保護——但身體確實可以被傷害。</p><div class="insight"><div class="label">結論</div>
+事實上，內外皆不可得。靈魂既不在身體裡面，也不在身體外面。
+</div><p class="indent">青目釋論更進一步駁斥：如果有人說斷臂時神縮到身體其他部分，那斷頭時神也應該縮到其他地方而不死——但人確實會因斷頭而死。這證明「神我」藏在身內的說法不成立。</p></div>
+</section>
+<!-- ---- S9 ---- -->
+<section id="s9">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec10">第三波反擊：一與多的困境</h3><p class="indent">如果堅持身體裡有一個「全知的主人」，那麼它是單一的（一）還是多樣的（多）？這兩個選項都會掉入陷阱。</p><h4 class="trap-header">陷阱 A：一神論的荒謬</h4><p class="indent">如果「看的那個」就是「聽的那個」——背後是同一個靈魂——那麼這個靈魂應該能透過任何感官做任何事。眼睛應該也能聽聲音，耳朵也能看顏色，就像一個人有六個方向可以隨意見聞。但事實上，眼睛只能看、耳朵只能聽，各有各的功能，不能互換。</p><div class="verse">「見者即聞者，聞者即受者，如是等諸根，則應有本住。」</div><h4 class="trap-header">陷阱 B：多重人格的混亂</h4><p class="indent">如果「看的」跟「聽的」是不同的靈魂，那身體裡就有好幾個「神」——看的神、聽的神、嗅的神、嚐的神、觸的神⋯⋯看東西的時候，「聽的神」也同時在運作，一個人變成了多個人。這就像多重人格一樣荒謬。而且，如果各根有各自的神，見的時候就應該同時聽、同時嗅，因為各個神是獨立運作的——但實際經驗並非如此。</p><div class="verse">「若見聞各異，受者亦各異，見時亦應聞，如是則神多。」</div></div>
+</section>
+<!-- ---- S10 ---- -->
+<section id="s10">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec11">反證：生理機能不是靈魂證據</h3><p class="indent">論敵曾以出入息（呼吸）、視眴（眨眼）、壽命、思惟等生理現象作為靈魂存在的證據。龍樹的回應是：這些都是風元素（呼吸的機械作用）、火元素（眼睛的光學運作）等物質元素的自然功能，或者說是神經網絡的反應，並非背後有一個「神我」在操控。</p><div class="insight"><div class="label">關鍵反駁</div>
+如風狂病人不得自在，不應作而作——精神失常的人無法控制自己的行為。如果真有一個「神」是一切行為的主宰者，為什麼會有「不得自在」的狀態？這證明並沒有一個全能的「神我」在幕後掌控。
+</div><p class="indent">因此，「離眼耳等先無別神」——離開了感官功能，並不存在一個獨立的靈魂。</p></div>
+</section>
+<!-- ---- S11 ---- -->
+<section id="s11">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec12">時間論證：三世皆空</h3><p class="indent">龍樹最後從時間軸上進行檢驗：在過去、現在、未來三個時間段中，「本住」能否被找到？</p><p class="indent">過去（未生）：感官尚未出現之前，本住無從被認知，所以「無本住」。現在（正生）：感官正在運作的當下，一切是因緣和合的過程，沒有一個獨立的實體可以被抽離出來，所以「無獨立實體」。未來（已滅）：感官功能滅去之後，本住也隨之不存在，所以「亦無」。</p><div class="verse">「眼等無本住，今後亦復無，以三世無故，無有無分別。」</div><p class="indent">三世皆無——過去找不到、現在找不到、未來也找不到。本住在任何時間點上都不存在。</p></div>
+</section>
+<!-- ---- S12 ---- -->
+<section id="s12">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec13">邏輯判決：無主宰</h3><p class="indent">經過上述層層論證，龍樹得出最終的邏輯判決：</p><div class="insight"><div class="label">核心判決</div>
+「我」不是名詞，而是動詞（Process）。痛苦（Suffering）存在，但受苦者（Sufferer）是幻覺。
+</div><p class="indent">並沒有一個固定的「主宰者」在經驗的背後操控一切。所有的經驗——看、聽、苦、樂——都是因緣和合的過程，如同河流不斷流動，並不存在一個靜止不變的「河流的主人」。</p></div>
+</section>
+<!-- ---- S13 ---- -->
+<section id="s13">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec14">中場釐清：「空」不是「沒有」</h3><p class="indent">在進入心法實踐之前，需要先澄清一個常見的誤解。龍樹所說的「空」，不是在否認「存在」，而是在否認「固有實體」（Inherency）。</p><div class="metaphor"><div class="label">頑空 vs 中道</div>
+頑空（Nihilism）：什麼都不存在——這不是龍樹的主張。<br/>
+中道（Emptiness）：事物存在，但以緣起的方式存在（Dependent Origination），沒有固有不變的本質——這才是龍樹的主張。
+</div><p class="indent">既然沒有固定的「我」，我們該如何生活？這就進入了「心法篇」——從理論解構轉向實踐應用。</p></div>
+</section>
+<div class="divider">◆ ◆ ◆</div>
+<!-- ---- S14 ---- -->
+<section id="s14">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec15">心法實踐：從「名詞」轉為「動詞」</h3><p class="indent">痛苦的根源，在於我們習慣性地將流動的過程（Process）凝固為一個受傷的實體（Entity）。我們說「我很痛苦」，就在不知不覺中創造了一個固定的「受苦的我」。心法的核心練習，就是將「我」從名詞轉為動詞——練習「動態流動觀」：無主宰、無恆常。</p><p class="indent">以下三個步驟，是將觀本住品的邏輯轉化為日常可操作的心法。</p></div>
+</section>
+<!-- ---- S15 ---- -->
+<section id="s15">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec16">步驟一至三：拆解受苦者</h3><div class="practice-step"><div class="step-label">步驟一：捕捉主體（定位本住）</div>
+<p>當痛苦升起時，先別急著解決問題，先問：「是誰在痛？」</p>
+<p>例如：「我很焦慮」——這句話預設了一個「本來好好的我」，被「焦慮」纏上了。試著找出那個「本來好好的我」在哪裡。你會發現，離開了焦慮這個感受，那個「受害者」根本無處可指。</p>
+</div><div class="practice-step"><div class="step-label">步驟二：分離測試（The Separation Test）</div>
+<p>試著在心中把「焦慮」這個感覺暫時拿掉。然後問自己：剩下的那個「焦慮的受害者」還存在嗎？</p>
+<p>你會發現：離開了當下的感受，那個「受苦的角色」在那個當下根本不存在。這就是分離測試的威力——它讓你親身體驗到，「受苦者」和「苦」是綁在一起的，不能單獨存在。</p>
+</div><div class="practice-step"><div class="step-label">步驟三：同步生滅</div>
+<p>「受苦者」是跟著「苦」同時產生的——同時存在，互相依賴。這對應偈文「因眼緣色生眼識」。</p>
+<p>念頭一走，受苦的角色也就跟著消失了。沒有一個長期存在的倒楣鬼。就像蠟燭與影子同步出現、同步消滅——苦（Emotion）生起時，受苦者（Sufferer）同時被創造；苦消失時，受苦者也隨之瓦解。</p>
+</div></div>
+</section>
+<!-- ---- S16 ---- -->
+<section id="s16">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec17">進階應用：人際關係與身份解構</h3><h4>破解「債主」模式</h4><p class="indent">當你覺得「朋友冷落我」、「他應該回報我」，你就在不知不覺中創造了一個「債主自我」（Creditor Self）和一個「欠債的壞朋友」。這個「債主」就是一個臨時被建構出來的「本住」。</p><p class="indent">試著抽掉「他應該要回報我」的念頭。你會發現，憤怒的「債主」瞬間消失，只剩下一個「單純對人好的人」。這就是「離法無人」的實踐——沒有期待（Expectation of Repayment），就沒有債主。關係減去回報的期待，等於真正的友誼（True Friendship）。</p><h4>歸零後的看見：緣起視角</h4><p class="indent">拿掉「自我參照」（Self-Reference）的濾鏡後，看到的世界截然不同。之前：「他的冷落是針對我的」——這是單一因果，一切圍繞著「我」。之後：「他的行為是由工作壓力、疲倦等因緣聚合而成」——這是多重因緣，不再以「我」為中心。心裡騰出空間，看見真實的朋友，而非想像中的敵人。</p><h4>身份的解構：沒有本質的「失敗者」</h4><p class="indent">「我是失敗者」這句話，其實是在設定一個「本住」——一個本質上就是失敗的固定自我。龍樹的反駁是：你現在失敗，是因為當下因緣不具足，而非你本質如此。因緣改變，結果就改變。隨時歸零（Reset to Zero），不被過去的標籤定義。</p><h4>賓主關係：情緒是過客</h4><p class="indent">把心想像成一個空間，情緒是來來去去的客人（Guest）。問題出在我們總想當那個「強勢主人」——想要留住快樂的客人、趕走痛苦的客人。但真正的智慧是：不要當主人，讓情緒穿過，不留痕跡。</p><h4>無我的力量：無靶也就無箭</h4><p class="indent">只要有一個堅固的「自尊心」或「我」，你就是一個靶子——別人的批評、冷落、否定，每一支箭都能射中你。但如果沒有靶子呢？</p><div class="insight"><div class="label">無靶無箭</div>
+「無主宰，則無處受傷。像水一樣，隨緣應變，而不僵化對抗。」
+</div></div>
+</section>
+<!-- ---- S17 ---- -->
+<section id="s17">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec18">心法總結與日常練習</h3><h4>解脫的三把鑰匙</h4><p class="indent">整個觀本住品的心法，可以歸結為三個核心原則，如同三角形的三個頂點，互相支撐：</p><div class="insight"><div class="label">三把鑰匙</div>
+<strong>無主宰</strong>（No Controller）——沒有一個固定的「我」在控制一切。<br/>
+<strong>無恆常</strong>（No Permanence）——一切都在變化，沒有永恆不變的狀態。<br/>
+<strong>緣起</strong>（Dependent Origination）——一切現象都是因緣和合而生，互相依存。
+</div><h4>日常微練習：心靈拆解檢核表</h4><div class="practice-step"><div class="step-label">每日三問</div>
+<p>1. 痛苦升起時，誰在受苦？（尋找本住）</p>
+<p>2. 拿掉痛苦的事件，那個「誰」還在嗎？（分離測試）</p>
+<p>3. 看著那個「誰」與「事件」一起消失。（同步寂滅）</p>
+</div></div>
+</section>
+<!-- ---- S18 ---- -->
+<section id="s18">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec19">最終境界：戲論滅故，諸法則空</h3><div class="verse">「不應有難：若無本住，云何有眼等？如是問答、戲論則滅。戲論滅故，諸法則空。」</div><p class="indent">當不再執著於尋找「背後的自我」，無意義的爭辯（戲論）就會停止。不再問「誰在看？」「誰在聽？」——因為這些問題本身就預設了一個不存在的主體。當問題消失，答案也不需要了。生命回到最純粹的狀態：當下觀察。</p><div class="insight" style="text-align:center; font-size:1.3em; padding:30px;"><strong>觀察即是真理。</strong><br/>
+<span style="font-family:Georgia,serif; font-size:0.85em; color:#888;">Observation is the only truth.</span>
+</div><a class="back-top" href="#toc">↑ 返回目錄</a></div>
+</section>
+</section><!-- end part1 -->
+<div class="divider">◆ ◆ ◆</div>
+<!-- ========================================================== -->
+<!--          下篇：原典論文                                      -->
+<!-- ========================================================== -->
+<section id="part2">
+<h2 class="section-title" id="ch9-sec20">下篇：原典論文——觀本住品第九（十二偈）</h2>
+<p class="indent">以下為《中論》觀本住品第九的原典全文，含龍樹菩薩偈頌及青目釋論。全品共十二偈，以問答辯證形式，層層破斥「本住」（先於經驗的主體）之實有。</p>
+<!-- 偈一、二 -->
+<section id="p2-v1">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec21">偈一、二：問方立論——本住之主張</h3><p class="qa-question">問曰：有人言：</p><div class="verse">「眼耳等諸根，　　苦樂等諸法，
+誰有如是事？　　是則名本住。
+若無有本住，　　誰有眼等法？
+以是故當知，　　先已有本住。」</div><p class="indent">眼耳鼻舌身命等諸根，名為眼耳等根。苦受、樂受、不苦不樂受、想、思、憶念等心心數法，名為苦樂等法。有論師言：先未有眼等法，應有本住。因是本住，眼等諸根得增長。若無本住，身及眼等諸根，為因何生而得增長？答曰：</p></div>
+</section>
+<!-- 偈三 -->
+<section id="p2-v3">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec22">偈三：答方反問——以何可知本住？</h3><div class="verse">「若離眼等根，　　及苦樂等法，
+先有本住者，　　以何而可知？」</div><p class="indent">若離眼耳等根、苦樂等法先有本住者，以何可說？以何可知？如外法瓶衣等，以眼等根得知；內法以苦樂等根得知。如經中說：可壞是色相，能受是受相，能識是識相。汝說離眼耳苦樂等先有本住者，以何可知說有是法？</p><p class="indent qa-question">問曰：有論師言：出入息、視眴、壽命、思惟、苦樂、憎愛、動發等是神相。若無有神，云何有出入息等相？是故當知，離眼耳等根、苦樂等法先有本住。</p><p class="indent qa-answer">答曰：是神若有，應在身內，如壁中有柱；若在身外，如人被鎧。若在身內，身則不可壞，神常在內故。是故言神在身內，但有言說，虛妄無實。若在身外覆身如鎧者，身應不可見，神細密覆故。亦應不可壞，而今實見身壞。是故當知，離苦樂等先無餘法。若謂斷臂時神縮在內不可斷者，斷頭時亦應縮在內不應死，而實有死。是故知離苦樂等先有神者，但有言說虛妄無實。復次若言身大則神大、身小則神小，如燈大則明大、燈小則明小者，如是神則隨身不應常。若隨身者，身無則神無，如燈滅則明滅。若神無常，則與眼耳苦樂等同。是故當知，離眼耳等先無別神。復次如風狂病人不得自在，不應作而作。若有神是諸作主者，云何言不得自在？若風狂病不惱神者，應離神別有所作。如是種種推求，離眼耳等根苦樂等法先無本住。若必謂離眼耳等根苦樂等法有本住者，無有是事。何以故？</p></div>
+</section>
+<!-- 偈四 -->
+<section id="p2-v4">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec23">偈四：若離本住有眼耳等</h3><div class="verse">「若離眼耳等，　　而有本住者；
+亦應離本住，　　而有眼耳等。」</div><p class="indent">若本住離眼耳等根、苦樂等法先有者，今眼耳等根、苦樂等法亦應離本住而有。</p><p class="qa-question">問曰：二事相離可爾，但使有本住。</p><p class="qa-answer">答曰：</p></div>
+</section>
+<!-- 偈五 -->
+<section id="p2-v5">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec24">偈五：以法知人，以人知法</h3><div class="verse">「以法知有人，　　以人知有法；
+離法何有人？　　離人何有法？」</div><p class="indent">法者，眼耳苦樂等。人者，是本住。汝謂以有法故知有人、以有人故知有法。今離眼耳等法何有人？離人何有眼耳等法？復次：</p></div>
+</section>
+<!-- 偈六 -->
+<section id="p2-v6">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec25">偈六：實無有本住</h3><div class="verse">「一切眼等根，　　實無有本住；
+眼耳等諸根，　　異相而分別。」</div><p class="indent">眼耳等諸根、苦樂等諸法，實無有本住。因眼緣色生眼識，以和合因緣知有眼耳等諸根，不以本住故知。是故偈中說「一切眼等根，實無有本住」，眼耳等諸根，各自能分別。問曰：</p></div>
+</section>
+<!-- 偈七、八 -->
+<section id="p2-v7">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec26">偈七、八：一與多的困境</h3><div class="verse">「若眼等諸根，　　無有本住者，
+眼等一一根，　　云何能知塵？」</div><p class="indent">若一切眼耳等諸根、苦樂等諸法無本住者，今一一根云何能知塵？眼耳等諸根無思惟，不應有知。而實知塵，當知離眼耳等諸根，更有能知塵者。</p><p class="indent qa-answer">答曰：若爾者，為一一根中各有知者？為一知者在諸根中？二俱有過。何以故？</p><div class="verse">「見者即聞者，　　聞者即受者，
+如是等諸根，　　則應有本住。」</div><p class="indent">若見者即是聞者、聞者即是受者，則是一神。如是眼等諸根應先有本住。色聲香等無有定知者，或可以眼聞聲，如人有六向隨意見聞。若聞者、見者是一，於眼等根隨意見聞，但是事不然。</p><div class="verse">「若見聞各異，　　受者亦各異，
+見時亦應聞，　　如是則神多。」</div><p class="indent">若見者、聞者、受者各異，則見時亦應聞。何以故？離見者有聞者故。如是鼻舌身中，神應一時行。若爾者，人一而神多，以一切根一時知諸塵。而實不爾，是故見者、聞者、受者不應俱用。復次：</p></div>
+</section>
+<!-- 偈九 -->
+<section id="p2-v9">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec27">偈九：四大亦無神</h3><div class="verse">「眼耳等諸根，　　苦樂等諸法，
+所從生諸大，　　彼大亦無神。」</div><p class="indent">若人言離眼耳等諸根、苦樂等諸法別有本住，是事已破。今於眼耳等所因四大，是四大中亦無本住。</p></div>
+</section>
+<!-- 偈十 -->
+<section id="p2-v10">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec28">偈十：眼等亦應無</h3><p class="qa-question">問曰：若眼耳等諸根、苦樂等諸法，無有本住可爾。眼耳等諸根、苦樂等諸法應有。</p><p class="qa-answer">答曰：</p><div class="verse">「若眼耳等根，　　苦樂等諸法，
+無有本住者，　　眼等亦應無。」</div><p class="indent">若眼耳苦樂等諸法無有本住者，誰有此眼耳等？何緣而有？是故眼耳等亦無。復次：</p></div>
+</section>
+<!-- 偈十一、十二 -->
+<section id="p2-v11">
+<div class="section-card"><h3 class="sub-title" id="ch9-sec29">偈十一、十二：三世無故，戲論則滅</h3><div class="verse">「眼等無本住，　　今後亦復無，
+以三世無故，　　無有無分別。」</div><p class="indent">思惟推求本住，於眼等先無，今後亦無。若三世無，即是無生寂滅。不應有難：若無本住，云何有眼等？如是問答、戲論則滅。戲論滅故，諸法則空。</p><a class="back-top" href="#toc">↑ 返回目錄</a></div>
+</section>
+</section><!-- end part2 -->
+</div>
+</body> </div>
+</article>
+<article class="chapter-article" data-chapter="10" id="chapter-10">
+<div class="chapter-header">
+<div class="chapter-badge">第十品</div>
+<h1 class="chapter-title">觀燃可燃品第十</h1>
+<p class="chapter-subtitle">火與薪的緣起辯證</p>
+</div>
+<div class="chapter-body">
+<body>
+<!-- Top Bar -->
+<div class="top-bar" id="top">
+<a href="#toc">目錄</a>
+<a href="#part-a">壹・導論</a>
+<a href="#part-b">貳・原典</a>
+<a href="#part-c">參・簡報解析</a>
+<a href="#part-d">肆・心法應用</a>
+</div>
+<!-- Hero -->
+<div class="container">
+<!-- ═══════════════ 目錄 ═══════════════ -->
+<!-- ═══════════════ 壹・導論 ═══════════════ -->
+<section id="part-a">
+<h2 id="ch10-sec1">壹、導論：核心隱喻與問題意識</h2>
+<div class="section-card"><h3 id="ch10-sec2">一、核心隱喻：物理與心靈的鏡像</h3><p>龍樹以<span class="key">「火」（燃）</span>喻<span class="key">「我」（受者，The Subject）</span>——能感受的主體；以<span class="key">「薪」（可燃）</span>喻<span class="key">「身心世界」（受／五陰，The Object）</span>——被感受的對象。</p><p>若火的獨立存在無法成立，則「我」的獨立存在亦隨之瓦解。</p><div class="insight"><span class="tag">原典引言</span>
+<p class="qa-question">問曰：應有受、受者，如燃、可燃，燃是受者、可燃是受，所謂五陰。</p>
+<p class="qa-answer">答曰：是事不然。何以故？燃、可燃俱不成故。燃、可燃若以一法成，若以二法成，二俱不成。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec3">二、世俗的直觀假設</h3><p>我們直覺認為：「火」在燒「木頭」。這裡面隱含一個假設——兩者皆有<span class="key">自性</span>（獨立、固定不變的實體）。但挑戰在於：如果它們真的實有，它們究竟是如何互動的？</p></div>
+<div class="section-card"><h3 id="ch10-sec4">三、三重邏輯陷阱總覽</h3><p>龍樹將「燃與可燃的關係」分為三種可能的假設，逐一論破：</p><div class="insight"><p><span class="key">一（Identity）</span>——燃與可燃是同一個東西？→ 不成立。</p>
+<p><span class="key">異（Difference）</span>——燃與可燃是完全不同的兩個東西？→ 不成立。</p>
+<p><span class="key">相待（Dependence）</span>——燃與可燃互為因果、相待而成？→ 不成立。</p>
+<p>若三路皆不通，則證明我們對「真實」的認知是錯覺。</p>
+</div></div>
+</section>
+<hr/>
+<!-- ═══════════════ 貳・原典 ═══════════════ -->
+<section id="part-b">
+<h2 id="ch10-sec5">貳、原典：十六偈與長行釋</h2>
+<div class="section-card"><h3 id="ch10-sec6">序說：問答緣起</h3><p>對方以火與薪的日常經驗，論證「受」與「受者」的存在。龍樹以一異法破之，並說明世俗言說不等於執受實有。</p><div class="commentary"><p class="qa-question">問曰：且置一異法。若言無燃、可燃，今云何以一異相破？如兔角龜毛，無故不可破。世間眼見實有事，而後可思惟。</p>
+<p class="qa-answer">答曰：隨世俗法言說，不應有過。燃、可燃若說一若說異，不名為受。若離世俗言說，則無所論。若不說燃、可燃，云何能有所破？若無所說，則義不可明。如有論者欲破有無，必應言有無，不以稱有無故而受有無。是以隨世間言說故無咎。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec7">第一偈：一異總破</h3><div class="verse">「若燃是可燃，　　作作者則一；
+若燃異可燃，　　離可燃有燃。」</div><div class="commentary"><p>燃是火、可燃是薪。作者是人、作是業。若燃、可燃一，則作、作者亦應一。若作、作者一，則陶師與瓶一。作者是陶師、作是瓶，陶師非瓶、瓶非陶師，云何為一？是以作、作者不一；故燃、可燃亦不一。若謂一不可則應異。是亦不然。何以故？若燃與可燃異，應離可燃別有燃。分別是可燃、是燃，處處離可燃應有燃。而實不爾，是故異亦不可。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec8">第二偈：常燃之過</h3><div class="verse">「如是常應燃，　　不因可燃生；
+則無燃火功，　　亦名無作火。」</div><div class="commentary"><p>若燃、可燃異，則燃不待可燃而常燃。若常燃者則自住其體、不待因緣，人功則空。人功者，將護火令燃。是功現有，是故知火不異可燃。</p>
+<p>復次若燃異可燃，燃即無作。離可燃，火何所然？若爾者，火則無作。無作火，無有是事。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec9">第三偈：不從緣生、人功應空</h3><div class="verse">「燃不待可燃，　　則不從緣生；
+火若常燃者，　　人功則應空。」</div><div class="commentary"><p>燃、可燃若異，則不待可燃有燃。若不待可燃有然，則無相因法，是故不從因緣生。復次若燃異可燃，則應常燃。若常燃者，應離可燃別見有燃，更不須人功。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec10">第四偈：燃時名可燃之破</h3><div class="verse">「若汝謂燃時，　　名為可燃者；
+爾時但有薪，　　何物燃可燃？」</div><div class="commentary"><p>若謂先有薪，燒時名可燃者，是事不爾。若離燃別有可燃者，云何言燃時名可燃？</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec11">第五偈：不至不燒不滅常住</h3><div class="verse">「若異則不至，　　不至則不燒，
+不燒則不滅，　　不滅則常住。」</div><div class="commentary"><p>若燃異可燃，則燃不應至可燃。何以故？不相待成故。若燃不相待成，則自住其體，何用可燃？是故不至。若不至，則不燃可燃。何以故？無有不至而能燒故。若不燒則無滅，應常住自相。是事不爾。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec12">第六偈：對方以男女喻反駁</h3><div class="verse">「燃與可燃異，　　而能至可燃；
+如此至彼人，　　彼人至此人。」</div><div class="commentary"><p class="qa-question">問曰：燃與可燃異，而能至可燃；如男至於女，如女至於男。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec13">第七偈：破男女喻</h3><div class="verse">「若謂燃可燃，　　二俱相離者，
+如是燃則能，　　至於彼可燃。」</div><div class="commentary"><p>若離燃有可燃、若離可燃有燃，各自成者，如是則應燃至可燃。而實不爾。何以故？離燃無可燃、離可燃無燃故。今離男有女、離女有男，是故汝喻非也。喻不成故，燃不至可燃。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec14">第八偈：相待而有之破——先定何法</h3><div class="verse">「若因可燃燃，　　因燃有可燃，
+先定有何法，　　而有燃可燃？」</div><div class="commentary"><p>若因可燃而燃成，亦應因燃可燃成。是中若先定有可燃，則因可燃而燃成。若先定有燃，則因燃可燃成。今若因可燃而燃成者，則先有可燃而後有燃，不應待燃而有可燃。何以故？可燃在先、燃在後故。若燃不燃可燃，是則可燃不成；又可燃不在餘處，離於燃故。若可燃不成，燃亦不成。若先燃後有可燃，燃亦有如是過。是故燃、可燃二俱不成。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec15">第九偈：燃成復成之過</h3><div class="verse">「若因可燃燃，　　則燃成復成；
+是為可燃中，　　則為無有燃。」</div><div class="commentary"><p>若欲因可燃而成燃，則燃成已復成。何以故？燃自住於燃中。若燃不自住其體，從可燃成者，無有是事。是故有是燃從可燃成，今則燃成復成，有如是過。復有可燃無燃過。何以故？可燃離燃自住其體故。是故燃可燃相因待，無有是事。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec16">第十偈：因待成之通破</h3><div class="verse">「若法因待成，　　是法還成待；
+今則無因待，　　亦無所成法。」</div><div class="commentary"><p>若法因待成，是法還成本因待。如是決定則無二事。如因可燃而成燃，還因於燃而成可燃，是則二俱無定。無定故，不可得。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec17">第十一偈：未成與已成</h3><div class="verse">「若法有待成，　　未成云何待？
+若成已有待，　　成已何用待？」</div><div class="commentary"><p>若法因待成，是法先未成，未成則無，無則云何有因待？若是法先已成，已成何用因待？是二俱不相因待，是故汝先說燃、可燃相因待成，無有是事。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec18">第十二偈：因與不因皆無</h3><div class="verse">「因可燃無燃，　　不因亦無燃；
+因燃無可燃，　　不因無可燃。」</div><div class="commentary"><p>今因待可燃，燃不成；不因待可燃，燃亦不成。可燃亦如是。因燃、不因燃，二俱不成，是過先已說。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec19">第十三偈：去來不可得</h3><div class="verse">「燃不餘處來，　　燃處亦無燃，
+可燃亦如是，　　餘如去來說。」</div><div class="commentary"><p>燃不於餘方來入可燃，可燃中亦無燃，析薪求燃不可得故。可燃亦如是，不從餘處來入燃中，燃中亦無可燃。如燃已不燃，未燃不燃、燃時不燃，是義如〈去來〉中說。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec20">第十四偈：五求不可得總結</h3><div class="verse">「可燃即非燃，　　離可燃無燃；
+燃無有可燃，　　燃中無可燃，
+可燃中無燃。」</div><div class="commentary"><p>可燃即非燃。何以故？先已說作、作者一過故。離可燃無燃，有常燃等過故。燃無有可燃、燃中無可燃、可燃中無燃，以有異過故，三皆不成。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec21">第十五偈：類推受受者、瓶衣諸法</h3><div class="verse">「以燃可燃法，　　說受受者法，
+及以說瓶衣，　　一切等諸法。」</div><div class="commentary"><p>如可燃非燃，如是受非受者，作作者一過故。又離受無受者，異不可得故。以異過故，三皆不成。如受受者，外瓶衣等一切法皆同上說，無生畢竟空。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec22">第十六偈：結偈——不得佛法味</h3><div class="verse">「若人說有我，　　諸法各異相；
+當知如是人，　　不得佛法味。」</div><div class="commentary"><p>諸法從本已來無生，畢竟寂滅相，是故品末說是偈。若人說我相，如犢子部眾說：不得言色即是我、不得言離色是我，我在第五不可說藏中。如薩婆多部眾說：諸法各各相，是善、是不善、是無記。是有漏、無漏、有為、無為等別異。如是等人不得諸法寂滅相，以佛語作種種戲論。</p>
+</div></div>
+</section>
+<hr/>
+<!-- ═══════════════ 參・簡報解析 ═══════════════ -->
+<section id="part-c">
+<h2 id="ch10-sec23">參、簡報解析：三重假設之逐步論破</h2>
+<div class="section-card"><h3 id="ch10-sec24">一、假設一：若燃是可燃（一／Identity）</h3><div class="insight"><span class="tag">假設</span>
+<p>火與木頭是同一個實體（A = B）。</p>
+<p>邏輯推導：若燃＝可燃，則「作」與「作者」亦應為一。</p>
+</div><h4>作者即作業的謬誤</h4><p>若「火＝木頭」，則等於說：陶師（作者）＝ 瓶（作）；吃飯的人 ＝ 飯。這違背世間基本邏輯——主體不能等同於客體。</p><p>結論：<span class="key">燃不一可燃</span>。</p></div>
+<div class="section-card"><h3 id="ch10-sec25">二、假設二：若燃異可燃（異／Difference）</h3><div class="insight"><span class="tag">假設</span>
+<p>火與木頭是完全無關、獨立存在的兩個實體。</p>
+<p>「若燃異可燃，離可燃有燃。」——離開了木頭，應該還能看見獨立燃燒的火。</p>
+</div><h4>謬誤 A：無因常燃</h4><p>若火不需木頭（因）即可存在，則火應常燃（永遠燃燒）。不需要燃料的火，就沒有熄滅的理由。</p><h4>謬誤 B：人功則空</h4><p>若火能獨立存在，則不需要人去點火、加柴（人功）。然而現實是：我們必須努力護火令燃。現實中有「人功」，證明火不能離開薪而獨立存在。</p><h4>謬誤 C：不至與不燒</h4><p>若 A 與 B 絕對相異（如東與西），則 A 無法「到達」B。若火無法「接觸」木頭，如何燒木頭？</p><p><span class="key">「若異則不至，不至則不燒。」</span>不燒則不滅，不滅則常住——這與經驗完全矛盾。</p></div>
+<div class="section-card"><h3 id="ch10-sec26">三、假設三：相待而有（相待／Dependence）</h3><div class="insight"><span class="tag">假設</span>
+<p>一般人的最後防線：「互為因果」（Co-arising）。因可燃有燃，因燃有可燃。</p>
+<p>這是看似最合理的解釋，但龍樹在此設下了最嚴密的邏輯封鎖線。</p>
+</div><h4>時間序的死結</h4><p>問：先有火，還是先有可燃？</p><p>若先有「可燃」：此時無火，誰來燒它？未燒，非可燃，僅是木。</p><p>若先有「燃」：此時無燃料，火依何而生？無燃料，火從何生？</p><h4>建立的悖論</h4><p>若 A 待 B 成，則 B 必須先存在（已成）。但 B 又待 A 成，即 B 尚未存在（未成）。你不能倚靠一個「還不存在的東西」來讓自己存在。</p><p>結論：<span class="key">循環論證，二俱不成。</span></p><h4>無窮迴圈</h4><p>若法因待成，是法還成待。火等燃料變成燃料，燃料等火變成火。結果：永遠在「等待」，永遠無法「出生」。</p><p><span class="key">「若法有待成，未成云何待？」</span></p></div>
+<div class="section-card"><h3 id="ch10-sec27">四、去來不可得</h3><p>燃不從餘處來（火不是從別的地方跑進木頭）。燃處亦無燃（火也不是原本就躲在木頭裡）。</p><p>結論：<span class="key">求火之來處，了不可得。</span></p></div>
+</section>
+<hr/>
+<!-- ═══════════════ 肆・心法應用 ═══════════════ -->
+<section id="part-d">
+<h2 id="ch10-sec28">肆、心法應用：從物理學到解脫道</h2>
+<div class="section-card"><h3 id="ch10-sec29">一、從火薪到受與受者</h3><p>龍樹菩薩並非物理學家。破斥「火／薪」的真實性，是為了破斥更深層的執著——<span class="key">「我」與「五陰」</span>。</p><p>我們認為有一個獨立的「我」（受者），在接收色、聲、香、味（受）。如同我們認為有「火」在燒「薪」。</p><div class="insight"><span class="tag">對應表</span>
+<p><strong>燃（Fire）</strong> ＝ 受者（The Feeler / Self）</p>
+<p><strong>可燃（Fuel）</strong> ＝ 受（The Feeling / Aggregates 五陰）</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec30">二、「我」的不可得</h3><p><span class="key">非一</span>：我不等於五蘊（否則身死我滅）。</p><p><span class="key">非異</span>：我不離開五蘊（否則我可離開身體獨立存在）。</p><p><span class="key">非相待</span>：我不因五蘊而生（互為因果的邏輯死結）。</p><p>結論：<span class="key">如火不可得，「我」亦不可得。</span></p></div>
+<div class="section-card"><h3 id="ch10-sec31">三、畢竟空：緣起如幻</h3><p>火與薪、我與五蘊，皆無自性（No Intrinsic Nature）。它們只是因緣和合下的現象，並非實體。</p><p><span class="key">「無生畢竟空。」</span></p></div>
+<div class="section-card"><h3 id="ch10-sec32">四、應用一：抽薪止火</h3><div class="insight"><span class="tag">實修心法</span>
+<p><strong>情境</strong>：憤怒（火）升起。</p>
+<p><strong>中論觀點</strong>：1. 憤怒不等於我。 2. 憤怒需「緣」才能燃燒。</p>
+<p class="xinfa-action"><strong>行動</strong>：既然是因緣和合，改變條件（轉念），火即自滅。不需壓抑，只需看清。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec33">五、應用二：對立的消融</h3><div class="insight"><span class="tag">實修心法</span>
+<p>「我是對的」必須依賴「你是錯的」才能成立。若無對手，爭執不生。</p>
+<p class="xinfa-insight"><strong>洞見</strong>：立場互為因果（Interdependent），並無絕對的真理實體。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec34">六、遠離斷常二見——中道</h3><p><span class="key">不落常見</span>：不執著事物實有。</p><p><span class="key">不落斷見</span>：不否定世俗功能。</p><p>火雖空，但手觸仍燙。我們尊重因果，但不被其束縛。</p></div>
+<div class="section-card"><h3 id="ch10-sec35">七、空性中的行動</h3><p>因為<span class="key">緣起性空，所以改變是可能的</span>。若一切實有固定，則人功無用（命運已定）。正因無自性，我們的努力（人功）才能創造新的因緣。</p></div>
+<div class="section-card"><h3 id="ch10-sec36">八、見法即見佛</h3><p>智者不看「實體」（火、我），只看「流程」（緣起、條件）。不再問「我是誰」，而問<span class="key">「現在是什麼因緣正在運作」</span>。</p></div>
+</section>
+<hr/>
+<!-- ═══════════════ 伍・結語 ═══════════════ -->
+<section id="part-e">
+<h2 id="ch10-sec37">伍、結語與延伸閱讀</h2>
+<div class="section-card"><h3 id="ch10-sec38">觀燃可燃品：全景圖</h3><p>在物理層面（Physics），燃與可燃經一、異、相待三路考察，俱不成立。在心靈層面（Mind），受者（Self）與受（Aggregates）同樣俱不成立。兩條路匯歸同一結論——<span class="key">中道</span>，<span class="key">畢竟空</span>。</p></div>
+<div class="section-card"><h3 id="ch10-sec39">結語偈頌</h3><div class="verse">「若人說有我，諸法各異相；
+當知如是人，不得佛法味。」</div><p>若人執著有實體的我，或認為萬法有獨立相，此人尚未嚐到佛法的真理滋味。</p></div>
+<div class="section-card"><h3 id="ch10-sec40">最後的提問</h3><div class="insight"><p>正在閱讀這篇文章的「你」，與這篇「文章」……</p>
+<p style="text-align:center; font-size:1.3em; margin-top:12px;">
+<span class="key">是一？是異？還是相待？</span>
+</p>
+<p style="text-align:center; color:#888;">請自行深入。</p>
+</div></div>
+<div class="section-card"><h3 id="ch10-sec41">延伸閱讀</h3><p>《中論》（Mūlamadhyamakakārikā）。推薦：梵志青目釋。</p><p>建議心態：以「破」為「顯」，不立新說，只破執著。</p><div class="back-top"><a href="#top">↑ 回到頂部</a></div></div>
+</section>
+</div><!-- .container -->
+</body> </div>
+</article>
+<article class="chapter-article" data-chapter="11" id="chapter-11">
+<div class="chapter-header">
+<div class="chapter-badge">第十一品</div>
+<h1 class="chapter-title">觀本際品第十一</h1>
+<p class="chapter-subtitle">生死起點的終極追問</p>
+</div>
+<div class="chapter-body">
+<body>
+<!-- ════════════════════════════════════════ HEADER ════════════════════════════════════════ -->
+<header>
+<h1>中論・觀本際品第十一</h1>
+<div class="subtitle">破解生死虛妄的終極邏輯──從線性思考到緣起性空的心法解構</div>
+<div class="meta">Mūlamadhyamakakārikā: Chapter 11 Analysis ｜ 龍樹菩薩 造 ｜ 鳩摩羅什 譯 ｜ 青目 釋</div>
+</header>
+<!-- ════════════════════════════════════════ TOC ════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════ S1 ════════════════════════════════════════ -->
+<section id="s1">
+<h2 id="ch11-sec1">一、核心衝突：生死的起點在哪裡？</h2>
+<p>《無本際經》提出了一個根本哉問：既然眾生在生死中往來，那一切必定有個「最初的開端」和「最後的結尾」？</p>
+<div class="commentary"><strong>論文原文（問難）：</strong>《無本際經》說：眾生往來生死，本際不可得。是中說有眾生、有生死。以何因緣故而作是說？
+  </div>
+<div class="insight">
+    人類的思維慣性總是在尋找「第一因」（The First Cause）。這是線性思考的根本預設──認為一切事物必然有一個絕對的起點。龍樹菩薩在本品中，將從根本上解構這一預設。
+  </div>
+<div class="back-top"><a href="#toc">↑ 回到目錄</a></div>
+</section>
+<div class="transition">▼</div>
+<!-- ════════════════════════════════════════ S2 ════════════════════════════════════════ -->
+<section id="s2">
+<h2 id="ch11-sec2">二、大聖之判決：本際不可得（第一偈）</h2>
+<div class="verse">「大聖之所說，　　本際不可得，
+生死無有始，　　亦復無有終。」</div>
+<div class="commentary"><strong>青目釋：</strong>聖人有三種：一者外道五神通；二者阿羅漢辟支佛；三者得神通大菩薩。佛於三種中最上，故言大聖。佛所言說，無不是實說。生死無始。何以故？生死初後不可得，是故言無始。
+  </div>
+<div class="insight">
+    「本際」(Ultimate Limit) 即絕對的起點。龍樹菩薩指出，在循環循環的因果鏈中，找不到一個獨立存在的起點。這不是說「起點藏在某處我們找不到」，而是起點本身在邏輯上就不成立。
+  </div>
+<div class="back-top"><a href="#toc">↑ 回到目錄</a></div>
+</section>
+<div class="transition">▼</div>
+<!-- ════════════════════════════════════════ S3 ════════════════════════════════════════ -->
+<section id="s3">
+<h2 id="ch11-sec3">三、既然無頭無尾，何來中間？（第二偈）</h2>
+<div class="verse">「若無有始終，　　中當云何有？
+是故於此中，　　先後共亦無。」</div>
+<div class="commentary"><strong>青目釋：</strong>因中、後故有初，因初、中故有後。若無初無後，云何有中？生死中無初、中、後，是故說先後共不可得。
+  </div>
+<p>此偈的論證結構可以拆解為三個層次：</p>
+<p>第一，若無有始終，中當云何有？──「中間」(Middle) 的概念依賴於「邊界」而存在，若起點 A 與終點 C 都不可得，則它們之間的 B（中間）也失去了成立的基礎。</p>
+<p>第二，中間依賴於邊界而存在──這是相互依存的緣起關係，沒有獨立自性可言。</p>
+<p>第三，若無起點與終點，「過程」本身即是虛妄。</p>
+<div class="insight">
+    生命並非線性的線段，初、中、後皆不可得。這徹底瓦解了我們將時間視為一條有頭有尾之直線的日常直覺。
+  </div>
+<div class="back-top"><a href="#toc">↑ 回到目錄</a></div>
+</section>
+<div class="transition">▼</div>
+<!-- ════════════════════════════════════════ S4 ════════════════════════════════════════ -->
+<section id="s4">
+<h2 id="ch11-sec4">四、邏輯攻防戰：生與死的時間軸假設（第三、四偈）</h2>
+<p>龍樹菩薩將窮盡所有時間的可能性，證明實有的「生」與「死」無法成立。三種假設分別是：先後（Forward）、後先（Backward）、同時（Simultaneous）。</p>
+<!-- 假設一 -->
+<div class="section-card"><h3 id="ch11-sec5">假設一：先有生，後有老死</h3><div class="verse">「若使先有生，　　後有老死者；
+不老死有生，　　不生有老死。」</div><div class="commentary"><strong>青目釋：</strong>生死眾生，若先生、漸有老而後有死者，則生無老死。法應生有老死、老死有生。又不老死而生，是亦不然；又不因生有老死。
+  </div><p>這是最符合直覺的線性觀點：認為「生」是獨立發生在前的實體。然而若「生」在「老死」之前獨立存在，則在「生」的那一刻，該生物不具備「老死」的性質。</p><div class="insight"><strong>破綻：不死之身的謬誤。</strong>「不老死有生」意味著一個會有出生但不會老死的實體（不死怪物），這違背現實。若生是獨立的、完全不含死的因子，那從生到死的轉變就無法解釋。
+  </div></div>
+<!-- 假設二 -->
+<div class="section-card"><h3 id="ch11-sec6">假設二：先有老死，後有生</h3><div class="verse">「若先有老死，　　而後有生者；
+是則為無因，　　不生有老死。」</div><div class="commentary"><strong>青目釋：</strong>若先老死後生，老死則無因，生在後故；又不生，何有老死？
+  </div><p>此假設試圖將死亡視為下一期生命的前提。然而若還未出生，何來老死？</p><div class="insight"><strong>破綻：無因之果 (Causelessness)。</strong>若死在生前，則死成為了沒有原因的結果。這比謬誤一更荒謬──一個尚不存在的東西怎麼能先行老化與消亡？
+  </div></div>
+<!-- 假設三 -->
+<div class="section-card"><h3 id="ch11-sec7">假設三：生與老死一時共</h3><div class="verse">「生及於老死，　　不得一時共；
+生時則有死，　　是二俱無因。」</div><div class="commentary"><strong>青目釋：</strong>若生老死一時，則不然。何以故？生時即有死故。法應生時有、死時無，若生時有死，是事不然。若一時生，則無有相因。如牛角一時出則不相因。
+  </div><p>此假設試圖通過讓兩者同時發生來解決順序問題。然而這引發兩個破綻：</p><p><strong>破綻一：狀態的矛盾。</strong>「生」= 存在的開始（有），「死」= 存在的結束（無）。生時則有死──如同光明與黑暗不能在同一點同時存在。</p><p><strong>破綻二：牛角譬喻 (The Cow Horn Paradox)。</strong>「不相因」(Non-Causality)──左角不是右角的原因，右角也不是左角的原因。若生死同時發生，它們就變成互不相干的平行事件。這破壞了因果律──如果生不是死的原因，消除生也無法消除死（無法解脫）。</p></div>
+<!-- 總結表 -->
+<div class="section-card"><h3 id="ch11-sec8">邏輯的崩塌</h3><table>
+<tr><th>假設</th><th>結果</th><th>判定</th></tr>
+<tr><td>先後？（先生後死）</td><td>導致長生不老</td><td class="fail">✕</td></tr>
+<tr><td>後先？（先死後生）</td><td>導致無因之果</td><td class="fail">✕</td></tr>
+<tr><td>同時？（生死一時）</td><td>導致互不相干</td><td class="fail">✕</td></tr>
+</table><p>既然三種邏輯都無法建立因果關係，證明我們認為實有的「生」與「死」根本不存在。</p><div class="back-top"><a href="#toc">↑ 回到目錄</a></div></div>
+</section>
+<div class="transition">▼</div>
+<!-- ════════════════════════════════════════ S5 ════════════════════════════════════════ -->
+<section id="s5">
+<h2 id="ch11-sec9">五、戲論的本質（第五偈）</h2>
+<div class="verse">「若使初後共，　　是皆不然者，
+何故而戲論，　　謂有生老死？」</div>
+<div class="commentary"><strong>青目釋：</strong>思惟生老死三皆有過故，即無生，畢竟空。汝今何故貪著戲論生老死，謂有決定相？
+  </div>
+<p>什麼是「戲論」（Prapañca）？大腦將流動的生命強行切成片段，並執著這些標籤為實有。「何故而戲論，謂有生老死？」──既然先、後、同時三種假設皆不成立，那我們所執著的「生」「老」「死」，不過是概念上的虛構、語言上的遊戲罷了。</p>
+<div class="insight">
+    龍樹在此不只是破除一個哲學命題，而是直指我們心理運作的根本機制：我們習慣性地將連續流動的經驗切割為離散的片段，然後將這些片段當作真實不變的存在。這正是煩惱的根源。
+  </div>
+<div class="back-top"><a href="#toc">↑ 回到目錄</a></div>
+</section>
+<div class="transition">▼</div>
+<!-- ════════════════════════════════════════ S6 ════════════════════════════════════════ -->
+<section id="s6">
+<h2 id="ch11-sec10">六、真相：相因與緣起</h2>
+<div class="section-card"><h3 id="ch11-sec11">火與薪的智慧</h3><p>既然「生」與「死」都不是獨立的實體，那它們的真相是什麼？答案是「此有故彼有」──生與死互為前提。沒有生就不會有死，沒有死也不會顯出生。它們是相互依存但無自性的。</p><p>火 (Fire) 不在木材 (Wood) 之前，也不在之後。它們在燃燒的當下同時顯現，卻又互為因果。生命就是這場燃燒，無法被拆解為獨立的時間點。</p></div>
+<div class="section-card"><h3 id="ch11-sec12">線性思考的心理陷阱</h3><p>我們尋找「起點」是為了歸咎責任（過去），尋找「終點」是為了安全感（未來）。龍樹的邏輯斬斷了這兩頭的執著，迫使我們回到「當下」。</p><div class="insight">
+    當我們不再執著於「一切從何而來」和「一切往何處去」，才能真正安住於此刻的流動之中。這不是虛無主義，而是對生命本質最深刻的洞察。
+  </div><div class="back-top"><a href="#toc">↑ 回到目錄</a></div></div>
+</section>
+<div class="transition">▼</div>
+<!-- ════════════════════════════════════════ S7 ════════════════════════════════════════ -->
+<section id="s7">
+<h2 id="ch11-sec13">七、一切法本際皆無（第六、七偈）</h2>
+<div class="verse">「諸所有因果，　　相及可相法，
+受及受者等，　　所有一切法，
+非但於生死，　　本際不可得，
+如是一切法，　　本際皆亦無。」</div>
+<div class="commentary"><strong>青目釋：</strong>一切法者，所謂因果相可相、受及受者等，皆無本際，非但生死無本際。以略開示故，說生死無本際。
+  </div>
+<p>龍樹在最後兩偈進行了一次關鍵的擴展：「本際不可得」不只適用於生死，而是適用於一切法。這包含三種虛妄的二元對立：</p>
+<div class="section-card"><h3 id="ch11-sec14">三種虛妄的二元對立</h3><p><strong>因果 (Causality)：</strong>因與果相互依存、無法割裂，不存在獨立的「第一因」。</p><p><strong>相／可相 (Characteristics)：</strong>特徵與被特徵所描述之物相互定義，沒有先後之分。</p><p><strong>受／受者 (Subject/Object)：</strong>感受與感受者不可分離，不存在獨立的主體。</p></div>
+<div class="section-card"><h3 id="ch11-sec15">誰在受苦？破解「受者」</h3><p>先有「我」才有「痛」？不是。先有「痛」才找到「我」？也不是。「受者」(The Feeler) 本身也是緣起性空，沒有獨立實體。</p><div class="insight">
+    生死 (Life/Death)、物 (Objects)、我 (Self)、宇宙 (Universe)──層層推展，「非但於生死……一切法本際皆亦無」。龍樹以生死為入口，最終揭示的是整個存在界的空性真相。
+  </div><div class="back-top"><a href="#toc">↑ 回到目錄</a></div></div>
+</section>
+<div class="transition">◆</div>
+<!-- ════════════════════════════════════════ S8 ════════════════════════════════════════ -->
+<section id="s8">
+<h2 id="ch11-sec16">附錄：原典全文──觀本際品第十一（八偈）</h2>
+<p class="qa-question qa-question"><strong>問曰：</strong>《無本際經》說：眾生往來生死，本際不可得。是中說有眾生、有生死。以何因緣故而作是說？</p>
+<p class="qa-answer qa-answer"><strong>答曰：</strong></p>
+<div class="verse">「大聖之所說，　　本際不可得，
+生死無有始，　　亦復無有終。」</div>
+<p>聖人有三種：一者外道五神通；二者阿羅漢辟支佛；三者得神通大菩薩。佛於三種中最上，故言大聖。佛所言說，無不是實說。生死無始。何以故？生死初後不可得，是故言無始。汝謂若無初後，應有中者，是亦不然。何以故？</p>
+<div class="verse">「若無有始終，　　中當云何有？
+是故於此中，　　先後共亦無。」</div>
+<p>因中、後故有初，因初、中故有後。若無初無後，云何有中？生死中無初、中、後，是故說先後共不可得。何以故？</p>
+<div class="verse">「若使先有生，　　後有老死者；
+不老死有生，　　不生有老死。
+若先有老死，　　而後有生者；
+是則為無因，　　不生有老死。」</div>
+<p>生死眾生，若先生、漸有老而後有死者，則生無老死。法應生有老死、老死有生。又不老死而生，是亦不然；又不因生有老死。若先老死後生，老死則無因，生在後故；又不生，何有老死？若謂生老死先後不可，謂一時成者，是亦有過。何以故？</p>
+<div class="verse">「生及於老死，　　不得一時共；
+生時則有死，　　是二俱無因。」</div>
+<p>若生老死一時，則不然。何以故？生時即有死故。法應生時有、死時無，若生時有死，是事不然。若一時生，則無有相因。如牛角一時出則不相因。是故：</p>
+<div class="verse">「若使初後共，　　是皆不然者，
+何故而戲論，　　謂有生老死？」</div>
+<p>思惟生老死三皆有過故，即無生，畢竟空。汝今何故貪著戲論生老死，謂有決定相？復次：</p>
+<div class="verse">「諸所有因果，　　相及可相法，
+受及受者等，　　所有一切法，
+非但於生死，　　本際不可得，
+如是一切法，　　本際皆亦無。」</div>
+<p>一切法者，所謂因果相可相、受及受者等，皆無本際，非但生死無本際。以略開示故，說生死無本際。</p>
+<div class="back-top"><a href="#toc">↑ 回到目錄</a></div>
+</section>
+<!-- ════════════════════════════════════════ FOOTER ════════════════════════════════════════ -->
+</body> </div>
+</article>
+<article class="chapter-article" data-chapter="12" id="chapter-12">
+<div class="chapter-header">
+<div class="chapter-badge">第十二品</div>
+<h1 class="chapter-title">觀苦品第十二</h1>
+<p class="chapter-subtitle">痛苦歸因的邏輯解構</p>
+</div>
+<div class="chapter-body">
+<body>
+<!-- ===================== HERO ===================== -->
+<div class="container">
+<!-- ===================== TOC ===================== -->
+<!-- ===================== S1 ===================== -->
+<section id="s1">
+<h2 id="ch12-sec1">一、核心提問：痛苦發生時，誰該負責？</h2>
+<p>當痛苦出現，大腦的本能反應是尋找歸因。我們會問：「為什麼？」以及「是誰造成的？」。龍樹菩薩指出，問題不在於答案，而在於我們「提問的方式」本身就是一種謬誤。</p>
+<div class="verse">
+    自作及他作，共作無因作，<br/>
+    如是說諸苦，於果則不然。
+    <span class="ref">——觀苦品 第一偈</span>
+</div>
+<div class="commentary"><div class="label">青目釋</div>
+<p>有人言：苦惱自作；或言他作；或言亦自作亦他作；或言無因作，於果皆不然。眾生以眾緣致苦，厭苦欲求滅。不知苦惱實因緣有四種謬，是故說於果皆不然。</p>
+</div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S2 ===================== -->
+<section id="s2">
+<h2 id="ch12-sec2">二、邏輯的四個死角</h2>
+<p>龍樹菩薩的論點：這四條路，條條不通。</p>
+<div class="grid-4">
+<div class="cell">
+<div class="num">1</div>
+<div class="term">自作</div>
+<div class="eng">Self-Made (Svayaṃ-kṛta)</div>
+<div class="desc">是我造成的（內疚）</div>
+</div>
+<div class="cell">
+<div class="num">2</div>
+<div class="term">他作</div>
+<div class="eng">Other-Made (Parakṛta)</div>
+<div class="desc">是別人害的（指責）</div>
+</div>
+<div class="cell">
+<div class="num">3</div>
+<div class="term">共作</div>
+<div class="eng">Both (Dvābhyāṃ-kṛta)</div>
+<div class="desc">合夥造成的（共犯）</div>
+</div>
+<div class="cell">
+<div class="num">4</div>
+<div class="term">無因作</div>
+<div class="eng">No Cause (Ahetuka)</div>
+<div class="desc">隨機發生（運氣）</div>
+</div>
+</div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S3 ===================== -->
+<section id="s3">
+<h2 id="ch12-sec3">三、解構工具：五陰</h2>
+<p>要討論「誰」在受苦，必須先定義「人」是什麼。</p>
+<p>五陰（五蘊）：生命不是固體，而是連續流動的過程。昨天的你與今天的你，既非完全相同，亦非完全無關。</p>
+<div class="insight"><div class="title">五陰 (Five Aggregates)</div>
+<p><strong>色</strong> (Form)、<strong>受</strong> (Sensation)、<strong>想</strong> (Perception)、<strong>行</strong> (Mental Formations)、<strong>識</strong> (Consciousness)</p>
+<p style="margin-top:8px; color:var(--text-muted);">前五陰 (Previous Aggregates) → 後五陰 (Current Aggregates)：因前五陰有後五陰生。</p>
+</div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S4 ===================== -->
+<section id="s4">
+<h2 id="ch12-sec4">四、第一關：破解「自作」</h2>
+<div class="section-card"><h3 id="ch12-sec5">4.1 偈頌與青目釋</h3><div class="verse">
+    苦若自作者，則不從緣生，<br/>
+    因有此陰故，而有彼陰生。
+    <span class="ref">——觀苦品 第二偈</span>
+</div><div class="commentary"><div class="label">青目釋</div>
+<p>若苦自作，則不從眾緣生，自名從自性生。是事不然。何以故？因前五陰有後五陰生，是故苦不得自作。</p>
+</div><p>如果痛苦是「自作」的，代表它源自一個獨立、不變的實體。如果它是獨立的，它就不需要依賴外在條件。但事實上，痛苦是依賴因緣而生的——這就是謬誤所在。</p><div class="verse">
+    若謂此五陰，異彼五陰者，<br/>
+    如是則應言，從他而作苦。
+    <span class="ref">——觀苦品 第三偈</span>
+</div><div class="commentary"><div class="label">青目釋</div>
+<p>若此五陰與彼五陰異，彼五陰與此五陰異者應從他作。如縷與布異者，應離縷有布。若離縷無布者，則布不異縷。如是彼五陰異此五陰者，則應離此五陰有彼五陰。若離此五陰無彼五陰者，則此五陰不異彼五陰，是故不應言苦從他作。</p>
+</div></div>
+<div class="section-card"><h3 id="ch12-sec6">4.2 邏輯矛盾：刀不自割</h3><div class="verse">
+    苦不名自作，法不自作法，<br/>
+    彼無有自體，何有彼作苦？
+    <span class="ref">——觀苦品 第八偈</span>
+</div><div class="commentary"><div class="label">青目釋</div>
+<p>自作苦不然。何以故？如刀不能自割。如是法不能自作法，是故不能自作。他作亦不然。何以故？離苦無彼自性。若離苦有彼自性者，應言彼作苦，彼亦即是苦，云何苦自作苦？</p>
+</div><div class="insight"><div class="title">「法不自作法…如刀不能自割」</div>
+<p>一個單一的實體無法同時是「施力者」又是「受力者」。痛苦無法自己產生自己。若無「前五陰」的條件，就無「後五陰」的苦果。</p>
+</div></div>
+<div class="section-card"><h3 id="ch12-sec7">4.3 譬喻：接力賽跑</h3><p>過去的「我」和現在的「我」是同一個人嗎？</p><div class="insight"><div class="title">接力賽的邏輯</div>
+<p>若是同一個：你將永遠不變，罪與罰將永恆固定。<br/>
+    若是不同人：因果關係將斷裂，無關者受罰。<br/>
+    正解：像接力賽——跑者不同，但接力棒（業力）延續。</p>
+</div></div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S5 ===================== -->
+<section id="s5">
+<h2 id="ch12-sec8">五、第二關：破解「他作」</h2>
+<div class="section-card"><h3 id="ch12-sec9">5.1 偈頌與青目釋</h3><div class="verse">
+    若人自作苦，離苦何有人？<br/>
+    而謂於彼人，而能自作苦。
+    <span class="ref">——觀苦品 第四偈</span>
+</div><div class="commentary"><div class="label">青目釋</div>
+<p>若謂人自作苦者，離五陰苦，何處別有人而能自作苦？應說是人，而不可說，是故苦非人自作。</p>
+</div><div class="verse">
+    若苦他人作，而與此人者；<br/>
+    若當離於苦，何有此人受？
+    <span class="ref">——觀苦品 第五偈</span>
+</div><div class="commentary"><div class="label">青目釋</div>
+<p>若他人作苦與此人者，離五陰無有此人受。</p>
+</div><div class="verse">
+    苦若彼人作，持與此人者；<br/>
+    離苦何有人，而能授於此？
+    <span class="ref">——觀苦品 第六偈</span>
+</div><div class="commentary"><div class="label">青目釋</div>
+<p>若謂彼人作苦授與此人者，離五陰苦，何有彼人作苦持與此人？若有者，應說其相。</p>
+</div><div class="verse">
+    自作若不成，云何彼作苦？<br/>
+    若彼人作苦，即亦名自作。
+    <span class="ref">——觀苦品 第七偈</span>
+</div><div class="commentary"><div class="label">青目釋</div>
+<p>種種因緣彼自作苦不成，而言他作苦，是亦不然。何以故？此彼相待故。若彼作苦，於彼亦名自作苦。自作苦先已破，汝受自作苦不成故，他作亦不成。</p>
+</div><p>我們傾向認為有一個獨立的「壞人」（他）傷害了「受害者」（我）。這種觀點預設了「我」與「他」是完全分割的兩個宇宙。</p></div>
+<div class="section-card"><h3 id="ch12-sec10">5.2 相待論：沒有「受害者」，就沒有「加害者」</h3><p>「此彼相待故」——就像「東方」與「西方」，如果沒有東方，西方也不存在。如果「我」（自）的獨立性已經被否定，那麼相對於我的「他」也無法獨立存在。「他作」本質上只是從另一個角度看的「自作」。</p></div>
+<div class="section-card"><h3 id="ch12-sec11">5.3 失蹤的受害者</h3><p>「離苦何有人？」——如果你說「別人把苦給了我」，試著把「苦」（受傷的狀態）拿掉，那個「接收苦的人」還存在嗎？</p><p>結論：離開了當下的五陰（苦），找不到一個獨立的「我」。既然沒有受害者，誰來接收別人的傷害？</p></div>
+<div class="section-card"><h3 id="ch12-sec12">5.4 譬喻：牛的雙角、布與縷</h3><p>如果「我」與「他」是截然無關的實體……就像牛的左角與右角，同時存在但互不相干。邏輯斷裂：如果完全無關（異），他的行動就不應該影響到你。</p><p>就像布與線——如果布完全異於線，那沒有線也能有布。但離縷無布，則布不異縷。</p></div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S6 ===================== -->
+<section id="s6">
+<h2 id="ch12-sec13">六、第三關與第四關：共作與無因</h2>
+<div class="verse">
+    若此彼苦成，應有共作苦；<br/>
+    此彼尚無作，何況無因作！
+    <span class="ref">——觀苦品 第九偈</span>
+</div>
+<div class="commentary"><div class="label">青目釋</div>
+<p>自作、他作猶尚有過，何況無因作。無因多過，如〈破作作者品〉中說。</p>
+</div>
+<div class="insight"><div class="title">共作 (Both)</div>
+<p>既然自作不成立，他作也不成立，兩者加起來依然是零。</p>
+<p style="text-align:center; font-size:1.2em; color:var(--gold); margin-top:10px;">Self (0) + Other (0) = Both (0)</p>
+</div>
+<div class="insight"><div class="title">無因作 (No Cause)</div>
+<p>「此彼尚無作，何況無因作！」——如果連有原因都造不出實體的苦，隨機（無中生有）更是不可能。</p>
+</div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S7 ===================== -->
+<section id="s7">
+<h2 id="ch12-sec14">七、四路不通——總結否定</h2>
+<div class="grid-4">
+<div class="cell">
+<div class="term" style="color:var(--accent-light);">自作？</div>
+<div class="desc">✗ 違背緣起</div>
+</div>
+<div class="cell">
+<div class="term" style="color:var(--accent-light);">他作？</div>
+<div class="desc">✗ 違背因果</div>
+</div>
+<div class="cell">
+<div class="term" style="color:var(--accent-light);">共作？</div>
+<div class="desc">✗ 邏輯無效</div>
+</div>
+<div class="cell">
+<div class="term" style="color:var(--accent-light);">無因？</div>
+<div class="desc">✗ 不可能</div>
+</div>
+</div>
+<p>既然這四種邏輯都無法解釋痛苦的來源，那麼痛苦究竟是什麼？</p>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S8 ===================== -->
+<section id="s8">
+<h2 id="ch12-sec15">八、轉折：從「實體」轉向「緣起」</h2>
+<p>龍樹菩薩並非否定痛苦的感受，而是否定痛苦的「實體性」。痛苦不是一個「東西」，而是一個「現象」。「眾生以眾緣致苦」——<strong>緣起性空</strong>。</p>
+<div class="section-card"><h3 id="ch12-sec16">8.1 譬喻：彩虹與水中月</h3><p>看得見，抓不到 (Visible but Intangible)。</p><div class="insight"><div class="title">彩虹的啟示</div>
+<p>彩虹存在嗎？存在——緣起顯現。<br/>
+    彩虹有實體嗎？沒有——自性本空。<br/>
+    痛苦亦如是。它是條件（陽光＋水氣）聚合的產物，沒有獨立的主人。</p>
+</div></div>
+<div class="section-card"><h3 id="ch12-sec17">8.2 什麼是「中道」？</h3><p><strong style="color:var(--accent-light);">破常見</strong>（Refuting Eternalism）：不承認痛苦有實體主宰（非自作）。</p><p><strong style="color:var(--accent-light);">破斷見</strong>（Refuting Nihilism）：不承認痛苦完全不存在或隨機（非無因）。</p><p><strong style="color:var(--gold);">緣起中道</strong>：痛苦如幻如化，因緣聚則生，因緣散則滅。</p></div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S9 ===================== -->
+<section id="s9">
+<h2 id="ch12-sec18">九、戰場擴大：一切外萬物</h2>
+<div class="verse">
+    非但說於苦，四種義不成；<br/>
+    一切外萬物，四義亦不成。
+    <span class="ref">——觀苦品 第十偈</span>
+</div>
+<div class="commentary"><div class="label">青目釋</div>
+<p>佛法中雖說五受陰為苦，有外道人謂苦受為苦，是故說不但說於苦四種義不成，外萬物地水山木等一切法皆亦不成。</p>
+</div>
+<p>這套邏輯不只適用於情緒，也適用於物理世界。種子到樹苗：樹不自作（不無中生有），樹不他作（種子與樹不異，否則石頭也能長樹）。<strong>萬物皆無自性，皆是緣起。</strong></p>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S10 ===================== -->
+<section id="s10">
+<h2 id="ch12-sec19">十、心法應用：去磁</h2>
+<p>當我們不再執著有一個真實的「受害者（我）」和「加害者（他）」……情緒就失去了黏著的對象。</p>
+<div class="insight"><div class="title">實踐要旨</div>
+<p><strong style="color:var(--accent-light);">不自責</strong>：苦非自作。<br/>
+<strong style="color:var(--accent-light);">不怨人</strong>：苦非他作。<br/>
+    只剩下純粹的「解決問題」。</p>
+</div>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S11 ===================== -->
+<section id="s11">
+<h2 id="ch12-sec20">十一、專家級邏輯總結</h2>
+<div class="flowchart">
+<div class="step">事件發生 (Event)</div>
+<div class="arrow">↓</div>
+<div class="step">歸因測試 (Test)：自作？<span style="color:var(--accent-light);"> No</span>　他作？<span style="color:var(--accent-light);"> No</span></div>
+<div class="arrow">↓</div>
+<div class="step">結論 (Result)：無實體 (No Entity)</div>
+<div class="arrow">↓</div>
+<div class="step" style="border-color:var(--gold);">轉念 (Shift)：改變因緣 (Change Conditions)</div>
+</div>
+<p style="text-align:center; font-size:1.15em; color:var(--gold); margin-top:16px;">「痛苦是動詞，不是名詞。」</p>
+<p style="text-align:center;">痛苦不是你擁有的東西，而是一個正在發生的過程。</p>
+<p style="text-align:center; color:var(--gold); margin-top:12px;">「此有故彼有，此滅故彼滅」</p>
+<p style="text-align:center; color:var(--accent-light);">看見緣起，即見解脫。</p>
+</section>
+<hr class="section-divider"/>
+<!-- ===================== S12 ===================== -->
+<section id="s12">
+<h2 id="ch12-sec21">十二、原典全文與註釋</h2>
+<div class="section-card"><h3 id="ch12-sec22">第一偈</h3><div class="verse">
+    自作及他作，共作無因作，<br/>
+    如是說諸苦，於果則不然。
+  </div><p>有人言：苦惱自作；或言他作；或言亦自作亦他作；或言無因作，於果皆不然。於果皆不然者，眾生以眾緣致苦，厭苦欲求滅。不知苦惱實因緣有四種謬，是故說於果皆不然。何以故？</p></div>
+<div class="section-card"><h3 id="ch12-sec23">第二偈</h3><div class="verse">
+    苦若自作者，則不從緣生，<br/>
+    因有此陰故，而有彼陰生。
+  </div><p>若苦自作，則不從眾緣生，自名從自性生。是事不然。何以故？因前五陰有後五陰生，是故苦不得自作。</p></div>
+<div class="section-card"><h3 id="ch12-sec24">第三偈</h3><div class="verse">
+    若謂此五陰，異彼五陰者，<br/>
+    如是則應言，從他而作苦。
+  </div><p>若此五陰與彼五陰異，彼五陰與此五陰異者應從他作。如縷與布異者，應離縷有布。若離縷無布者，則布不異縷。如是彼五陰異此五陰者，則應離此五陰有彼五陰。若離此五陰無彼五陰者，則此五陰不異彼五陰，是故不應言苦從他作。</p></div>
+<div class="section-card"><h3 id="ch12-sec25">第四偈</h3><div class="verse">
+    若人自作苦，離苦何有人？<br/>
+    而謂於彼人，而能自作苦。
+  </div><p>若謂人自作苦者，離五陰苦，何處別有人而能自作苦？應說是人，而不可說，是故苦非人自作。若謂人不自作苦，他人作苦與此人者，是亦不然。何以故？</p></div>
+<div class="section-card"><h3 id="ch12-sec26">第五偈</h3><div class="verse">
+    若苦他人作，而與此人者；<br/>
+    若當離於苦，何有此人受？
+  </div><p>若他人作苦與此人者，離五陰無有此人受。復次：</p></div>
+<div class="section-card"><h3 id="ch12-sec27">第六偈</h3><div class="verse">
+    苦若彼人作，持與此人者；<br/>
+    離苦何有人，而能授於此？
+  </div><p>若謂彼人作苦授與此人者，離五陰苦，何有彼人作苦持與此人？若有者，應說其相。復次：</p></div>
+<div class="section-card"><h3 id="ch12-sec28">第七偈</h3><div class="verse">
+    自作若不成，云何彼作苦？<br/>
+    若彼人作苦，即亦名自作。
+  </div><p>種種因緣彼自作苦不成，而言他作苦。是亦不然。何以故？此彼相待故。若彼作苦，於彼亦名自作苦。自作苦先已破，汝受自作苦不成故，他作亦不成。復次：</p></div>
+<div class="section-card"><h3 id="ch12-sec29">第八偈</h3><div class="verse">
+    苦不名自作，法不自作法，<br/>
+    彼無有自體，何有彼作苦？
+  </div><p>自作苦不然。何以故？如刀不能自割。如是法不能自作法，是故不能自作。他作亦不然。何以故？離苦無彼自性。若離苦有彼自性者，應言彼作苦，彼亦即是苦，云何苦自作苦？</p></div>
+<div class="section-card"><h3 id="ch12-sec30">第九偈</h3><div class="verse">
+    若此彼苦成，應有共作苦；<br/>
+    此彼尚無作，何況無因作！
+  </div><p>自作、他作猶尚有過，何況無因作。無因多過，如〈破作作者品〉中說。復次：</p></div>
+<div class="section-card"><h3 id="ch12-sec31">第十偈</h3><div class="verse">
+    非但說於苦，四種義不成；<br/>
+    一切外萬物，四義亦不成。
+  </div><p>佛法中雖說五受陰為苦，有外道人謂苦受為苦，是故說不但說於苦四種義不成，外萬物地水山木等一切法皆亦不成。</p></div>
+</section>
+<!-- ===================== FOOTNOTES ===================== -->
+<div class="footnotes">
+</div>
+<div class="back-top"><a href="#toc">↑ 回到目錄</a></div>
+</div><!-- .container -->
+</body> </div>
+</article>
+<article class="chapter-article" data-chapter="13" id="chapter-13">
+<div class="chapter-header">
+<div class="chapter-badge">第十三品</div>
+<h1 class="chapter-title">觀行品第十三</h1>
+<p class="chapter-subtitle">虛誑與空的邏輯辯證</p>
+</div>
+<div class="chapter-body">
+<body>
+<!-- ==================== HERO ==================== -->
+<!-- ==================== TOC ==================== -->
+<!-- ==================== S1: 導論 ==================== -->
+<section id="s1">
+<h2 id="ch13-sec1">一、導論：為什麼佛說世界是「虛誑」的？</h2>
+<div class="section-card"><h3 id="ch13-sec2">佛經的定義與核心邏輯</h3><p>佛經云：「<span class="highlight">虛誑妄取相</span>。」所謂「虛誑」（梵 Mṛṣā），指的是一切會變化的事物（諸行，梵 Saṃskāra）都是虛假、欺騙人的。凡是有「相」可取的，皆是假象——因為妄取相的緣故，名之為虛誑。</p><div class="slide-insight"><span class="tag">核心推導</span>
+<p style="margin-bottom:0;">諸行（Saṃskāra）→ 變化（Change）→ 無自性（No Fixed Nature）→ <strong>空（Emptiness）</strong></p>
+<p>如果事物有「固定本質」，它就不可能改變。既然在變，即證明其本質為空。</p>
+</div></div>
+<div class="section-card"><h3 id="ch13-sec3">涅槃——唯一的真實</h3><div class="metaphor"><h4>唯一的真實：涅槃</h4>
+<p>除了涅槃（寂滅）之外，凡是有「相」的，皆是假象。我們感知的現實，是一場由因緣編織的集體幻覺。佛經中說：「第一實者，所謂涅槃，非妄取相。」以此經說故，當知有諸行虛誑妄取相。</p>
+</div></div>
+<div class="section-card"><h3 id="ch13-sec4">本品四大辯證主軸</h3><p>本品透過問答辯證的方式，層層深入「空」的義理。全品可分為四大辯證主軸：</p><p><strong>1. 嬰兒與老人</strong>——身分同一性的辯證：透過人的成長過程，破除「一」與「異」的執著。<br/>
+<strong>2. 乳與酪</strong>——因果變化的辯證：透過牛奶變酸奶的過程，說明因果非即非離。<br/>
+<strong>3. 五蘊皆空</strong>——向內解構自我：逐一分析色、受、想、行、識五蘊，皆無定性。<br/>
+<strong>4. 空亦復空</strong>——避免虛無主義：空不是終點，執著「空」本身也是一種病。</p></div>
+</section>
+<!-- ==================== S2: 第一偈 ==================== -->
+<section id="s2">
+<h2 id="ch13-sec5">二、第一偈：虛誑妄取——空義的提出</h2>
+<div class="section-card"><h3 id="ch13-sec6">問方立場：經典依據</h3><div class="verse"><span class="label">問曰（引經）</span>
+    「如佛經所說，　虛誑妄取相，<br/>
+    　諸行妄取故，　是名為虛誑。」
+  </div><div class="commentary">
+    佛經中說，虛誑者，即是妄取相；第一實者，所謂涅槃，非妄取相。以是經說故，當知有諸行虛誑妄取相。
+  </div><p>問方引佛經來質疑：既然佛說諸行是虛誑的、是妄取相的，那麼這些「諸行」應當是實有的才對——否則誰在虛誑？誰在妄取？</p></div>
+<div class="section-card"><h3 id="ch13-sec7">答方破斥：妄取即空</h3><div class="verse"><span class="label">答曰（第一偈）</span>
+    「虛誑妄取者，　是中何所取？<br/>
+    　佛說如是事，　欲以示空義。」
+  </div><div class="commentary">
+    若妄取相法即是虛誑者，是諸行中為何所取？佛如是說，當知說空義。
+  </div><p>龍樹回應：如果妄取相的法就是虛誑的，那在這些諸行之中，到底取了什麼呢？既然取到的都是虛假的，就等於什麼也沒取到。佛這樣說，正是要開示<span class="highlight">空的義理</span>。</p></div>
+</section>
+<!-- ==================== S3: 嬰兒與老人 ==================== -->
+<section id="s3">
+<h2 id="ch13-sec8">三、辯證一：嬰兒與老人——身分同一性的辯證</h2>
+<div class="section-card"><h3 id="ch13-sec9">反方質疑：成長是連續的</h3><div class="slide-insight"><span class="tag">反方立場</span>
+<p>「如佛經所說，虛誑妄取相……」但我不覺得虛假。我看見嬰兒長大變成老人。如果一切都是空的，誰在成長？這顯示背後一定有一個「實體」存在。</p>
+</div><p>青目釋中詳細展開了這個論證：一切諸行虛妄相故空。諸行生滅不住，無自性故空。諸行名五陰，從行生故。五陰名行，是五陰皆虛妄無有定相。何以故？</p><p>如嬰兒時色非匍匐時色、匍匐時色非行時色、行時色非童子時色、童子時色非壯年時色、壯年時色非老年時色。如色念念不住故，分別決定性不可得。</p></div>
+<div class="section-card"><h3 id="ch13-sec10">邏輯陷阱 A：若是「一」（同一實體）</h3><div class="logic-box">
+<div class="logic-card trap">
+<span class="card-label">假設：嬰兒 ＝ 老人（擁有不變的自性）</span>
+<ul>
+<li>謬誤 1：嬰兒永遠不會長大（定格）。</li>
+<li>謬誤 2：老人永遠是嬰兒。</li>
+<li>又如泥團常是泥團，終不作瓶。何以故？色常定故。</li>
+</ul>
+</div>
+</div><p>原文：「若嬰兒色即是匍匐色乃至老年色者，如是則是一色皆為嬰兒，無有匍匐乃至老年。」若嬰兒定住自性者，終不作匍匐乃至老年。</p></div>
+<div class="section-card"><h3 id="ch13-sec11">邏輯陷阱 B：若是「異」（完全不同）</h3><div class="logic-box">
+<div class="logic-card trap">
+<span class="card-label">假設：嬰兒 ≠ 老人（完全無關的個體，如張三與李四）</span>
+<ul>
+<li>謬誤 1：老人憑空出現，沒有童年（無因）。</li>
+<li>謬誤 2：失親屬法，無父無子。</li>
+<li>唯有嬰兒應得父，餘則匍匐乃至老年不應有分。</li>
+</ul>
+</div>
+</div><p>原文：「若嬰兒色異匍匐色者，則嬰兒不作匍匐、匍匐不作嬰兒。何以故？二色異故。」</p><p>接下來，問方試圖用「相續」來解圍：「色雖不定，嬰兒色滅已，相續更生乃至老年色，無有如上過。」</p><p>答方再破：嬰兒色相續生者，為滅已相續生？為不滅相續生？若嬰兒色滅，云何有相續？以無因故。如雖有薪可燃，火滅故無有相續。若嬰兒色不滅而相續者，則嬰兒色不滅，常住本相亦無相續。</p><p>問方再辯：「我不說滅不滅故相續生，但說不住相似生，故言相續生。」</p><p>答方結論：若爾者，則有定色而更生，如是應有千萬種色。但是事不然，如是亦無相續。</p></div>
+<div class="section-card"><h3 id="ch13-sec12">結論：不一亦不異</h3><div class="metaphor"><h4>不一亦不異</h4>
+<p>說「一樣」是錯的（凍結了變化）。說「不一樣」也是錯的（切斷了因果）。結論：沒有固定的「我」，只有因緣流動的現象。</p>
+</div><div class="verse"><span class="label">第五偈</span>
+    「是法則無異，　異法亦無異，<br/>
+    　如壯不作老，　老亦不作壯。」
+  </div><div class="commentary">
+    若法有異者，則應有異相。為即是法異？為異法異？是二不然。若即是法異，則老應作老；而老實不作老。若異法異者，老與壯異，壯應作老；而壯實不作老。二俱有過。
+  </div></div>
+<div class="section-card"><h3 id="ch13-sec13">譬喻：燈焰的傳遞與水流相續</h3><div class="slide-insight"><span class="tag">譬喻：燈焰</span>
+<p>核心概念：薪火相傳。後來的火，是不是原來的火？不是（燃料不同）。後來的火，是否與原來的火無關？不是（因前火而生）。這就是「相續」（Continuity），而非「永恆」（Permanence）。</p>
+</div><div class="slide-insight"><span class="tag">譬喻：水流</span>
+<p>我們無法踏入同一條河流兩次。「河流」只是一個名字，指代無數水滴的瞬間生滅。生命亦如水流，看似有實體，實則是無數片段的快速閃現。</p>
+</div><p>原文中以燈炎為喻：「如燈炎分別定色不可得，從是定色更有色生不可得。」如是一切處求色無有定相，但以世俗言說故有。如芭蕉樹求實不可得，但有皮葉。</p></div>
+</section>
+<!-- ==================== S4: 乳與酪 ==================== -->
+<section id="s4">
+<h2 id="ch13-sec14">四、辯證二：乳與酪——因果變化的辯證</h2>
+<div class="section-card"><h3 id="ch13-sec15">第六偈：若即是、若離</h3><p>問方提出：「若法即異，有何咎？如今眼見年少經日月歲數則老。」我看得到變化啊！牛奶變成了優酪乳（酪），這難道不是實實在在的過程嗎？</p><div class="verse"><span class="label">答曰（第六偈）</span>
+    「若是法即異，　乳應即是酪；<br/>
+    　離乳有何法，　而能作於酪？」
+  </div><div class="logic-box">
+<div class="logic-card">
+<span class="card-label">若即是（If Identity）</span>
+<ul>
+<li>乳即是酪，不需因緣（不需發酵）。</li>
+<li>結果已存在於原因中。</li>
+<li>矛盾：乳與酪有種種異故。</li>
+</ul>
+</div>
+<div class="logic-card">
+<span class="card-label">若離（If Difference）</span>
+<ul>
+<li>若離乳更有何物為酪？</li>
+<li>優酪乳能從水中生出嗎？</li>
+<li>矛盾：離因無果。</li>
+</ul>
+</div>
+</div><div class="commentary">
+    若是法即異者，乳應即是酪，更不須因緣。是事不然。何以故？乳與酪有種種異故。乳不即是酪，是故法不即異。若謂異法為異者，是亦不然，離乳更有何物為酪？如是思惟，是法不異、異法亦不異，是故不應偏有所執。
+  </div><p>結論：因果非即非離。事物的變化既不是「同一個東西在變」，也不是「完全不相干的東西替換」。</p></div>
+<div class="section-card"><h3 id="ch13-sec16">什麼是「空」（Śūnyatā）？</h3><div class="slide-insight"><span class="tag">關鍵概念</span>
+<p><strong>空 ≠ 虛無（Nothingness）</strong></p>
+<p><strong>空 ＝ 變化的可能性（Capacity for Change）</strong></p>
+<p>正因為沒有「固定的牛奶性」，牛奶才能變成優酪乳。</p>
+</div><p>如果萬法「有」自性，世界將被凍結，因果無法運作，罪人無法變好，凡夫無法成佛。「性名決定有，不可變異。如真金不可變，又如暗性不變為明、明性不變為暗。」</p><p>以有空義故，一切法得成。種子必須「死」（失去種子相），才能變成樹。如果種子堅持「我是種子」，樹永遠不會出現。結論：空，是得以生存的空間。</p></div>
+</section>
+<!-- ==================== S5: 五蘊皆空 ==================== -->
+<section id="s5">
+<h2 id="ch13-sec17">五、辯證三：五蘊皆空——向內解構自我</h2>
+<p>如果外在世界是空的，那「我」呢？佛陀將「自我」拆解為五個零件（五蘊），逐一證明其無自性。</p>
+<div class="section-card"><h3 id="ch13-sec18">色蘊與受蘊</h3><h4>色（身體）——如聚沫</h4><p>如聚沫，雖有形狀，一碰即碎，無堅實核心。智者求色相念念滅，更無實色可得，不住色形色相。相似次第生難可分別，如燈炎分別定色不可得。是故色無性故空，但以世俗言說故有。</p><h4>受（感受）——如水泡</h4><p>如水泡，瞬間生滅。沒有「我感到痛苦」，只有「痛苦的感覺流過」。受亦如是，智者種種觀察，次第相似故生滅難可別知，如水流相續，但以覺故說三受在身。</p></div>
+<div class="section-card"><h3 id="ch13-sec19">想蘊與行蘊</h3><h4>想（認知）——如陽焰</h4><p>想因名相生，若離名相則不生。是故佛說，分別知名字相故名為想。非決定先有，從眾緣生無定性，無定性故如影隨形。因形有影、無形則無影，影無決定性。若定有者，離形應有影，而實不爾。想亦如是，但因外名相，以世俗言說故有。</p><h4>行（意志）——如芭蕉樹</h4><p>如芭蕉樹，層層剝開，中間沒有「芯」。諸行者，身、口、意。行有二種：淨、不淨。淨行者，在人中、欲天、色天、無色天受果報已則減，還作故名增。不淨行者亦如是。是故諸行有增有減故不住。如人有病，隨宜將適病則除愈，不將適病則還集。諸行亦如是，有增有減故不決定，但以世俗言說故有。</p></div>
+<div class="section-card"><h3 id="ch13-sec20">識蘊：幻術師的戲法</h3><div class="metaphor"><h4>識：幻術師的戲法</h4>
+<p>意識不是獨立存在的「靈魂」。它是「眼」與「色」相遇時的火花（緣起）。結論：識不住故無自性，虛誑如幻。</p>
+</div><p>識因色聲香味觸等、眼耳鼻舌身等生，以眼等諸根別異故，識有別異。是識為在色、為在眼、為在中間？無有決定。如伎人含一珠出已復示人則生疑，為是本珠、為更有異？識亦如是，生已更生，為是本識、為是異識？</p></div>
+<div class="section-card"><h3 id="ch13-sec21">誰在受苦？——無我（Anattā）</h3><div class="slide-insight"><span class="tag">無我</span>
+<p>沒有「開車的人」，只有「開車」這個動作。沒有「受苦者」，只有「苦」的現象。痛苦之所以沈重，是因為我們設定了一個「受苦的主角」。</p>
+</div><p>因世諦故得見第一義諦。所謂無明緣諸行，從諸行有識著，識著故有名色，從名色有六入，從六入有觸，從觸有受，從受有愛，從愛有取，從取有有，從有有生，從生有老、死、憂悲苦惱、恩愛別苦、怨憎會苦等，如是諸苦皆以行為本。</p><div class="flow">
+<span class="flow-item">無明</span><span class="flow-arrow">→</span>
+<span class="flow-item">諸行</span><span class="flow-arrow">→</span>
+<span class="flow-item">識</span><span class="flow-arrow">→</span>
+<span class="flow-item">名色</span><span class="flow-arrow">→</span>
+<span class="flow-item">六入</span><span class="flow-arrow">→</span>
+<span class="flow-item">觸</span><span class="flow-arrow">→</span>
+<span class="flow-item">受</span><span class="flow-arrow">→</span>
+<span class="flow-item">愛</span><span class="flow-arrow">→</span>
+<span class="flow-item">取</span><span class="flow-arrow">→</span>
+<span class="flow-item">有</span><span class="flow-arrow">→</span>
+<span class="flow-item">生</span><span class="flow-arrow">→</span>
+<span class="flow-item">老死憂悲苦惱</span>
+</div><p>佛以世諦故說，若得第一義諦生真智慧者則無明息，無明息故諸行亦不集。以是斷故一一分滅，五陰身畢竟滅更無有餘，唯但有空。<strong>是故佛欲示空義故，說諸行虛誑。</strong></p></div>
+</section>
+<!-- ==================== S6: 核心偈頌 ==================== -->
+<section id="s6">
+<h2 id="ch13-sec22">六、核心偈頌：諸法無性與空亦復空</h2>
+<div class="section-card"><h3 id="ch13-sec23">第七偈：諸法有異故，知皆是無性</h3><div class="verse"><span class="label">第二、三偈（諸法無性）</span>
+    「諸法有異故，　知皆是無性；<br/>
+    　無性法亦無，　一切法空故。」
+  </div><div class="commentary">
+    諸法無有性。何以故？諸法雖生，不住自性，是故無性。如嬰兒定住自性者，終不作匍匐乃至老年。而嬰兒次第相續有異相現，匍匐乃至老年，是故說見諸法異相故知無性。
+  </div><p>因為我們觀察到萬物不斷地呈現「異相」（不同的面貌），所以知道它們沒有固定不變的「性」。而這個「無性」本身也不是一個獨立存在的「法」——因為一切法皆空。</p><p class="qa-question">問曰：若諸法異相無性，即有無性法，有何咎？</p><p class="qa-answer">答曰：若無性，云何有法？云何有相？何以故？無有根本故。但為破性，故說無性。是無性法若有者，不名一切法空；若一切法空，云何有無性法？</p></div>
+<div class="section-card"><h3 id="ch13-sec24">第八偈：若有不空法，則應有空法</h3><div class="verse"><span class="label">第八偈（梵第七偈）</span>
+    「若有不空法，　則應有空法；<br/>
+    　實無不空法，　何得有空法？」
+  </div><p>梵文：Yady aśūnyaṃ bhavet kiṃ cit syāc chūnyaṃ iti kiṃ cana, Na kiṃ cid asty aśūnyaṃ ca kutaḥ śūnyaṃ bhaviṣyati.</p><div class="commentary">
+    若有不空法，相因故應有空法。而上來種種因緣破不空法，不空法無故則無相待，無相待故何有空法？
+  </div><p>「空」與「不空」是相待而立的概念。既然「不空法」已被種種因緣所破，沒有「不空」作為對待，「空」又從何而來？</p></div>
+<div class="section-card"><h3 id="ch13-sec25">緣起性空——中道實相</h3><div class="slide-insight"><span class="tag">真相：緣起性空</span>
+<p>因為無自性（空），所以能依靠因緣而生（緣起）。因為依賴因緣，所以沒有獨立自性。這就是中道實相。</p>
+</div></div>
+</section>
+<!-- ==================== S7: 空亦復空 ==================== -->
+<section id="s7">
+<h2 id="ch13-sec26">七、辯證四：空亦復空——避免虛無主義</h2>
+<div class="section-card"><h3 id="ch13-sec27">終極陷阱：執著於「空」</h3><p>問方做最後努力：「破是、破異猶有空在，空即是法。」——你把「是」破了、「異」也破了，但「空」還留著，空就是法呀！</p><div class="slide-insight"><span class="tag">危險的見解</span>
+<p>聽說「萬法皆空」，於是抓著「空」不放。以為「空」是一個境界，或者一種虛無的狀態。這是最危險的見解。</p>
+</div></div>
+<div class="section-card"><h3 id="ch13-sec28">第九偈：大聖說空法，諸佛所不化</h3><div class="verse"><span class="label">第九偈（梵第八偈）——本品最重要的偈頌</span>
+    「大聖說空法，　為離諸見故；<br/>
+    　若復見有空，　諸佛所不化。」
+  </div><p>梵文：Śūnyatā sarvadṛṣṭīnāṃ proktā niḥsaraṇaṃ jinaiḥ. Yeṣāṃ tu śūnyatādṛṣṭis tān asādhyān babhāṣire.</p><div class="commentary">
+    大聖為破六十二諸見，及無明、愛等諸煩惱故說空。若人於空復生見者，是人不可化。譬如有病須服藥可治，若藥復為病則不可治。如火從薪出以水可滅，若從水生為用何滅？
+  </div></div>
+<div class="section-card"><h3 id="ch13-sec29">譬喻：空是藥、水與火</h3><div class="metaphor"><h4>空，是藥，不是歸宿</h4>
+<p>「空」是為了治療「執著病」的瀉藥。病好了，藥就要丟掉。如果病好了還繼續吃藥，藥就變成了毒。</p>
+</div><div class="metaphor"><h4>當水燃燒時</h4>
+<p>空（水）是用來滅煩惱（火）的。如果你對「空」產生執著，就像水自己燒起來了。世間再也沒有東西能救火了。</p>
+</div><p>原文補充：「如空是水，能滅諸煩惱火，有人罪重貪著心深，智慧鈍故於空生見，或謂有空、或謂無空，因有無還起煩惱。若以空化此人者，則言我久知是空，若離是空則無涅槃道。如經說，離空無相無作門得解脫者，但有言說。」</p><div class="slide-insight"><span class="tag">諸佛所不化</span>
+<p>「大聖說空法，為離諸見故；若復見有空，諸佛所不化。」如果把「空」當成實體，佛陀也救不了你。死寂空：變得冷漠、消極、覺得一切沒意義，這是錯誤的「惡取空」。</p>
+</div></div>
+</section>
+<!-- ==================== S8: 生活應用 ==================== -->
+<section id="s8">
+<h2 id="ch13-sec30">八、生活應用與總結</h2>
+<div class="section-card"><h3 id="ch13-sec31">面對變局</h3><p>因為虛誑，所以有希望。壞學生不是定性的（可教化）。困境不是定性的（可突破）。利用「無自性」來創造改變的因緣。</p></div>
+<div class="section-card"><h3 id="ch13-sec32">情緒管理</h3><p>觀受如泡：不要說「我很痛苦」，要說「現在有一個痛苦的感覺流過」。不抓取（妄取），它自然會代謝消失。</p></div>
+<div class="section-card"><h3 id="ch13-sec33">真正的中道專家</h3><div class="metaphor"><h4 style="text-align:center;">真正的中道專家</h4>
+<p style="text-align:center; font-size:1.1em;">知虛妄，不執著：看透遊戲規則。<br/>
+    用空義，不著空：認真玩這場遊戲。</p>
+</div></div>
+</section>
+<!-- ==================== CONCLUSION ==================== -->
+<section class="conclusion-section">
+<h2 id="ch13-sec34">結語</h2>
+<div class="big-text">因無所住，而生其心</div>
+<p style="margin-top:16px; font-size:1.05em;">因無所住，而生其心。</p>
+</section>
+<!-- ==================== S9: 校勘注釋 ==================== -->
+<section id="s9">
+</section>
+<a class="back-top" href="#">▲ 回到頂部</a>
+</body> </div>
+</article>
+<article class="chapter-article" data-chapter="14" id="chapter-14">
+<div class="chapter-header">
+<div class="chapter-badge">第十四品</div>
+<h1 class="chapter-title">觀合品第十四</h1>
+<p class="chapter-subtitle">破除接觸的幻象</p>
+</div>
+<div class="chapter-body">
+<body>
+<header>
+<h1>中論・觀合品第十四</h1>
+<div class="subtitle">破除接觸的幻象 — 深度解析第十四品邏輯與解脫心法</div>
+<div class="series">龍樹菩薩《中論》邏輯解構系列 ｜ 八偈</div>
+</header>
+<div class="container" id="top">
+<!-- ======================== 目 錄 ======================== -->
+<!-- ======================== 前 言 ======================== -->
+<section id="s0">
+<h2 class="section-title" id="ch14-sec1">前言：品名由來與前後文脈絡</h2>
+<p>《中論》第十四品名為「觀合品」，此處的「合」（saṃsarga）指的是事物之間的「接觸」、「結合」或「和合」。龍樹菩薩在上一品〈觀行品〉（或〈破根品〉）中已經論證了「見」（能見的作用）、「所見」（被見的對象）與「見者」（進行觀看的主體）三者皆不成立。既然這三者沒有各自獨立的實體（異法），那麼它們之間也就不可能有真實的「合」（接觸、結合）。本品正是在此基礎上，進一步深入破斥「合」的概念。</p>
+<p>全品共八首偈頌，以嚴密的邏輯從「物理空間的不可能」出發，層層深入到「邏輯前提的瓦解」，最終揭示：一切法如幻如夢，無有定相，「合者」、「合時」、「合法」皆不可得。</p>
+</section>
+<hr class="divider"/>
+<!-- ======================== 核心問題 ======================== -->
+<section id="s1">
+<h2 class="section-title" id="ch14-sec2">核心問題：我們真的「接觸」到世界了嗎？</h2>
+<p>凡夫認為「見者」（我 / 主體）、「見」（眼根 / 感官能力）與「可見」（色塵 / 外境）這三者結合在一起，便產生了「經驗」。如果「合」是真實的，那麼痛苦與煩惱也將是真實的。反之，若能證明「合」在根本上不存在，則一切苦便失去了立足之地。</p>
+<div class="key">核心提問：如果接觸從未真正發生，那一切建立在「接觸」之上的苦惱，是否只是一場幻象？</div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第一偈 ======================== -->
+<section id="s2">
+<h2 class="section-title" id="ch14-sec3">第一偈 — 三事各異方，終無有合時</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「見可見見者，　　是三各異方；
+如是三法異，　　終無有合時。」</div>
+<div class="section-card"><h3 id="ch14-sec4">凡夫見：三事和合</h3><p>我們日常的認知模式是：眼根（內）＋ 色塵（外）＋ 我（識）＝ 看見。我們直覺認為這三者「碰」在了一起，產生了「看見」的經驗。但問題在於：這三個截然不同的東西，如何在物理或邏輯上「見面」？</p><div class="explain"><span class="tag">論文原文</span>
+<p>見是眼根、可見是色塵、見者是我，是三事各在異處，終無合時。異處者，眼在身內，色在身外，我者或言在身內、或言遍一切處，是故無合。</p>
+</div></div>
+<div class="section-card"><h3 id="ch14-sec5">空間矛盾：眼在身內，色在身外</h3><p>如果「合」才能看見，那到底是眼睛飛出去找到了花瓶，還是花瓶飛進來碰到了眼睛？兩者都不成立。物理距離證明「接觸」未發生。</p></div>
+<div class="section-card"><h3 id="ch14-sec6">合與不合的兩難</h3><p>龍樹進一步提出兩難論證：</p><div class="explain"><span class="tag blue">若合而見</span>
+<p>若需要接觸才能見，那麼「有塵處應有根有我」——色塵所在之處也應該有眼根和我。但事實並非如此，故「合而見」不成立。</p>
+</div><div class="explain"><span class="tag blue">若不合而見</span>
+<p>若不需要接觸也能見，那麼眼睛應該能穿透牆壁，看見背後的東西。既然不能透視，證明「視力」受空間限制。結論：空間上無法接觸，不接觸又不能見，矛盾成立。</p>
+</div></div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 時間與因果 ======================== -->
+<section id="s3">
+<h2 class="section-title" id="ch14-sec7">時間與因果的矛盾 — 四事合之破斥</h2>
+<div class="explain"><span class="tag">對手主張</span>
+<p>我、意、根、塵四事合，故有知生，能知瓶衣等萬物，是故有見、可見、見者。</p>
+</div>
+<p>龍樹的反駁：這個「知」到底是看見之後才生，還是看見之前就生，還是同時生？</p>
+<div class="explain"><span class="tag blue">見後知</span>
+<p>看見後才知道？那看的時候是瞎的——知（認識）無用。</p>
+</div>
+<div class="explain"><span class="tag blue">見前知</span>
+<p>還沒看就知道？因果顛倒——尚未接觸（合），怎會有知生？</p>
+</div>
+<div class="explain"><span class="tag blue">同時生</span>
+<p>若一時生則無相待。如牛雙角同時生出，互不為因果。知無故，見、可見、見者亦無。</p>
+</div>
+<div class="key">如是諸法如幻如夢，無有定相，何得有合？無合故空。</div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第二偈 ======================== -->
+<section id="s4">
+<h2 class="section-title" id="ch14-sec8">第二偈 — 推廣至煩惱：染、可染、染者</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「染與於可染，　　染者亦復然，
+餘入餘煩惱，　　皆亦復如是。」</div>
+<p>見、可見、見者的邏輯同樣適用於一切感官（聞、可聞、聞者等「餘入」）和一切煩惱（染、可染、染者；瞋、可瞋、瞋者等）。</p>
+<div class="section-card"><h3 id="ch14-sec9">貪欲的物理學</h3><p>以「染」（貪欲）為例：染（貪欲）、可染（對象）、染者（起貪之人）三者之間存在一道永遠無法跨越的 GAP。慾望無法物理性地「抓住」對象，貪欲與誘惑物在實相上從未接觸。</p></div>
+<div class="section-card"><h3 id="ch14-sec10">憤怒的落點</h3><p>瞋（Anger）需要一個對象。若「我」無法與「辱罵」真實接觸，憤怒便生不起來。憤怒源於我們想像了一個「接觸點」——聲波（罵聲）穿過了一個虛線的「我」（空），箭穿過的只是空氣。</p></div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第一階段總結 ======================== -->
+<section id="s5">
+<h2 class="section-title" id="ch14-sec11">第一階段總結：物理上的不可能</h2>
+<p>至此，從三個維度證明了「合」在物理現象上的不可能：</p>
+<div class="explain"><span class="tag green">空間上</span>
+<p>內外無法相及——眼在身內，色在身外。</p>
+</div>
+<div class="explain"><span class="tag green">時間上</span>
+<p>因果無法成立——先見後知、先知後見、同時生，皆有過失。</p>
+</div>
+<div class="explain"><span class="tag green">現象上</span>
+<p>貪瞋無處著力——煩惱的「主體」與「對象」之間找不到真實的接觸點。</p>
+</div>
+<p>但對手會反駁：「邏輯上，A 和 B 是兩個不同的東西，為什麼不能合？」——於是接下來進入核心辯證：破斥「異」的實在性。</p>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第三偈 ======================== -->
+<section id="s6">
+<h2 class="section-title" id="ch14-sec12">第三偈 — 異法當有合，見等無有異</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「異法當有合，　　見等無有異，
+異相不成故，　　見等云何合？」</div>
+<p>凡物皆以「異」（差異、不同）為前提才有「合」。然而見、可見、見者的「異相」不可得，因此無合。</p>
+<div class="section-card"><h3 id="ch14-sec13">邏輯陷阱：合的前提是「異」</h3><p>龍樹揭示了一個邏輯結構：要發生「結合」→ 必須有兩個獨立個體 → 這兩者必須有「差異」（異）。因此，龍樹的策略是：若證明「異」不存在，則「兩個東西」不存在，故「合」不可能發生。</p></div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第四偈 ======================== -->
+<section id="s7">
+<h2 class="section-title" id="ch14-sec14">第四偈 — 一切法皆無異相</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「非但見等法，　　異相不可得；
+所有一切法，　　皆亦無異相。」</div>
+<p>非但見、可見、見者等三事異相不可得，一切法皆無異相。這是將論證的範圍從「認知三事」擴展到「一切存在」——宇宙中沒有任何事物具有真實的、獨立的「差異性」。</p>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第五偈 ======================== -->
+<section id="s8">
+<h2 class="section-title" id="ch14-sec15">第五偈 — 異因異有異，異離異無異</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「異因異有異，　　異離異無異；
+若法從因出，　　是法不異因。」</div>
+<div class="section-card"><h3 id="ch14-sec16">「異」是相對的</h3><p>所謂的「異」（差異），是因為有另一個對比的事物才成立的。長因短而顯長，若拿走短，長就不存在。「差異」不是事物的本質，而是依賴對方的關係。離開了參照對象（從異），差異就消失（無異）。</p><div class="explain"><span class="tag">論文原文</span>
+<p>汝所謂異，是異因異法故名為異。離異法不名為異。何以故？若法從眾緣生，是法不異因，因壞果亦壞故。</p>
+</div></div>
+<div class="section-card"><h3 id="ch14-sec17">隱喻：房子與樑柱</h3><div class="analogy">
+    如因樑椽等有舍，舍不異樑椽，樑椽等壞舍亦壞故。離開樑柱，沒有房子。房子與樑柱不異——因為不異，所以不能說是「房子跟樑柱見面了」。它們是一體的系統。
+  </div></div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第六偈 ======================== -->
+<section id="s9">
+<h2 class="section-title" id="ch14-sec18">第六偈 — 歸謬法：離從異有異</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「若離從異異，　　應餘異有異；
+離從異無異，　　是故無有異。」</div>
+<p>若離開「從異」（參照對象）還能有獨立的「異法」，那麼這個「異」就應該可以脫離原本的關係，跑去跟其他事物比較而依然成立。</p>
+<div class="section-card"><h3 id="ch14-sec19">隱喻：拳頭與手指</h3><div class="analogy">
+    五指為因，拳頭為果。離開五指，還有一個獨立的「拳頭」可以跟五指「異」嗎？否。故拳頭不異於指。如離五指異有拳異者，拳異應於瓶等異物有異。今離五指異，拳異不可得。
+  </div><p>假設「拳頭異於手指」是一種獨立存在的特質（像一張身分證）。荒謬的後果是：把拳頭拿開，這張「身分證」應該還在，我應該能拿著它去跟花瓶比。但現實是：離開了手指，拳頭的「異」就消失了。證明「異」無自體。</p></div>
+<div class="section-card"><h3 id="ch14-sec20">核心洞見：是「關係」而非「實體」</h3><div class="key">離開了比較對象（從異），差異就消失（無異）。世界上找不到一個真實、不變、獨立的「異」。萬法如幻，皆是緣起關係的暫時聚合。</div></div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第七偈 ======================== -->
+<section id="s10">
+<h2 class="section-title" id="ch14-sec21">第七偈 — 異中無異相，不異中亦無</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「異中無異相，　　不異中亦無；
+無有異相故，　　則無此彼異。」</div>
+<div class="explain"><span class="tag">論文原文</span>
+<p>異相從眾緣生，異相離異法不可得故。異相因異法而有，不能獨成。今異法中無異相——何以故？先有異法故，何用異相？不異法中亦無異相——何以故？若異相在不異法中，不名不異法。若二處俱無，即無異相，異相無故此彼法亦無。</p>
+</div>
+<div class="section-card"><h3 id="ch14-sec22">「異相」無處容身</h3><p>在「異」的事物中找不到「異相」——因為已經不同了，不需要再加「異」的標籤。在「不異」的事物中也找不到「異相」——因為本質相同，找不到「異」。既不在異中，也不在不異中，「差異性」究竟在哪裡？答案是：無處可在。</p></div>
+<div class="section-card"><h3 id="ch14-sec23">「他者」的崩塌</h3><p>沒有真實的「異相」，就無法劃分真實的「此」（我）與「彼」（物）。沒有此彼，何來接觸？異法無故亦無合。</p></div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 第八偈 ======================== -->
+<section id="s11">
+<h2 class="section-title" id="ch14-sec24">第八偈 — 終極結論：是法不自合</h2>
+<div class="gatha"><span class="label">【偈頌】</span>「是法不自合，　　異法亦不合，
+合者及合時，　　合法亦皆無。」</div>
+<div class="explain"><span class="tag">論文原文</span>
+<p>是法自體不合，以一故，如一指不自合。異法亦不合，以異故，異事已成不須合故。如是思惟，合法不可得。是故說合者、合時、合法皆不可得。</p>
+</div>
+<p>法不自合（一體故，如一根手指不會跟自己接觸）；法不異合（前面已破「異」的實在性，既無真實的兩個東西，就無所謂結合）。合者（進行接觸的主體）、合時（接觸的時刻）、合法（接觸本身）——三者皆不可得。</p>
+</section>
+<hr class="divider"/>
+<!-- ======================== 邏輯路徑圖 ======================== -->
+<section id="s12">
+<h2 class="section-title" id="ch14-sec25">專家邏輯路徑圖</h2>
+<p>以下是全品八偈的邏輯推演總覽：</p>
+<div class="flow flow-vertical">
+<div class="flow-step">接觸的先決條件</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">需要兩個實體</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">需要差異（異相）</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">差異是依存的（相對的）</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">依存是空的（無自性）</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">無實體</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step final">無接觸（無合）</div>
+</div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 解脫心法 ======================== -->
+<section id="s13">
+<h2 class="section-title" id="ch14-sec26">解脫心法：從邏輯到實踐</h2>
+<div class="section-card"><h3 id="ch14-sec27">為什麼我們感到痛苦？</h3><p>痛苦源於我們強行將「我」（Self）黏貼在「經驗」（Experience）上。我們創造了一個並不存在的「碰撞」——虛構的接觸產生了真實的摩擦。如果接觸從未發生，摩擦便是一場自導自演的幻覺。</p></div>
+<div class="section-card"><h3 id="ch14-sec28">觀察者心法：緣起性空，無合無散</h3><div class="key">觀察事物升起，而不去「接受」（合）或「抗拒」（散）。</div><p>當我們看到一朵花、聽到一句話、感受一個情緒時，不需要急著「合」（抓取、認同），也不需要「散」（排斥、抗拒）。因為在究竟的層面上，從來就沒有什麼真正「碰在一起」。</p></div>
+<div class="section-card"><h3 id="ch14-sec29">實戰應用：斷貪</h3><div class="practice"><h4 class="scenario-header">場景：購買名牌包的衝動</h4>
+<p><strong>心法：</strong>將「想買的我」與「包包」視為緣起的一體。問自己：如果沒有這個包包，還有「想買它的慾望」嗎？</p>
+<p><strong>結論：</strong>慾望不是我的，是依賴包包而暫時存在的關係。拿掉關係，慾望即空。</p>
+</div></div>
+<div class="section-card"><h3 id="ch14-sec30">實戰應用：斷瞋</h3><div class="practice"><h4 class="scenario-header">場景：遭受辱罵或批評</h4>
+<p class="xinfa-question"><strong>問題：</strong>聲音在哪個點「接觸」並「刺痛」了尊嚴？聲波是物理震動 → 耳膜是接收器 → 意識進行解讀。在這整個過程中，聲波在哪裡碰到了「我」？</p>
+<p><strong>結論：</strong>找不到那個接觸點，憤怒就成了無源之水。</p>
+</div></div>
+<div class="section-card"><h3 id="ch14-sec31">實戰應用：人際關係</h3><div class="practice"><h4 class="scenario-header">場景：親密關係的執著與失落</h4>
+<p>人際關係是「條件的極度靠近」，而非「靈魂的融合」。緣聚則現，緣散則滅。珍惜當下，但不執著於永恆的「合」。</p>
+</div><div class="explain"><span class="tag">龍樹的雙鉗戰術</span>
+<p>若兩者完全獨立（如房與空地）→ 無法接觸。若兩者互相依賴（如房與樑柱）→ 本無差異。無論你選哪條路，「真實的接觸」都無法成立。</p>
+</div></div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 正見總結 ======================== -->
+<section id="s14">
+<h2 class="section-title" id="ch14-sec32">正見總結與終極偈頌</h2>
+<p>一切法皆是關係系統。沒有東西互相接觸，也沒有東西互相分離。一切只是「如其本然」（Just As It Is — Tathata）。</p>
+<div class="gatha" style="text-align:center; font-size:1.3em;"><span class="label">【終極偈頌】</span>合者及合時，
+合法亦皆無。</div>
+<p style="text-align:center; color: var(--accent); font-weight: bold;">合者、合時、與合法皆無法獲得。</p>
+<div class="key" style="text-align:center; margin-top: 30px; font-size: 1.15em; padding: 24px;">
+    「無合則無磨擦，無磨擦則無苦，無苦即寂滅。」<br/>
+<span style="font-weight:normal; font-size:0.9em;">在沒有接觸的情況下，就沒有摩擦。在沒有摩擦的情況下，就有和平。</span>
+</div>
+</section>
+<hr class="divider"/>
+<!-- ======================== 延伸學習 ======================== -->
+<section id="s15">
+<h2 class="section-title" id="ch14-sec33">延伸學習索引</h2>
+<p><strong>Pratītyasamutpāda（緣起）：</strong>緣起法——一切法因條件而生，因條件而滅。</p>
+<p><strong>Svabhāva（自性）：</strong>自性（本無）——事物不具有獨立、不變的本質。</p>
+<p><strong>三事：</strong>根（Indriya）、境（Visaya）、識（Vijñāna）——感官、對象與意識的三元結構。</p>
+<p><strong>推薦閱讀：</strong>中論第三品（觀六情品）——進一步探討感官與外境的關係。</p>
+</section>
+<a class="back-top" href="#top">↑ 回到頂部</a>
+</div><!-- .container -->
+</body> </div>
+</article>
+<!-- Footer -->
+<footer class="main-footer">
+<p>《中論》第七至十四品　深度解析總彙整</p>
+<p style="margin-top:8px; font-size:0.85em;">龍樹菩薩造頌・青目長行釋・鳩摩羅什漢譯</p>
+</footer>
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" title="回到頂部">↑</button>
+<script>
+// ===== Progress Bar =====
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('progressText').textContent = Math.round(progress) + '%';
+}
+
+// ===== Sticky Nav =====
+const stickyNav = document.getElementById('stickyNav');
+const navPills = document.querySelectorAll('.nav-pill[data-ch]');
+const chapters = document.querySelectorAll('.chapter-article');
+
+function updateNav() {
+  const scrollTop = window.scrollY;
+  // Show/hide sticky nav
+  stickyNav.classList.toggle('visible', scrollTop > 500);
+  
+  // Highlight active chapter
+  let activeChapter = null;
+  chapters.forEach(ch => {
+    const rect = ch.getBoundingClientRect();
+    if (rect.top <= 150 && rect.bottom > 150) {
+      activeChapter = ch.dataset.chapter;
+    }
+  });
+  navPills.forEach(pill => {
+    pill.classList.toggle('active', pill.dataset.ch === activeChapter);
+  });
+}
+
+// ===== Back to Top =====
+const backToTop = document.getElementById('backToTop');
+function updateBackToTop() {
+  backToTop.classList.toggle('visible', window.scrollY > 600);
+}
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ===== Scroll Animation =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.05 });
+chapters.forEach(ch => observer.observe(ch));
+
+// ===== Scroll Events =====
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      updateProgress();
+      updateNav();
+      updateBackToTop();
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// Initial
+updateProgress();
+
+// ===== TOC expand on click (mobile) =====
+document.querySelectorAll('.toc-chapter-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const parent = link.closest('.toc-chapter');
+    parent.classList.toggle('expanded');
+  });
+});
+
+// ===== Anti-Copy Protection =====
+// Disable text selection via mouse
+document.addEventListener('selectstart', (e) => { e.preventDefault(); });
+// Disable copy
+document.addEventListener('copy', (e) => { e.preventDefault(); });
+// Disable cut
+document.addEventListener('cut', (e) => { e.preventDefault(); });
+// Disable right-click context menu
+document.addEventListener('contextmenu', (e) => { e.preventDefault(); });
+// Disable common keyboard shortcuts (Ctrl+C, Ctrl+A, Ctrl+U, Ctrl+S, Ctrl+P)
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey || e.metaKey) {
+    const blocked = ['c','a','u','s','p','x'];
+    if (blocked.includes(e.key.toLowerCase())) { e.preventDefault(); }
+  }
+  // Block F12 (DevTools)
+  if (e.key === 'F12') { e.preventDefault(); }
+  // Block Ctrl+Shift+I/J/C (DevTools)
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+    const blocked2 = ['i','j','c'];
+    if (blocked2.includes(e.key.toLowerCase())) { e.preventDefault(); }
+  }
+});
+</script>
+</body>
+</html>
